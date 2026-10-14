@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how MakeItMine handles personal information, orders, account details, cookies and privacy requests.">
+  <title>Privacy Policy | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #fbf7f0;
+      --white: #fff;
+      --wine: #681f35;
+      --wine-dark: #471321;
+      --gold: #c49a56;
+      --text: #33272a;
+      --muted: #827477;
+      --border: #eadfd8;
+      --soft: #f4ebe4;
+      --shadow: 0 12px 35px rgba(71, 19, 33, .07);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 110px;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .announcement {
+      background: var(--wine-dark);
+      color: white;
+      text-align: center;
+      padding: 9px 15px;
+      font-size: 12px;
+      letter-spacing: .3px;
+    }
+
+    .announcement span {
+      color: #e8c98e;
+      font-weight: 700;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      padding: 17px 7%;
+      background: rgba(251, 247, 240, .97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      color: var(--wine);
+      font-size: 28px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--wine);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+    }
+
+    .nav-icon {
+      position: relative;
+      font-size: 20px;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -7px;
+      right: -9px;
+      width: 17px;
+      height: 17px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--wine);
+      color: white;
+      font-size: 10px;
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 0;
+      background: transparent;
+      color: var(--wine);
+      font-size: 25px;
+    }
+
+    .breadcrumb {
+      max-width: 1160px;
+      margin: auto;
+      padding: 23px 24px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--wine);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 55px 20px 65px;
+      text-align: center;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border: 1px solid rgba(196, 154, 86, .25);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      left: -110px;
+      top: 5px;
+    }
+
+    .hero::after {
+      right: -110px;
+      bottom: -35px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 15px;
+      margin-bottom: 17px;
+      background: #f1e4dc;
+      border-radius: 30px;
+      color: var(--wine);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      color: var(--wine-dark);
+      font-family: "Playfair Display", serif;
+      font-size: clamp(37px, 5vw, 55px);
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .last-updated {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 8px 13px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: rgba(255,255,255,.65);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .policy-layout {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px 85px;
+      display: grid;
+      grid-template-columns: 255px minmax(0, 1fr);
+      gap: 38px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 105px;
+    }
+
+    .sidebar-card {
+      padding: 23px 19px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar-card h3 {
+      margin-bottom: 14px;
+      color: var(--wine-dark);
+      font-family: "Playfair Display", serif;
+      font-size: 21px;
+    }
+
+    .toc-link {
+      display: block;
+      padding: 10px 11px;
+      margin: 3px 0;
+      border-left: 2px solid transparent;
+      border-radius: 0 6px 6px 0;
+      color: #746568;
+      font-size: 12px;
+      transition: .2s;
+    }
+
+    .toc-link:hover,
+    .toc-link.active {
+      border-left-color: var(--gold);
+      background: var(--soft);
+      color: var(--wine);
+      font-weight: 700;
+    }
+
+    .sidebar-note {
+      padding: 22px 19px;
+      margin-top: 16px;
+      border-radius: 13px;
+      background: var(--wine);
+      color: white;
+    }
+
+    .sidebar-note .icon {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-note h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 21px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-note p {
+      color: #ead7db;
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    .sidebar-note a {
+      display: inline-block;
+      padding: 10px 14px;
+      background: white;
+      color: var(--wine);
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .policy-content {
+      min-width: 0;
+    }
+
+    .intro-card {
+      padding: 27px;
+      margin-bottom: 20px;
+      border: 1px solid #e8d7c9;
+      border-radius: 13px;
+      background: #f4e9df;
+    }
+
+    .intro-card h2 {
+      font-family: "Playfair Display", serif;
+      color: var(--wine-dark);
+      font-size: 25px;
+      margin-bottom: 9px;
+    }
+
+    .intro-card p {
+      color: #6f5e60;
+      font-size: 13px;
+    }
+
+    .policy-section {
+      padding: 28px 29px;
+      margin-bottom: 16px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      scroll-margin-top: 110px;
+    }
+
+    .section-number {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-right: 9px;
+      border-radius: 9px;
+      background: var(--soft);
+      color: var(--wine);
+      font-size: 12px;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+
+    .policy-section h2 {
+      display: flex;
+      align-items: center;
+      color: var(--wine-dark);
+      font-family: "Playfair Display", serif;
+      font-size: 23px;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    .policy-section p {
+      color: #746568;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .policy-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .policy-section ul {
+      padding-left: 21px;
+      margin: 10px 0 14px;
+      color: #746568;
+      font-size: 13px;
+    }
+
+    .policy-section li {
+      margin-bottom: 8px;
+      padding-left: 3px;
+    }
+
+    .policy-section strong {
+      color: #4d333a;
+    }
+
+    .policy-section a {
+      color: var(--wine);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .highlight {
+      padding: 15px 17px;
+      margin-top: 15px;
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      background: #faf5ed;
+      color: #746568;
+      font-size: 12px;
+    }
+
+    .contact-banner {
+      max-width: 1112px;
+      margin: 0 auto 80px;
+      padding: 35px;
+      border: 1px solid #e8d7c9;
+      border-radius: 16px;
+      background: #f1e6dc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .contact-banner h2 {
+      margin-bottom: 7px;
+      color: var(--wine-dark);
+      font-family: "Playfair Display", serif;
+      font-size: 27px;
+    }
+
+    .contact-banner p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      padding: 13px 21px;
+      border-radius: 8px;
+      background: var(--wine);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: .2s;
+    }
+
+    .primary-btn:hover {
+      background: var(--wine-dark);
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      padding: 52px 7% 20px;
+      background: var(--wine-dark);
+      color: white;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 35px;
+      max-width: 1250px;
+      margin: 0 auto 38px;
+    }
+
+    .footer-brand .logo {
+      display: inline-block;
+      margin-bottom: 13px;
+      color: white;
+    }
+
+    .footer-brand p {
+      max-width: 300px;
+      color: #d7c2c7;
+      font-size: 12px;
+    }
+
+    .footer-col h4 {
+      margin-bottom: 15px;
+      color: #e7c994;
+      font-size: 13px;
+    }
+
+    .footer-col a {
+      display: block;
+      width: fit-content;
+      margin-bottom: 10px;
+      color: #d7c2c7;
+      font-size: 12px;
+    }
+
+    .footer-col a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.15);
+      color: #d7c2c7;
+      font-size: 11px;
+    }
+
+    @media (max-width: 950px) {
+      .navbar {
+        padding-left: 4%;
+        padding-right: 4%;
+      }
+
+      .nav-links {
+        gap: 13px;
+      }
+
+      .policy-layout {
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 23px;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .contact-banner {
+        margin-left: 24px;
+        margin-right: 24px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .navbar {
+        min-height: 70px;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-size: 25px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        order: 3;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding-top: 10px;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 11px 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .hero {
+        padding: 40px 18px 48px;
+      }
+
+      .policy-layout {
+        grid-template-columns: 1fr;
+        padding: 0 17px 55px;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .sidebar-card {
+        padding: 17px;
+      }
+
+      .sidebar-card h3 {
+        margin-bottom: 10px;
+      }
+
+      .toc-link {
+        display: inline-block;
+        margin: 3px 3px 3px 0;
+        padding: 8px 9px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+      }
+
+      .toc-link:hover,
+      .toc-link.active {
+        border-color: var(--gold);
+      }
+
+      .sidebar-note {
+        display: none;
+      }
+
+      .intro-card,
+      .policy-section {
+        padding: 21px 18px;
+      }
+
+      .policy-section h2 {
+        font-size: 21px;
+      }
+
+      .contact-banner {
+        margin: 0 17px 55px;
+        padding: 25px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer {
+        padding: 40px 6% 20px;
+      }
+
+      .footer-grid {
+        gap: 27px 20px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .announcement {
+        font-size: 10px;
+      }
+
+      .nav-actions {
+        gap: 12px;
+      }
+
+      .nav-actions .nav-icon:first-child {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="announcement">
+    Make every moment special — <span>Thoughtful gifts, made personal.</span>
+  </div>
+
+  <header class="navbar">
+    <a href="home.html" class="logo">MakeIt<span>Mine.</span></a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="home.html">Home</a>
+      <a href="shop.html">Shop All</a>
+      <a href="categories.html">Categories</a>
+      <a href="customize.html">Personalise</a>
+      <a href="about.html">Our Story</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">♡</a>
+      <a href="cart.html" class="nav-icon" aria-label="Shopping cart">
+        🛍 <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <a href="profile.html" class="nav-icon" aria-label="Profile">♙</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+    </div>
+  </header>
+
+  <div class="breadcrumb">
+    <a href="home.html">Home</a> &nbsp; / &nbsp; Privacy Policy
+  </div>
+
+  <section class="hero">
+    <span class="eyebrow">Your privacy matters</span>
+    <h1>Privacy <span>Policy</span></h1>
+    <p>
+      We believe personal gifting should feel special and personal information
+      should be treated responsibly. Learn how this store may collect, use
+      and protect your information.
+    </p>
+    <div class="last-updated">
+      Last updated: <strong id="lastUpdated"></strong>
+    </div>
+  </section>
+
+  <main class="policy-layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>On This Page</h3>
+
+        <a class="toc-link active" href="#introduction">Introduction</a>
+        <a class="toc-link" href="#information">Information We Collect</a>
+        <a class="toc-link" href="#usage">How We Use Information</a>
+        <a class="toc-link" href="#sharing">Sharing Information</a>
+        <a class="toc-link" href="#cookies">Cookies & Storage</a>
+        <a class="toc-link" href="#security">Data Security</a>
+        <a class="toc-link" href="#retention">Data Retention</a>
+        <a class="toc-link" href="#rights">Your Privacy Choices</a>
+        <a class="toc-link" href="#children">Children's Privacy</a>
+        <a class="toc-link" href="#third-party">Third-Party Links</a>
+        <a class="toc-link" href="#changes">Policy Updates</a>
+        <a class="toc-link" href="#contact">Contact Us</a>
+      </div>
+
+      <div class="sidebar-note">
+        <div class="icon">♡</div>
+        <h3>Questions about privacy?</h3>
+        <p>Reach out to us if you have questions about personal information or your privacy choices.</p>
+        <a href="contact.html">Contact Support →</a>
+      </div>
+    </aside>
+
+    <div class="policy-content">
+
+      <section class="intro-card" id="introduction">
+        <h2>A little transparency goes a long way.</h2>
+        <p>
+          This page describes the intended privacy practices for the MakeItMine
+          storefront. The actual practices must match the services, databases,
+          analytics tools, payment providers and other technologies used by the
+          live website. Replace any incomplete details before publishing.
+        </p>
+      </section>
+
+      <section class="policy-section" id="information">
+        <h2><span class="section-number">01</span> Information We Collect</h2>
+        <p>
+          Depending on how the website is implemented and which features you use,
+          information may be collected when you browse products, create an account,
+          customise a gift, place an order or contact customer support.
+        </p>
+        <ul>
+          <li><strong>Contact details:</strong> name, email address, telephone number and delivery address supplied by you.</li>
+          <li><strong>Order information:</strong> purchased items, quantities, order status, delivery details and gift messages.</li>
+          <li><strong>Personalisation content:</strong> names, photographs, text or other material you choose to provide for a customised product.</li>
+          <li><strong>Account information:</strong> profile details and authentication-related information, if account functionality is enabled.</li>
+          <li><strong>Technical information:</strong> device, browser and basic usage information, where collected by the website or its service providers.</li>
+          <li><strong>Support communications:</strong> messages and information you choose to share when requesting help.</li>
+        </ul>
+        <p>
+          Payment information may be processed by a payment provider if a live
+          payment gateway is integrated. The store should not collect or store
+          full card credentials unless it has the appropriate compliant systems.
+        </p>
+      </section>
+
+      <section class="policy-section" id="usage">
+        <h2><span class="section-number">02</span> How We Use Information</h2>
+        <p>Information may be used for legitimate, disclosed purposes such as:</p>
+        <ul>
+          <li>Processing orders and delivering purchased products.</li>
+          <li>Preparing personalised gifts according to the instructions you provide.</li>
+          <li>Sending order confirmations and necessary service updates.</li>
+          <li>Responding to customer service questions and resolving order issues.</li>
+          <li>Maintaining account, cart and wishlist features where available.</li>
+          <li>Protecting the store against fraud, abuse and unauthorised activity.</li>
+          <li>Meeting applicable legal, tax and recordkeeping obligations.</li>
+          <li>Improving the website and its shopping experience where permitted.</li>
+        </ul>
+        <p>
+          Marketing communications should be sent only in accordance with
+          applicable requirements and your preferences. Where required, we will
+          request consent and provide a way to opt out.
+        </p>
+      </section>
+
+      <section class="policy-section" id="sharing">
+        <h2><span class="section-number">03</span> Sharing Information</h2>
+        <p>
+          Personal information should be shared only when necessary for disclosed
+          purposes, with appropriate safeguards and a valid legal basis.
+        </p>
+        <ul>
+          <li><strong>Delivery partners:</strong> to transport your order to the address you provide.</li>
+          <li><strong>Payment providers:</strong> to process and verify payments when online payments are enabled.</li>
+          <li><strong>Technology providers:</strong> to host, maintain and secure the website or provide configured services.</li>
+          <li><strong>Professional advisers:</strong> where reasonably necessary for legal, accounting or compliance support.</li>
+          <li><strong>Legal authorities:</strong> where disclosure is required by applicable law or a valid legal process.</li>
+        </ul>
+        <p>
+          This policy does not authorise selling personal information. Any sharing
+          that actually occurs must be accurately described here, including the
+          providers and purposes relevant to the live implementation.
+        </p>
+      </section>
+
+      <section class="policy-section" id="cookies">
+        <h2><span class="section-number">04</span> Cookies & Browser Storage</h2>
+        <p>
+          Websites may use cookies or similar technologies to support essential
+          functions, remember preferences, understand usage or enable third-party
+          services. The technologies used depend on the final implementation.
+        </p>
+        <p>
+          This frontend demo may use browser local storage for items such as cart,
+          wishlist or locally saved order information. Browser storage is not the
+          same as a secure, server-side customer database and may not synchronise
+          across devices.
+        </p>
+        <div class="highlight">
+          Do not store passwords, payment credentials or other highly sensitive
+          information in plain text in browser storage.
+        </div>
+        <p>
+          If analytics, advertising or non-essential cookies are added, disclose
+          them accurately and provide any consent controls required by applicable law.
+        </p>
+      </section>
+
+      <section class="policy-section" id="security">
+        <h2><span class="section-number">05</span> Data Security</h2>
+        <p>
+          Appropriate technical and organisational safeguards should be used to
+          reduce the risk of unauthorised access, loss, alteration or disclosure
+          of personal information.
+        </p>
+        <p>
+          Depending on the deployment, safeguards may include HTTPS, restricted
+          staff access, secure authentication, server-side validation, protected
+          secrets, backups and security monitoring.
+        </p>
+        <p>
+          No website or electronic storage system can be guaranteed completely
+          secure. The store should maintain an incident response process and
+          handle any applicable reporting obligations.
+        </p>
+      </section>
+
+      <section class="policy-section" id="retention">
+        <h2><span class="section-number">06</span> How Long We Keep Information</h2>
+        <p>
+          Information should be retained only for as long as necessary for the
+          purpose for which it was collected, subject to applicable legal,
+          accounting, dispute-resolution and security requirements.
+        </p>
+        <p>
+          Retention periods may differ for orders, invoices, support messages,
+          account details and customisation files. A final policy should describe
+          the actual retention approach and how information is securely deleted
+          or anonymised when it is no longer required.
+        </p>
+      </section>
+
+      <section class="policy-section" id="rights">
+        <h2><span class="section-number">07</span> Your Privacy Choices</h2>
+        <p>
+          Depending on applicable law, the circumstances of processing and
+          available verification procedures, you may have rights or choices
+          concerning your personal information.
+        </p>
+        <ul>
+          <li>Request access to certain personal information.</li>
+          <li>Ask for correction of inaccurate or incomplete information.</li>
+          <li>Request deletion where applicable legal requirements permit it.</li>
+          <li>Withdraw consent where processing relies on consent.</li>
+          <li>Opt out of marketing communications.</li>
+          <li>Raise a privacy concern or submit a grievance through the designated channel.</li>
+        </ul>
+        <p>
+          To make a request, contact us using the details on our
+          <a href="contact.html">Contact Us</a> page. We may need to verify your
+          identity before acting on a request. Some records may need to be retained
+          where the law requires it.
+        </p>
+        <div class="highlight">
+          The exact rights, response timelines and complaint procedure must be
+          checked against the laws applicable to the business and its users.
+        </div>
+      </section>
+
+      <section class="policy-section" id="children">
+        <h2><span class="section-number">08</span> Children's Privacy</h2>
+        <p>
+          The store is not intended to knowingly collect personal information
+          from children in circumstances where such collection is not permitted.
+          Where applicable, age-related requirements and parental or guardian
+          permissions must be followed.
+        </p>
+        <p>
+          If you believe that information has been collected inappropriately,
+          contact us so the matter can be reviewed and handled in accordance
+          with applicable law.
+        </p>
+      </section>
+
+      <section class="policy-section" id="third-party">
+        <h2><span class="section-number">09</span> Third-Party Links & Services</h2>
+        <p>
+          The website may link to third-party websites or use external services
+          such as payment gateways, delivery tracking, fonts or customer support
+          tools. Those providers may have their own privacy policies and practices.
+        </p>
+        <p>
+          Review the relevant provider's privacy information before using its
+          services. Third-party links should not be treated as an endorsement
+          or as a guarantee of their privacy practices.
+        </p>
+      </section>
+
+      <section class="policy-section" id="changes">
+        <h2><span class="section-number">10</span> Changes to This Policy</h2>
+        <p>
+          This policy may be updated to reflect changes in the website, its
+          services, business practices or applicable legal requirements.
+        </p>
+        <p>
+          When changes are made, the revised policy should be published on this
+          page with an updated revision date. Where legally required, significant
+          changes should be communicated through an appropriate notice or consent
+          process.
+        </p>
+      </section>
+
+      <section class="policy-section" id="contact">
+        <h2><span class="section-number">11</span> Contact Us</h2>
+        <p>
+          If you have questions about this policy, your personal information or
+          a privacy-related request, contact the store using the details published
+          on the <a href="contact.html">Contact Us</a> page.
+        </p>
+        <p>
+          Before publishing this page, the store owner should add a monitored
+          privacy contact email and, where applicable, the identity and contact
+          details of the responsible business or designated grievance contact.
+        </p>
+        <div class="highlight">
+          Important: this page is a development template, not legal advice.
+          Replace generic descriptions with verified details about your actual
+          business, data practices, vendors, retention periods and legal obligations.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <section class="contact-banner">
+    <div>
+      <h2>Your trust means everything.</h2>
+      <p>Have a question about how your information is handled? Get in touch with us.</p>
+    </div>
+    <a href="contact.html" class="primary-btn">Contact Support →</a>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="home.html" class="logo">MakeIt<span>Mine.</span></a>
+        <p>
+          Thoughtful gifts, made personal. Discover meaningful surprises
+          for birthdays, anniversaries and life's little celebrations.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="shop.html">Shop All</a>
+        <a href="categories.html">Categories</a>
+        <a href="customize.html">Personalise a Gift</a>
+        <a href="about.html">Our Story</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Customer Care</h4>
+        <a href="contact.html">Contact Us</a>
+        <a href="faq.html">FAQs</a>
+        <a href="order-tracking.html">Track Order</a>
+        <a href="refund-return.html">Returns & Refunds</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Information</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="profile.html">My Account</a>
+        <a href="cart.html">Shopping Cart</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> MakeItMine. All rights reserved.</p>
+      <p>Made with ♡ for every special moment.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("lastUpdated").textContent =
+      new Intl.DateTimeFormat("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(new Date());
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    document.getElementById("menuToggle").addEventListener("click", () => {
+      document.getElementById("navLinks").classList.toggle("show");
+    });
+
+    function updateCartCount() {
+      try {
+        const cart = JSON.parse(localStorage.getItem("mim_cart") || "[]");
+        const count = cart.reduce((total, item) => {
+          return total + Math.max(0, Number(item.quantity) || 1);
+        }, 0);
+
+        document.getElementById("cartCount").textContent = count;
+      } catch (error) {
+        document.getElementById("cartCount").textContent = "0";
+      }
+    }
+
+    updateCartCount();
+
+    const tocLinks = [...document.querySelectorAll(".toc-link")];
+    const sections = tocLinks
+      .map(link => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        tocLinks.forEach(link => {
+          link.classList.toggle(
+            "active",
+            link.getAttribute("href") === "#" + entry.target.id
+          );
+        });
+      });
+    }, {
+      rootMargin: "-110px 0px -65% 0px",
+      threshold: 0
+    });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+ <script type="module" src="js/app.js"></script>
+</body>
+</html>

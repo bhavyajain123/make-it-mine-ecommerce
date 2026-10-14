@@ -1,0 +1,2649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fbf7f0">
+  <title>My Profile | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+ 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+ 
+  <style>
+    :root {
+      --cream: #fbf7f0;
+      --white: #fffdf9;
+      --wine: #681d32;
+      --wine-dark: #481323;
+      --gold: #c69b55;
+      --text: #302521;
+      --muted: #897970;
+      --border: #e9dfd4;
+      --green: #39764e;
+      --soft-pink: #f4e8e8;
+      --shadow: 0 12px 35px rgba(65, 34, 27, .06);
+    }
+ 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+ 
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+ 
+    button, input, select, textarea {
+      font: inherit;
+    }
+ 
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+ 
+    button {
+      cursor: pointer;
+    }
+ 
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+ 
+    .announcement {
+      background: var(--wine-dark);
+      color: #fff8ed;
+      text-align: center;
+      padding: 9px 15px;
+      font-size: 10px;
+      letter-spacing: 1.2px;
+    }
+ 
+    .announcement span {
+      color: #e7c88e;
+      font-weight: 700;
+    }
+ 
+    .navbar {
+      height: 76px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+ 
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--wine);
+      white-space: nowrap;
+    }
+ 
+    .brand span {
+      color: var(--gold);
+    }
+ 
+    .nav-links {
+      display: flex;
+      gap: 27px;
+      align-items: center;
+      font-size: 12px;
+      color: #5c4b43;
+    }
+ 
+    .nav-links a:hover {
+      color: var(--wine);
+    }
+ 
+    .nav-actions {
+      display: flex;
+      gap: 17px;
+      align-items: center;
+    }
+ 
+    .nav-icon {
+      font-size: 20px;
+      color: var(--wine);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+ 
+    .count {
+      background: var(--wine);
+      color: white;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+ 
+    .menu-toggle {
+      display: none;
+      border: 0;
+      background: transparent;
+      color: var(--wine);
+      font-size: 23px;
+    }
+ 
+    .breadcrumb {
+      padding: 24px 7% 15px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+ 
+    .breadcrumb span {
+      margin: 0 9px;
+      color: #b5a59b;
+    }
+ 
+    .page-heading {
+      padding: 12px 7% 29px;
+    }
+ 
+    .eyebrow {
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+ 
+    .page-heading h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      font-size: clamp(32px, 4vw, 43px);
+      color: var(--wine-dark);
+      line-height: 1.2;
+    }
+ 
+    .page-heading p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 9px;
+    }
+ 
+    .layout {
+      max-width: 1350px;
+      padding: 0 7% 75px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 265px minmax(0, 1fr);
+      gap: 27px;
+      align-items: start;
+    }
+ 
+    /* SIDEBAR */
+ 
+    .sidebar {
+      background: var(--white);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+ 
+    .user-card {
+      padding: 27px 20px 24px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .avatar-wrap {
+      width: 86px;
+      height: 86px;
+      position: relative;
+      margin: 0 auto 13px;
+    }
+ 
+    .avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: var(--soft-pink);
+      border: 3px solid #e8d5bd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--wine);
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-weight: 600;
+      overflow: hidden;
+    }
+ 
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+ 
+    .avatar-edit {
+      position: absolute;
+      bottom: 0;
+      right: -3px;
+      background: var(--wine);
+      color: white;
+      border: 2px solid var(--white);
+      border-radius: 50%;
+      width: 29px;
+      height: 29px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      cursor: pointer;
+    }
+ 
+    #avatarUpload {
+      display: none;
+    }
+ 
+    .user-card h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--wine-dark);
+      font-size: 21px;
+      font-weight: 500;
+      overflow-wrap: anywhere;
+    }
+ 
+    .user-card p {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+      overflow-wrap: anywhere;
+    }
+ 
+    .member-badge {
+      display: inline-block;
+      margin-top: 12px;
+      background: #f6eddf;
+      color: #946c32;
+      padding: 5px 10px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+ 
+    .sidebar-nav {
+      padding: 13px 0;
+    }
+ 
+    .side-link {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 21px;
+      text-align: left;
+      font-size: 12px;
+      color: #6e5d55;
+      border-left: 3px solid transparent;
+    }
+ 
+    .side-link .side-icon {
+      font-size: 18px;
+      width: 22px;
+      text-align: center;
+    }
+ 
+    .side-link:hover,
+    .side-link.active {
+      background: #f8f0e8;
+      color: var(--wine);
+      border-left-color: var(--wine);
+      font-weight: 700;
+    }
+ 
+    .side-link .side-count {
+      margin-left: auto;
+      background: #f2e6e5;
+      color: var(--wine);
+      border-radius: 20px;
+      padding: 2px 7px;
+      font-size: 10px;
+    }
+ 
+    .sidebar-bottom {
+      border-top: 1px solid var(--border);
+      padding: 14px 0;
+    }
+ 
+    .side-link.logout {
+      color: #a33b44;
+    }
+ 
+    /* MAIN CONTENT */
+ 
+    .main-content {
+      min-width: 0;
+    }
+ 
+    .welcome-banner {
+      background: var(--wine);
+      color: white;
+      padding: 28px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+ 
+    .welcome-banner::after {
+      content: "✧";
+      position: absolute;
+      right: 155px;
+      top: -44px;
+      font-size: 180px;
+      color: rgba(255,255,255,.07);
+      pointer-events: none;
+    }
+ 
+    .welcome-banner .welcome-label {
+      color: #e7c88e;
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+ 
+    .welcome-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+ 
+    .welcome-banner p {
+      color: #e9d8d5;
+      font-size: 11px;
+      margin-top: 7px;
+    }
+ 
+    .banner-button {
+      border: 1px solid #d7b77f;
+      background: transparent;
+      color: white;
+      padding: 11px 16px;
+      font-size: 10px;
+      letter-spacing: .5px;
+      white-space: nowrap;
+      position: relative;
+      z-index: 1;
+    }
+ 
+    .banner-button:hover {
+      background: white;
+      color: var(--wine);
+    }
+ 
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin-bottom: 23px;
+    }
+ 
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 20px;
+      min-width: 0;
+    }
+ 
+    .stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+ 
+    .stat-icon {
+      background: #f6ece5;
+      color: var(--wine);
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+    }
+ 
+    .stat-label {
+      color: var(--muted);
+      font-size: 10px;
+    }
+ 
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 29px;
+      color: var(--wine-dark);
+      line-height: 1.3;
+    }
+ 
+    .stat-note {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+ 
+    .content-panel {
+      display: none;
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 27px;
+      margin-bottom: 22px;
+      min-width: 0;
+    }
+ 
+    .content-panel.active {
+      display: block;
+      animation: fadeIn .2s ease;
+    }
+ 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+ 
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+ 
+    .panel-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--wine-dark);
+      font-size: 25px;
+      font-weight: 500;
+    }
+ 
+    .panel-header p {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 5px;
+    }
+ 
+    .button {
+      border: 1px solid var(--wine);
+      padding: 10px 15px;
+      background: var(--wine);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+    }
+ 
+    .button:hover {
+      background: var(--wine-dark);
+    }
+ 
+    .button.secondary {
+      background: transparent;
+      color: var(--wine);
+    }
+ 
+    .button.secondary:hover {
+      background: #f8f0e8;
+    }
+ 
+    .button.danger {
+      background: transparent;
+      color: #a33b44;
+      border-color: #dfc0c0;
+    }
+ 
+    .button.danger:hover {
+      background: #fff0f0;
+    }
+ 
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 19px 17px;
+    }
+ 
+    .form-field {
+      min-width: 0;
+    }
+ 
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+ 
+    .form-field label {
+      display: block;
+      color: #625149;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+ 
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fffefa;
+      padding: 12px 13px;
+      outline: none;
+      border-radius: 0;
+      color: var(--text);
+      font-size: 12px;
+      min-width: 0;
+    }
+ 
+    .form-field textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+ 
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--wine);
+    }
+ 
+    .form-field input:disabled {
+      background: #f4eee7;
+      color: #95867d;
+      cursor: not-allowed;
+    }
+ 
+    .form-hint {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 5px;
+    }
+ 
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+ 
+    .hidden {
+      display: none !important;
+    }
+ 
+    /* ORDER HISTORY */
+ 
+    .order-list {
+      display: grid;
+      gap: 14px;
+    }
+ 
+    .order-card {
+      border: 1px solid var(--border);
+      padding: 18px;
+      min-width: 0;
+    }
+ 
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f0e8df;
+    }
+ 
+    .order-id {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--wine);
+      overflow-wrap: anywhere;
+    }
+ 
+    .order-date {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 4px;
+    }
+ 
+    .status {
+      display: inline-block;
+      padding: 5px 9px;
+      font-size: 9px;
+      font-weight: 700;
+      background: #e8f3e8;
+      color: var(--green);
+      white-space: nowrap;
+    }
+ 
+    .status.pending {
+      background: #f8efd9;
+      color: #936b2e;
+    }
+ 
+    .status.cancelled {
+      background: #f7e6e5;
+      color: #a33b44;
+    }
+ 
+    .order-bottom {
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+ 
+    .order-items {
+      font-size: 11px;
+      color: #74645c;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+ 
+    .order-total {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--wine);
+      white-space: nowrap;
+    }
+ 
+    .order-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+ 
+    .empty-state {
+      text-align: center;
+      padding: 35px 15px;
+    }
+ 
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+ 
+    .empty-state h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 23px;
+      color: var(--wine-dark);
+      font-weight: 500;
+    }
+ 
+    .empty-state p {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 8px 0 18px;
+    }
+ 
+    /* ADDRESS */
+ 
+    .address-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+ 
+    .address-card {
+      border: 1px solid var(--border);
+      padding: 19px;
+      min-width: 0;
+    }
+ 
+    .address-card.default {
+      border-color: var(--gold);
+      background: #fffaf0;
+    }
+ 
+    .address-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 13px;
+    }
+ 
+    .address-type {
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--wine);
+    }
+ 
+    .default-badge {
+      font-size: 8px;
+      background: #f2e6cf;
+      color: #89642f;
+      padding: 4px 7px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+ 
+    .address-card p {
+      font-size: 11px;
+      color: #77665d;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+    }
+ 
+    .address-card strong {
+      color: var(--text);
+    }
+ 
+    .address-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+ 
+    /* WISHLIST */
+ 
+    .wishlist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+ 
+    .wishlist-card {
+      border: 1px solid var(--border);
+      min-width: 0;
+      overflow: hidden;
+    }
+ 
+    .wishlist-image {
+      position: relative;
+      background: #f3e7da;
+      aspect-ratio: 1 / 1;
+    }
+ 
+    .wishlist-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+ 
+    .remove-wishlist {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      width: 29px;
+      height: 29px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--wine);
+      font-size: 16px;
+    }
+ 
+    .wishlist-info {
+      padding: 12px;
+    }
+ 
+    .wishlist-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      line-height: 1.4;
+      color: var(--wine-dark);
+      overflow-wrap: anywhere;
+    }
+ 
+    .wishlist-price {
+      color: var(--wine);
+      font-size: 13px;
+      font-weight: 700;
+      margin: 7px 0 11px;
+    }
+ 
+    .wishlist-info .button {
+      width: 100%;
+      padding: 9px 5px;
+      font-size: 9px;
+    }
+ 
+    /* SETTINGS */
+ 
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 19px 0;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .setting-row:first-child {
+      padding-top: 0;
+    }
+ 
+    .setting-row:last-child {
+      border-bottom: 0;
+    }
+ 
+    .setting-row h3 {
+      font-size: 12px;
+      color: var(--text);
+    }
+ 
+    .setting-row p {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.7;
+    }
+ 
+    .switch {
+      width: 43px;
+      height: 24px;
+      position: relative;
+      flex-shrink: 0;
+    }
+ 
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+ 
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      background: #d9cec4;
+      border-radius: 30px;
+      transition: .2s;
+      cursor: pointer;
+    }
+ 
+    .switch-track::before {
+      content: "";
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      top: 3px;
+      border-radius: 50%;
+      background: white;
+      transition: .2s;
+    }
+ 
+    .switch input:checked + .switch-track {
+      background: var(--wine);
+    }
+ 
+    .switch input:checked + .switch-track::before {
+      transform: translateX(19px);
+    }
+ 
+    .privacy-note {
+      background: #f8f0e8;
+      border-left: 3px solid var(--gold);
+      padding: 14px;
+      color: #6f5a4e;
+      font-size: 10px;
+      line-height: 1.8;
+      margin-top: 20px;
+    }
+ 
+    /* FOOTER */
+ 
+    footer {
+      background: var(--wine-dark);
+      color: #f9eee3;
+      padding: 42px 7% 20px;
+    }
+ 
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 35px;
+      padding-bottom: 32px;
+    }
+ 
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 27px;
+      margin-bottom: 10px;
+    }
+ 
+    .footer-brand span {
+      color: var(--gold);
+    }
+ 
+    .footer-description {
+      color: #d4c0b7;
+      font-size: 11px;
+      max-width: 270px;
+      line-height: 1.9;
+    }
+ 
+    .footer-column h4 {
+      color: #e4c48d;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      margin-bottom: 13px;
+    }
+ 
+    .footer-column a {
+      display: block;
+      color: #d4c0b7;
+      font-size: 11px;
+      margin-bottom: 9px;
+    }
+ 
+    .footer-column a:hover {
+      color: white;
+    }
+ 
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.15);
+      padding-top: 17px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: #cbb7ae;
+      font-size: 10px;
+    }
+ 
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 100;
+      max-width: calc(100% - 44px);
+      background: var(--wine-dark);
+      color: white;
+      padding: 14px 20px;
+      font-size: 11px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(80px);
+      transition: .3s;
+    }
+ 
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+ 
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(32, 17, 19, .55);
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+ 
+    .modal-overlay.show {
+      display: flex;
+    }
+ 
+    .modal {
+      background: var(--white);
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 27px;
+      box-shadow: var(--shadow);
+    }
+ 
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+ 
+    .modal-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--wine);
+    }
+ 
+    .modal-close {
+      border: 0;
+      background: transparent;
+      color: var(--wine);
+      font-size: 24px;
+    }
+ 
+    @media (max-width: 1050px) {
+      .navbar {
+        padding: 0 4%;
+      }
+ 
+      .nav-links {
+        gap: 14px;
+      }
+ 
+      .layout {
+        padding: 0 4% 60px;
+        grid-template-columns: 235px minmax(0, 1fr);
+        gap: 18px;
+      }
+ 
+      .page-heading,
+      .breadcrumb {
+        padding-left: 4%;
+        padding-right: 4%;
+      }
+ 
+      .content-panel {
+        padding: 21px;
+      }
+ 
+      .footer-main {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+ 
+    @media (max-width: 760px) {
+      .navbar {
+        height: 66px;
+      }
+ 
+      .brand {
+        font-size: 24px;
+      }
+ 
+      .menu-toggle {
+        display: block;
+      }
+ 
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        padding: 20px 6%;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+      }
+ 
+      .nav-links.open {
+        display: flex;
+      }
+ 
+      .nav-actions {
+        gap: 11px;
+      }
+ 
+      .layout {
+        grid-template-columns: 1fr;
+      }
+ 
+      .sidebar {
+        display: grid;
+        grid-template-columns: 170px minmax(0, 1fr);
+      }
+ 
+      .user-card {
+        border-bottom: 0;
+        border-right: 1px solid var(--border);
+        padding: 20px 12px;
+      }
+ 
+      .avatar,
+      .avatar-wrap {
+        width: 65px;
+        height: 65px;
+      }
+ 
+      .user-card h2 {
+        font-size: 17px;
+      }
+ 
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+ 
+      .side-link {
+        padding: 9px 12px;
+        gap: 8px;
+        font-size: 11px;
+      }
+ 
+      .side-link .side-icon {
+        font-size: 15px;
+        width: 18px;
+      }
+ 
+      .sidebar-bottom {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--border);
+      }
+ 
+      .sidebar-bottom .side-link {
+        padding-left: 20px;
+      }
+ 
+      .welcome-banner {
+        padding: 23px 20px;
+      }
+ 
+      .welcome-banner h2 {
+        font-size: 23px;
+      }
+ 
+      .banner-button {
+        padding: 10px;
+        font-size: 9px;
+      }
+ 
+      .stats-grid {
+        gap: 10px;
+      }
+ 
+      .stat-card {
+        padding: 13px;
+      }
+ 
+      .stat-number {
+        font-size: 24px;
+      }
+ 
+      .stat-label {
+        font-size: 9px;
+      }
+ 
+      .stat-icon {
+        width: 31px;
+        height: 31px;
+        font-size: 16px;
+      }
+ 
+      .wishlist-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+ 
+      footer {
+        padding: 35px 5% 20px;
+      }
+    }
+ 
+    @media (max-width: 480px) {
+      .announcement {
+        font-size: 8px;
+        letter-spacing: .6px;
+      }
+ 
+      .layout {
+        padding: 0 4% 45px;
+      }
+ 
+      .sidebar {
+        grid-template-columns: 1fr;
+      }
+ 
+      .user-card {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+ 
+      .sidebar-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2px;
+      }
+ 
+      .side-link {
+        padding: 11px 9px;
+      }
+ 
+      .side-link .side-count {
+        display: none;
+      }
+ 
+      .welcome-banner {
+        display: block;
+      }
+ 
+      .welcome-banner h2 {
+        font-size: 24px;
+      }
+ 
+      .banner-button {
+        margin-top: 17px;
+      }
+ 
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+ 
+      .stat-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+ 
+      .stat-top {
+        margin-bottom: 0;
+      }
+ 
+      .stat-number {
+        font-size: 23px;
+      }
+ 
+      .stat-info {
+        flex: 1;
+      }
+ 
+      .content-panel {
+        padding: 17px 13px;
+      }
+ 
+      .panel-header {
+        flex-direction: column;
+      }
+ 
+      .panel-header h2 {
+        font-size: 23px;
+      }
+ 
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+ 
+      .form-field.full {
+        grid-column: auto;
+      }
+ 
+      .address-grid {
+        grid-template-columns: 1fr;
+      }
+ 
+      .order-top {
+        flex-direction: column;
+        gap: 10px;
+      }
+ 
+      .order-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+      }
+ 
+      .wishlist-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+ 
+      .setting-row {
+        align-items: flex-start;
+      }
+ 
+      .footer-main {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px 15px;
+      }
+    }
+  </style>
+</head>
+ 
+<body>
+ 
+  <div class="announcement">
+    MAKE EVERY MOMENT SPECIAL — <span>FREE SHIPPING ON ORDERS ABOVE ₹999</span>
+  </div>
+ 
+  <header class="navbar">
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
+ 
+    <a href="home.html" class="brand">MakeIt<span>Mine</span>.</a>
+ 
+    <nav class="nav-links" id="navLinks">
+      <a href="home.html">Home</a>
+      <a href="categories.html">Shop All</a>
+      <a href="categories.html?category=personalized">Personalized Gifts</a>
+      <a href="about.html">Our Story</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+ 
+    <div class="nav-actions">
+      <a href="cart.html" class="nav-icon" aria-label="Wishlist">♡ <span class="count" id="wishlistCount">0</span></a>
+      <a href="cart.html" class="nav-icon" aria-label="Shopping cart">♧ <span class="count" id="cartCount">0</span></a>
+    </div>
+  </header>
+ 
+  <div class="breadcrumb">
+    <a href="home.html">Home</a><span>/</span><span>My Account</span>
+  </div>
+ 
+  <section class="page-heading">
+    <div class="eyebrow">Your Little Corner</div>
+    <h1>My Account</h1>
+    <p>Manage your details, keep track of your gifts and make every order yours.</p>
+  </section>
+ 
+  <main class="layout">
+ 
+    <aside class="sidebar">
+      <div class="user-card">
+        <div class="avatar-wrap">
+          <div class="avatar" id="avatar">G</div>
+          <label for="avatarUpload" class="avatar-edit" title="Change profile photo">✎</label>
+          <input type="file" id="avatarUpload" accept="image/*">
+        </div>
+ 
+        <h2 id="sidebarName">Guest User</h2>
+        <p id="sidebarEmail">Sign in to your account</p>
+        <span class="member-badge">♡ Gift Lover</span>
+      </div>
+ 
+      <nav class="sidebar-nav" aria-label="Profile navigation">
+        <button class="side-link active" data-panel="overview">
+          <span class="side-icon">⌂</span> Overview
+        </button>
+        <button class="side-link" data-panel="personal">
+          <span class="side-icon">♙</span> Personal Information
+        </button>
+        <button class="side-link" data-panel="orders">
+          <span class="side-icon">▤</span> My Orders
+          <span class="side-count" id="ordersSideCount">0</span>
+        </button>
+        <button class="side-link" data-panel="addresses">
+          <span class="side-icon">⌖</span> Saved Addresses
+        </button>
+        <button class="side-link" data-panel="wishlist">
+          <span class="side-icon">♡</span> My Wishlist
+          <span class="side-count" id="wishlistSideCount">0</span>
+        </button>
+        <button class="side-link" data-panel="settings">
+          <span class="side-icon">⚙</span> Account Settings
+        </button>
+      </nav>
+ 
+      <div class="sidebar-bottom">
+        <button class="side-link logout" id="logoutButton">
+          <span class="side-icon">⇥</span> Sign Out
+        </button>
+      </div>
+    </aside>
+ 
+    <div class="main-content">
+ 
+      <section class="welcome-banner">
+        <div>
+          <div class="welcome-label">Welcome to your space</div>
+          <h2 id="welcomeName">Hello, Gift Lover! ♡</h2>
+          <p>Your favourite gifts and special moments, all in one place.</p>
+        </div>
+        <button class="banner-button" id="shopNowButton">EXPLORE GIFTS →</button>
+      </section>
+ 
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon">▤</div>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">TOTAL ORDERS</div>
+            <div class="stat-number" id="ordersStat">0</div>
+            <div class="stat-note">Your gifting journey</div>
+          </div>
+        </div>
+ 
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon">♡</div>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">WISHLIST ITEMS</div>
+            <div class="stat-number" id="wishlistStat">0</div>
+            <div class="stat-note">Gifts you have saved</div>
+          </div>
+        </div>
+ 
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon">₹</div>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">TOTAL SPENT</div>
+            <div class="stat-number" id="spentStat">₹0</div>
+            <div class="stat-note">Based on saved orders</div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- OVERVIEW -->
+      <section class="content-panel active" id="panel-overview">
+        <div class="panel-header">
+          <div>
+            <h2>Account Overview</h2>
+            <p>A quick look at your MakeItMine account.</p>
+          </div>
+          <button class="button secondary" data-open-panel="personal">Edit Profile ✎</button>
+        </div>
+ 
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Full Name</label>
+            <input id="overviewName" disabled value="Guest User">
+          </div>
+          <div class="form-field">
+            <label>Email Address</label>
+            <input id="overviewEmail" disabled value="">
+          </div>
+          <div class="form-field">
+            <label>Phone Number</label>
+            <input id="overviewPhone" disabled value="">
+          </div>
+          <div class="form-field">
+            <label>Birthday</label>
+            <input id="overviewBirthday" disabled value="">
+          </div>
+        </div>
+ 
+        <div style="margin-top:28px">
+          <div class="panel-header">
+            <div>
+              <h2>Recent Orders</h2>
+              <p>Your latest gifting adventures.</p>
+            </div>
+            <button class="button secondary" data-open-panel="orders">View All</button>
+          </div>
+          <div id="recentOrders" class="order-list"></div>
+        </div>
+      </section>
+ 
+      <!-- PERSONAL INFORMATION -->
+      <section class="content-panel" id="panel-personal">
+        <div class="panel-header">
+          <div>
+            <h2>Personal Information</h2>
+            <p>Keep your contact details up to date.</p>
+          </div>
+        </div>
+ 
+        <form id="profileForm">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="fullName">Full Name *</label>
+              <input type="text" id="fullName" maxlength="80" required placeholder="Enter your full name">
+            </div>
+ 
+            <div class="form-field">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="you@example.com">
+              <span class="form-hint">Update this only if your account system supports email changes.</span>
+            </div>
+ 
+            <div class="form-field">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" maxlength="16" placeholder="+91 98765 43210">
+            </div>
+ 
+            <div class="form-field">
+              <label for="birthday">Date of Birth</label>
+              <input type="date" id="birthday">
+            </div>
+ 
+            <div class="form-field">
+              <label for="gender">Gender (Optional)</label>
+              <select id="gender">
+                <option value="">Prefer not to say</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Non-binary">Non-binary</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+ 
+            <div class="form-field">
+              <label for="city">City</label>
+              <input type="text" id="city" maxlength="80" placeholder="Your city">
+            </div>
+ 
+            <div class="form-field full">
+              <label for="aboutMe">A Little About You</label>
+              <textarea id="aboutMe" maxlength="300" placeholder="Tell us what makes your gifting style special..."></textarea>
+            </div>
+          </div>
+ 
+          <div class="form-actions">
+            <button type="submit" class="button">Save Changes ✓</button>
+            <button type="reset" class="button secondary" id="resetProfile">Reset Form</button>
+          </div>
+        </form>
+      </section>
+ 
+      <!-- ORDERS -->
+      <section class="content-panel" id="panel-orders">
+        <div class="panel-header">
+          <div>
+            <h2>My Orders</h2>
+            <p>All your saved orders in one place.</p>
+          </div>
+          <a href="categories.html" class="button">Shop Gifts +</a>
+        </div>
+ 
+        <div id="allOrders" class="order-list"></div>
+      </section>
+ 
+      <!-- ADDRESSES -->
+      <section class="content-panel" id="panel-addresses">
+        <div class="panel-header">
+          <div>
+            <h2>Saved Addresses</h2>
+            <p>Manage where your thoughtful gifts should go.</p>
+          </div>
+          <button class="button" id="addAddressButton">+ Add Address</button>
+        </div>
+ 
+        <div class="address-grid" id="addressGrid"></div>
+ 
+        <div class="privacy-note">
+          Your saved addresses are stored in this browser for this demo. For a real
+          multi-device account, connect the form to your backend database.
+        </div>
+      </section>
+ 
+      <!-- WISHLIST -->
+      <section class="content-panel" id="panel-wishlist">
+        <div class="panel-header">
+          <div>
+            <h2>My Wishlist ♡</h2>
+            <p>All the little things you would love to gift or receive.</p>
+          </div>
+          <a href="categories.html" class="button secondary">Discover More</a>
+        </div>
+ 
+        <div id="wishlistGrid" class="wishlist-grid"></div>
+      </section>
+ 
+      <!-- SETTINGS -->
+      <section class="content-panel" id="panel-settings">
+        <div class="panel-header">
+          <div>
+            <h2>Account Settings</h2>
+            <p>Choose how you would like to stay connected.</p>
+          </div>
+        </div>
+ 
+        <div class="setting-row">
+          <div>
+            <h3>Order Updates</h3>
+            <p>Allow preferences for order-related notifications.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="orderNotifications" checked>
+            <span class="switch-track"></span>
+          </label>
+        </div>
+ 
+        <div class="setting-row">
+          <div>
+            <h3>Offers & Gift Inspiration</h3>
+            <p>Receive preference-based offers and new collection updates.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="marketingNotifications">
+            <span class="switch-track"></span>
+          </label>
+        </div>
+ 
+        <div class="setting-row">
+          <div>
+            <h3>Remember My Details</h3>
+            <p>Keep your profile information saved in this browser.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="rememberDetails" checked>
+            <span class="switch-track"></span>
+          </label>
+        </div>
+ 
+        <div class="form-actions">
+          <button class="button" id="saveSettings">Save Preferences</button>
+        </div>
+ 
+        <div class="privacy-note">
+          <strong>Privacy matters.</strong> These settings control demo preferences stored
+          in your browser. They do not send emails or change a real notification service
+          until a backend is connected.
+        </div>
+ 
+        <div style="margin-top:28px;padding-top:22px;border-top:1px solid var(--border)">
+          <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--wine);font-weight:500">Account Actions</h2>
+          <p style="font-size:11px;color:var(--muted);margin:6px 0 17px">
+            You can clear local demo profile data from this browser. This does not delete server-side account data.
+          </p>
+          <button class="button danger" id="clearProfileButton">Clear Local Profile Data</button>
+        </div>
+      </section>
+ 
+    </div>
+  </main>
+ 
+  <footer>
+    <div class="footer-main">
+      <div>
+        <div class="footer-brand">MakeIt<span>Mine</span>.</div>
+        <p class="footer-description">
+          Thoughtful gifts, personal touches and little things that turn ordinary
+          moments into unforgettable memories.
+        </p>
+      </div>
+ 
+      <div class="footer-column">
+        <h4>Explore</h4>
+        <a href="home.html">Home</a>
+        <a href="categories.html">Shop All</a>
+        <a href="about.html">Our Story</a>
+        <a href="customize.html">Create Your Gift</a>
+        <a href="order-history.html">My Orders</a>
+      </div>
+ 
+      <div class="footer-column">
+        <h4>Your Account</h4>
+        <a href="profile.html">My Profile</a>
+        <a href="order-tracking.html">Track Order</a>
+        <a href="cart.html">Shopping Cart</a>
+        <a href="contact.html">Help & Support</a>
+        <a href="order-history.html">My Orders</a>
+      </div>
+ 
+      <div class="footer-column">
+        <h4>Get In Touch</h4>
+        <a href="contact.html">Contact Us</a>
+        <a href="mailto:hello@makeitmine.com">hello@makeitmine.com</a>
+        <a href="categories.html">Find Your Perfect Gift</a>
+      </div>
+    </div>
+ 
+    <div class="footer-bottom">
+      <span>© 2026 MakeItMine. All rights reserved.</span>
+      <span>Made with ♡ for your special moments.</span>
+    </div>
+  </footer>
+ 
+  <!-- ADDRESS MODAL -->
+  <div class="modal-overlay" id="addressModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="addressModalTitle">Add New Address</h2>
+        <button class="modal-close" id="closeAddressModal" aria-label="Close">×</button>
+      </div>
+ 
+      <form id="addressForm">
+        <input type="hidden" id="addressEditId">
+ 
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="addressType">Address Type *</label>
+            <select id="addressType" required>
+              <option value="Home">Home</option>
+              <option value="Work">Work</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+ 
+          <div class="form-field">
+            <label for="addressName">Recipient Name *</label>
+            <input id="addressName" required maxlength="80">
+          </div>
+ 
+          <div class="form-field">
+            <label for="addressPhone">Phone Number *</label>
+            <input id="addressPhone" type="tel" required maxlength="16">
+          </div>
+ 
+          <div class="form-field">
+            <label for="addressPostal">PIN Code *</label>
+            <input id="addressPostal" required maxlength="10">
+          </div>
+ 
+          <div class="form-field full">
+            <label for="addressLine">Address Line *</label>
+            <textarea id="addressLine" required maxlength="250" placeholder="House no., street, area"></textarea>
+          </div>
+ 
+          <div class="form-field">
+            <label for="addressCity">City *</label>
+            <input id="addressCity" required maxlength="80">
+          </div>
+ 
+          <div class="form-field">
+            <label for="addressState">State *</label>
+            <input id="addressState" required maxlength="80">
+          </div>
+ 
+          <div class="form-field full">
+            <label for="addressLandmark">Landmark (Optional)</label>
+            <input id="addressLandmark" maxlength="120">
+          </div>
+ 
+          <div class="form-field full">
+            <label style="display:flex;align-items:center;gap:9px">
+              <input type="checkbox" id="addressDefault" style="width:auto">
+              Set as default address
+            </label>
+          </div>
+        </div>
+ 
+        <div class="form-actions">
+          <button type="submit" class="button">Save Address</button>
+          <button type="button" class="button secondary" id="cancelAddress">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+ 
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+ 
+  <script>
+ 
+ 
+    const $ = id => document.getElementById(id);
+ 
+    let toastTimer;
+    let editingAddressId = null;
+ 
+    const defaultProfile = {
+      name: "",
+      email: "",
+      phone: "",
+      birthday: "",
+      gender: "",
+      city: "",
+      aboutMe: "",
+      photo: ""
+    };
+ 
+    const demoProducts = {
+      "gift-box": {
+        name: "The Personalised Gift Box",
+        price: 799,
+        image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=500&q=80",
+        emoji: "🎁"
+      },
+      "personalized-mug": {
+        name: "Personalised Mug",
+        price: 399,
+        image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=500&q=80",
+        emoji: "☕"
+      },
+      "memory-scrapbook": {
+        name: "Memory Scrapbook",
+        price: 599,
+        image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=500&q=80",
+        emoji: "📔"
+      },
+      "gift-hamper": {
+        name: "Celebration Hamper",
+        price: 1199,
+        image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=500&q=80",
+        emoji: "🎀"
+      },
+      "photo-frame": {
+        name: "Personalised Photo Frame",
+        price: 699,
+        image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=500&q=80",
+        emoji: "🖼️"
+      }
+    };
+ 
+    function readStorage(key, fallback) {
+      try {
+        const value = JSON.parse(localStorage.getItem(key));
+        return value ?? fallback;
+      } catch (error) {
+        return fallback;
+      }
+    }
+ 
+    function writeStorage(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch (error) {
+        showToast("Unable to save data in this browser.");
+        return false;
+      }
+    }
+ 
+    function money(value) {
+      return "₹" + Number(value || 0).toLocaleString("en-IN");
+    }
+ 
+    function showToast(message) {
+      const toast = $("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+ 
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2700);
+    }
+ 
+    function safeText(value, fallback = "") {
+      return String(value ?? fallback).trim();
+    }
+ 
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+ 
+    function getProfile() {
+      const saved = readStorage("mim_profile", {});
+      return { ...defaultProfile, ...(saved && typeof saved === "object" ? saved : {}) };
+    }
+ 
+    function getOrders() {
+      const orders = readStorage("mim_orders", []);
+      const safeOrders = Array.isArray(orders) ? [...orders] : [];
+ 
+      // Include the most recent order saved by payment.html.
+      const lastOrder = readStorage("mim_last_order", null);
+ 
+      if (lastOrder && typeof lastOrder === "object") {
+        const lastId = lastOrder.orderNumber || lastOrder.id;
+ 
+        const alreadyExists = safeOrders.some(order => {
+          return (order.orderNumber || order.id) === lastId;
+        });
+ 
+        if (!alreadyExists) {
+          safeOrders.unshift(lastOrder);
+        }
+      }
+ 
+      return safeOrders.sort((a, b) => {
+        const dateA = new Date(a.createdAt || a.date || 0).getTime() || 0;
+        const dateB = new Date(b.createdAt || b.date || 0).getTime() || 0;
+        return dateB - dateA;
+      });
+    }
+ async function loadBackendOrders() {
+  const token = localStorage.getItem("mim_token");
+
+  if (!token) {
+    showToast("Please sign in to view your orders.");
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/orders/my",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const result = await response.json();
+
+    console.log("Profile data:", result);
+
+
+    if (!response.ok) {
+      throw new Error(result.message || "Unable to load orders");
+    }
+
+    const backendOrders = result.data?.orders || result.orders || [];
+
+    const orders = backendOrders.map(order => ({
+      id: order.orderNumber || order._id,
+      createdAt: order.createdAt,
+      status: order.status,
+      total: Number(order.totalAmount ?? order.total ?? 0),
+      items: (order.items || []).map(item => ({
+        name: item.productName || item.name || item.product?.name || "Gift",
+        price: Number(
+  item.unitPrice ?? item.price ?? item.priceAtPurchase ?? 0
+),
+        qty: Number(item.quantity ?? item.qty ?? 1)
+      }))
+    }));
+
+    localStorage.setItem("mim_orders", JSON.stringify(orders));
+
+    renderOrders();
+
+    console.log("Backend orders loaded:", orders);
+  } catch (error) {
+    console.error("Orders loading failed:", error);
+    showToast(error.message || "Could not load orders.");
+  }
+}
+
+
+
+
+async function loadProfileDetails() {
+  const token = localStorage.getItem("mim_token");
+  if (!token) return;
+
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/auth/me",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Unable to load profile");
+    }
+
+    const user = result.user;
+    const profile = getProfile();
+
+profile.name = user.name || "Guest User";
+profile.email = user.email || "";
+
+localStorage.setItem("mim_profile", JSON.stringify(profile));
+
+renderProfile();
+    
+    
+    
+
+    if (!user) {
+      throw new Error("User details were not returned by the API");
+    }
+
+    const setValue = (id, value) => {
+      const element = document.getElementById(id);
+      if (element) element.value = value || "";
+    };
+
+    setValue("overviewName", user.name);
+    setValue("overviewEmail", user.email);
+    setValue("overviewPhone", user.phone);
+    setValue("overviewBirthday", user.birthday);
+
+    console.log("Profile fields populated:", user);
+
+  } catch (error) {
+    console.error("Profile loading failed:", error);
+  }
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadProfileDetails();
+  loadBackendOrders();
+});
+
+
+    function getWishlist() {
+      const wishlist = readStorage("mim_wishlist", []);
+      return Array.isArray(wishlist) ? wishlist : [];
+    }
+ 
+    function getAddresses() {
+      const addresses = readStorage("mim_addresses", []);
+      return Array.isArray(addresses) ? addresses : [];
+    }
+ 
+    function getCart() {
+      const cart = readStorage("mim_cart", []);
+      return Array.isArray(cart) ? cart : [];
+    }
+ 
+    function renderAvatar(profile) {
+      const avatar = $("avatar");
+      const name = safeText(profile.name);
+      const initial = name ? name.charAt(0).toUpperCase() : "G";
+ 
+      if (profile.photo) {
+        avatar.innerHTML = '<img src="' + escapeHTML(profile.photo) + '" alt="Profile photo">';
+      } else {
+        avatar.textContent = initial;
+      }
+    }
+ 
+    function renderProfile() {
+      const profile = getProfile();
+      const name = safeText(profile.name, "Guest User");
+      const email = safeText(profile.email);
+ 
+      $("sidebarName").textContent = name || "Guest User";
+      $("sidebarEmail").textContent = email || "Welcome to MakeItMine";
+      $("welcomeName").textContent = name && name !== "Guest User"
+        ? "Hello, " + name.split(/\s+/)[0] + "! ♡"
+        : "Hello, Gift Lover! ♡";
+ 
+      $("overviewName").value = profile.name || "";
+      $("overviewEmail").value = profile.email || "";
+      $("overviewPhone").value = profile.phone || "";
+      $("overviewBirthday").value = profile.birthday || "";
+ 
+      $("fullName").value = profile.name || "";
+      $("email").value = profile.email || "";
+      $("phone").value = profile.phone || "";
+      $("birthday").value = profile.birthday || "";
+      $("gender").value = profile.gender || "";
+      $("city").value = profile.city || "";
+      $("aboutMe").value = profile.aboutMe || "";
+ 
+      renderAvatar(profile);
+    }
+ 
+    function orderStatusClass(status) {
+      const value = safeText(status, "Order Placed").toLowerCase();
+ 
+      if (value.includes("cancel")) return "cancelled";
+      if (
+        value.includes("deliver") ||
+        value.includes("complete")
+      ) return "";
+ 
+      return "pending";
+    }
+ 
+    function formatDate(value) {
+      if (!value) return "Date unavailable";
+ 
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "Date unavailable";
+ 
+      return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+    }
+ 
+    function getOrderId(order) {
+      return order.orderNumber || order.id || "Order";
+    }
+ 
+    function getOrderItemsSummary(order) {
+      if (!Array.isArray(order.items) || !order.items.length) {
+        return "Order details unavailable";
+      }
+ 
+      return order.items.map(item => {
+        const qty = Math.max(1, Number(item.quantity) || 1);
+        return safeText(item.name, "Gift") + " × " + qty;
+      }).join(", ");
+    }
+ 
+    function getOrderTotal(order) {
+      if (order.total !== undefined) return Number(order.total) || 0;
+ 
+      if (Array.isArray(order.items)) {
+        return order.items.reduce((sum, item) => {
+          return sum + (Number(item.price) || 0) *
+            Math.max(1, Number(item.quantity) || 1);
+        }, 0);
+      }
+ 
+      return 0;
+    }
+ 
+    function renderOrderCard(order) {
+      const status = safeText(order.status, "Order Placed");
+      const orderId = getOrderId(order);
+      const date = formatDate(order.createdAt || order.date);
+      const summary = getOrderItemsSummary(order);
+      const total = getOrderTotal(order);
+ 
+      return `
+        <article class="order-card">
+          <div class="order-top">
+            <div>
+              <div class="order-id">Order #${escapeHTML(orderId)}</div>
+              <div class="order-date">Placed on ${escapeHTML(date)}</div>
+            </div>
+            <span class="status ${orderStatusClass(status)}">${escapeHTML(status)}</span>
+          </div>
+ 
+          <div class="order-bottom">
+            <div class="order-items">${escapeHTML(summary)}</div>
+            <div class="order-total">${money(total)}</div>
+          </div>
+ 
+          <div class="order-buttons">
+            <a class="button secondary" href="order-tracking.html">Track Order →</a>
+          </div>
+        </article>
+      `;
+    }
+ 
+    function renderOrders() {
+      const orders = getOrders();
+      const recent = orders.slice(0, 2);
+ 
+      $("ordersStat").textContent = orders.length;
+      $("ordersSideCount").textContent = orders.length;
+ 
+      const spent = orders.reduce((sum, order) => {
+        const status = safeText(order.status, "").toLowerCase();
+ 
+        if (status.includes("cancel")) return sum;
+        return sum + getOrderTotal(order);
+      }, 0);
+ 
+      $("spentStat").textContent = money(spent);
+ 
+      if (!recent.length) {
+        $("recentOrders").innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🎁</div>
+            <h3>Your gifting story starts here</h3>
+            <p>You haven't placed an order yet. Find something special for someone you love.</p>
+            <a class="button" href="categories.html">Explore Gifts →</a>
+          </div>
+        `;
+      } else {
+        $("recentOrders").innerHTML = recent.map(renderOrderCard).join("");
+      }
+ 
+      if (!orders.length) {
+        $("allOrders").innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📦</div>
+            <h3>No orders just yet</h3>
+            <p>Once you place an order, it will appear here.</p>
+            <a class="button" href="categories.html">Start Shopping →</a>
+          </div>
+        `;
+      } else {
+        $("allOrders").innerHTML = orders.map(renderOrderCard).join("");
+      }
+    }
+ 
+    function renderWishlist() {
+      const wishlist = getWishlist();
+ 
+      $("wishlistStat").textContent = wishlist.length;
+      $("wishlistSideCount").textContent = wishlist.length;
+      $("wishlistCount").textContent = wishlist.length;
+ 
+      if (!wishlist.length) {
+        $("wishlistGrid").innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1">
+            <div class="empty-icon">♡</div>
+            <h3>Your wishlist is waiting</h3>
+            <p>Save your favourite gifts and find them here whenever you need them.</p>
+            <a href="categories.html" class="button">Discover Gifts →</a>
+          </div>
+        `;
+        return;
+      }
+ 
+      $("wishlistGrid").innerHTML = wishlist.map((item, index) => {
+        const isString = typeof item === "string";
+        const id = isString ? item : item.id;
+        const known = demoProducts[id] || {};
+        const name = isString ? (known.name || item) : (item.name || known.name || "Personalised Gift");
+        const price = isString ? (known.price || 0) : (Number(item.price) || known.price || 0);
+        const image = isString ? known.image : (item.image || known.image || "");
+        const emoji = isString ? known.emoji : (item.emoji || known.emoji || "🎁");
+ 
+        const safeImage = image
+          ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(name)}" loading="lazy">`
+          : `<div style="height:100%;display:grid;place-items:center;font-size:42px">${escapeHTML(emoji)}</div>`;
+ 
+        return `
+          <article class="wishlist-card">
+            <div class="wishlist-image">
+              ${safeImage}
+              <button class="remove-wishlist" data-remove-wishlist="${index}" aria-label="Remove from wishlist">×</button>
+            </div>
+            <div class="wishlist-info">
+              <h3>${escapeHTML(name)}</h3>
+              <div class="wishlist-price">${price ? money(price) : "View product"}</div>
+              <button class="button" data-wishlist-add="${index}">Add to Cart</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+ 
+      $("wishlistGrid").querySelectorAll("[data-remove-wishlist]").forEach(button => {
+        button.addEventListener("click", () => {
+          const index = Number(button.dataset.removeWishlist);
+          const updated = getWishlist();
+          updated.splice(index, 1);
+ 
+          if (writeStorage("mim_wishlist", updated)) {
+            renderWishlist();
+            updateHeaderCounts();
+            showToast("Removed from your wishlist.");
+          }
+        });
+      });
+ 
+      $("wishlistGrid").querySelectorAll("[data-wishlist-add]").forEach(button => {
+        button.addEventListener("click", () => {
+          const index = Number(button.dataset.wishlistAdd);
+          const item = getWishlist()[index];
+ 
+          if (!item) return;
+ 
+          const isString = typeof item === "string";
+          const id = isString ? item : item.id;
+          const known = demoProducts[id] || {};
+          const cart = getCart();
+ 
+          cart.push({
+            id: id || ("wishlist-" + Date.now()),
+            name: isString ? (known.name || item) : (item.name || known.name || "Personalised Gift"),
+            type: "Wishlist Gift",
+            basePrice: isString ? (known.price || 0) : (Number(item.price) || known.price || 0),
+            price: isString ? (known.price || 0) : (Number(item.price) || known.price || 0),
+            quantity: 1,
+            emoji: isString ? (known.emoji || "🎁") : (item.emoji || known.emoji || "🎁"),
+            image: isString ? (known.image || "") : (item.image || known.image || ""),
+            customProduct: false,
+            personalisation: {
+              name: "",
+              message: "",
+              occasion: "",
+              giftWrap: "No"
+            }
+          });
+ 
+          if (writeStorage("mim_cart", cart)) {
+            updateHeaderCounts();
+            showToast("Added to your cart!");
+          }
+        });
+      });
+    }
+ 
+    function updateHeaderCounts() {
+      const cart = getCart();
+ 
+      $("cartCount").textContent = cart.reduce((sum, item) => {
+        return sum + Math.max(0, Number(item.quantity) || 0);
+      }, 0);
+ 
+      $("wishlistCount").textContent = getWishlist().length;
+    }
+ 
+    function renderAddresses() {
+      const addresses = getAddresses();
+ 
+      if (!addresses.length) {
+        $("addressGrid").innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1">
+            <div class="empty-icon">⌖</div>
+            <h3>No saved addresses</h3>
+            <p>Add an address to make future gifting easier.</p>
+            <button class="button" id="emptyAddAddress">+ Add Address</button>
+          </div>
+        `;
+ 
+        const button = $("emptyAddAddress");
+        if (button) button.addEventListener("click", openAddressModal);
+        return;
+      }
+ 
+      $("addressGrid").innerHTML = addresses.map(address => `
+        <article class="address-card ${address.isDefault ? "default" : ""}">
+          <div class="address-top">
+            <span class="address-type">⌖ ${escapeHTML(address.type || "Home")}</span>
+            ${address.isDefault ? '<span class="default-badge">Default</span>' : ""}
+          </div>
+          <p>
+            <strong>${escapeHTML(address.name || "")}</strong><br>
+            ${escapeHTML(address.line || "")}<br>
+            ${escapeHTML(address.landmark || "")}${address.landmark ? "<br>" : ""}
+            ${escapeHTML(address.city || "")}, ${escapeHTML(address.state || "")}<br>
+            PIN: ${escapeHTML(address.postal || "")}<br>
+            Phone: ${escapeHTML(address.phone || "")}
+          </p>
+          <div class="address-actions">
+            <button class="button secondary" data-edit-address="${escapeHTML(address.id)}">Edit</button>
+            ${!address.isDefault ? `<button class="button secondary" data-default-address="${escapeHTML(address.id)}">Set Default</button>` : ""}
+            <button class="button danger" data-delete-address="${escapeHTML(address.id)}">Remove</button>
+          </div>
+        </article>
+      `).join("");
+ 
+      $("addressGrid").querySelectorAll("[data-edit-address]").forEach(button => {
+        button.addEventListener("click", () => {
+          const address = getAddresses().find(item => item.id === button.dataset.editAddress);
+          if (address) openAddressModal(address);
+        });
+      });
+ 
+      $("addressGrid").querySelectorAll("[data-delete-address]").forEach(button => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.deleteAddress;
+          if (!confirm("Remove this saved address?")) return;
+ 
+          const updated = getAddresses().filter(item => item.id !== id);
+ 
+          if (!updated.some(item => item.isDefault) && updated.length) {
+            updated[0].isDefault = true;
+          }
+ 
+          if (writeStorage("mim_addresses", updated)) {
+            renderAddresses();
+            showToast("Address removed.");
+          }
+        });
+      });
+ 
+      $("addressGrid").querySelectorAll("[data-default-address]").forEach(button => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.defaultAddress;
+          const updated = getAddresses().map(item => ({
+            ...item,
+            isDefault: item.id === id
+          }));
+ 
+          if (writeStorage("mim_addresses", updated)) {
+            renderAddresses();
+            showToast("Default address updated.");
+          }
+        });
+      });
+    }
+ 
+    function showPanel(panelName) {
+      document.querySelectorAll(".content-panel").forEach(panel => {
+        panel.classList.toggle("active", panel.id === "panel-" + panelName);
+      });
+ 
+      document.querySelectorAll(".side-link[data-panel]").forEach(button => {
+        button.classList.toggle("active", button.dataset.panel === panelName);
+      });
+ 
+      if (panelName === "orders") renderOrders();
+      if (panelName === "wishlist") renderWishlist();
+      if (panelName === "addresses") renderAddresses();
+      if (panelName === "personal") renderProfile();
+ 
+      if (window.innerWidth < 760) {
+        $("panel-" + panelName).scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+ 
+    document.querySelectorAll(".side-link[data-panel]").forEach(button => {
+      button.addEventListener("click", () => showPanel(button.dataset.panel));
+    });
+ 
+    document.querySelectorAll("[data-open-panel]").forEach(button => {
+      button.addEventListener("click", () => showPanel(button.dataset.openPanel));
+    });
+ 
+    $("profileForm").addEventListener("submit", event => {
+      event.preventDefault();
+ 
+      const name = $("fullName").value.trim();
+ 
+      if (!name) {
+        showToast("Please enter your full name.");
+        return;
+      }
+ 
+      const existing = getProfile();
+ 
+      const updated = {
+        ...existing,
+        name,
+        email: $("email").value.trim(),
+        phone: $("phone").value.trim(),
+        birthday: $("birthday").value,
+        gender: $("gender").value,
+        city: $("city").value.trim(),
+        aboutMe: $("aboutMe").value.trim()
+      };
+ 
+      if (writeStorage("mim_profile", updated)) {
+        renderProfile();
+        showToast("Your profile has been updated ♡");
+        showPanel("overview");
+      }
+    });
+ 
+    $("resetProfile").addEventListener("click", () => {
+      setTimeout(renderProfile, 0);
+    });
+ 
+    $("avatarUpload").addEventListener("change", event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+ 
+      if (!file.type.startsWith("image/")) {
+        showToast("Please choose an image file.");
+        return;
+      }
+ 
+      if (file.size > 2 * 1024 * 1024) {
+        showToast("Please choose an image smaller than 2 MB.");
+        event.target.value = "";
+        return;
+      }
+ 
+      const reader = new FileReader();
+ 
+      reader.onload = () => {
+        const profile = getProfile();
+        profile.photo = reader.result;
+ 
+        if (writeStorage("mim_profile", profile)) {
+          renderProfile();
+          showToast("Profile photo updated.");
+        }
+      };
+ 
+      reader.readAsDataURL(file);
+    });
+ 
+    function openAddressModal(address = null) {
+      $("addressForm").reset();
+      editingAddressId = address ? address.id : null;
+ 
+      $("addressEditId").value = address ? address.id : "";
+      $("addressModalTitle").textContent = address ? "Edit Address" : "Add New Address";
+ 
+      if (address) {
+        $("addressType").value = address.type || "Home";
+        $("addressName").value = address.name || "";
+        $("addressPhone").value = address.phone || "";
+        $("addressPostal").value = address.postal || "";
+        $("addressLine").value = address.line || "";
+        $("addressCity").value = address.city || "";
+        $("addressState").value = address.state || "";
+        $("addressLandmark").value = address.landmark || "";
+        $("addressDefault").checked = Boolean(address.isDefault);
+      } else {
+        const profile = getProfile();
+        $("addressName").value = profile.name || "";
+        $("addressPhone").value = profile.phone || "";
+        $("addressCity").value = profile.city || "";
+        $("addressDefault").checked = getAddresses().length === 0;
+      }
+ 
+      $("addressModal").classList.add("show");
+    }
+ 
+    function closeAddressModal() {
+      $("addressModal").classList.remove("show");
+      editingAddressId = null;
+    }
+ 
+    $("addAddressButton").addEventListener("click", () => openAddressModal());
+    $("closeAddressModal").addEventListener("click", closeAddressModal);
+    $("cancelAddress").addEventListener("click", closeAddressModal);
+ 
+    $("addressModal").addEventListener("click", event => {
+      if (event.target === $("addressModal")) closeAddressModal();
+    });
+ 
+    $("addressForm").addEventListener("submit", event => {
+      event.preventDefault();
+ 
+      const address = {
+        id: editingAddressId || ("address-" + Date.now()),
+        type: $("addressType").value,
+        name: $("addressName").value.trim(),
+        phone: $("addressPhone").value.trim(),
+        postal: $("addressPostal").value.trim(),
+        line: $("addressLine").value.trim(),
+        city: $("addressCity").value.trim(),
+        state: $("addressState").value.trim(),
+        landmark: $("addressLandmark").value.trim(),
+        isDefault: $("addressDefault").checked
+      };
+ 
+      let addresses = getAddresses();
+ 
+      if (address.isDefault || addresses.length === 0) {
+        addresses = addresses.map(item => ({ ...item, isDefault: false }));
+        address.isDefault = true;
+      }
+ 
+      if (editingAddressId) {
+        addresses = addresses.map(item => item.id === editingAddressId ? address : item);
+      } else {
+        addresses.push(address);
+      }
+ 
+      if (writeStorage("mim_addresses", addresses)) {
+        closeAddressModal();
+        renderAddresses();
+        showToast(editingAddressId ? "Address updated." : "New address saved.");
+      }
+    });
+ 
+    $("shopNowButton").addEventListener("click", () => {
+      window.location.href = "categories.html";
+    });
+ 
+    function loadSettings() {
+      const settings = readStorage("mim_profile_settings", {
+        orderNotifications: true,
+        marketingNotifications: false,
+        rememberDetails: true
+      });
+ 
+      $("orderNotifications").checked = settings.orderNotifications !== false;
+      $("marketingNotifications").checked = Boolean(settings.marketingNotifications);
+      $("rememberDetails").checked = settings.rememberDetails !== false;
+    }
+ 
+    $("saveSettings").addEventListener("click", () => {
+      const settings = {
+        orderNotifications: $("orderNotifications").checked,
+        marketingNotifications: $("marketingNotifications").checked,
+        rememberDetails: $("rememberDetails").checked
+      };
+ 
+      if (writeStorage("mim_profile_settings", settings)) {
+        showToast("Your preferences have been saved.");
+      }
+    });
+ 
+    $("clearProfileButton").addEventListener("click", () => {
+      const confirmed = confirm(
+        "Clear your local profile, saved addresses and settings from this browser? Your cart, wishlist and order history will remain."
+      );
+ 
+      if (!confirmed) return;
+ 
+      try {
+        localStorage.removeItem("mim_profile");
+        localStorage.removeItem("mim_addresses");
+        localStorage.removeItem("mim_profile_settings");
+        renderProfile();
+        renderAddresses();
+        loadSettings();
+        showToast("Local profile data cleared.");
+        showPanel("overview");
+      } catch (error) {
+        showToast("Unable to clear browser data.");
+      }
+    });
+ 
+    $("logoutButton").addEventListener("click", () => {
+      const confirmed = confirm("Would you like to sign out?");
+ 
+      if (!confirmed) return;
+ 
+ 
+      try {
+        localStorage.removeItem("mim_user");
+        localStorage.removeItem("mim_current_user");
+        sessionStorage.removeItem("mim_user");
+      } catch (error) {
+ 
+      }
+ 
+      showToast("Taking you to the sign-in page...");
+ 
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 650);
+    });
+ 
+    $("menuToggle").addEventListener("click", () => {
+      $("navLinks").classList.toggle("open");
+    });
+ 
+ 
+    renderProfile();
+    renderOrders();
+    loadBackendOrders();
+    loadBackendOrders();
+    renderWishlist();
+    renderAddresses();
+    updateHeaderCounts();
+    loadSettings();
+
+  </script>
+ <script type="module" src="js/app.js"></script>
+</body>
+</html>
+ 

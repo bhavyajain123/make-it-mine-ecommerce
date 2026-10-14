@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #fbf7f0;
+      --white: #ffffff;
+      --wine: #702b3b;
+      --wine-dark: #4d1927;
+      --gold: #c5a46d;
+      --text: #30252a;
+      --muted: #887b7d;
+      --border: #e9dfd7;
+      --green: #368363;
+      --shadow: 0 18px 55px rgba(77, 25, 39, 0.10);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    .topbar {
+      height: 78px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-family: "Playfair Display", serif;
+      font-size: 29px;
+      font-weight: 700;
+      color: var(--wine);
+      letter-spacing: -1px;
+    }
+
+    .brand span {
+      color: var(--gold);
+    }
+
+    .top-link {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .top-link a {
+      color: var(--wine);
+      font-weight: 700;
+      margin-left: 5px;
+    }
+
+    .page {
+      min-height: calc(100vh - 78px);
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      padding: 48px 7%;
+      gap: 65px;
+      align-items: center;
+      max-width: 1500px;
+      margin: auto;
+    }
+
+    /* Left promotional section */
+    .visual {
+      min-height: 660px;
+      border-radius: 22px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 45px;
+      color: white;
+      background:
+        linear-gradient(180deg, rgba(38, 17, 23, 0.04) 5%, rgba(38, 17, 23, 0.88) 100%),
+        url("https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=1200&q=85")
+        center / cover no-repeat,
+        var(--wine);
+    }
+
+    .visual::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      border-radius: 14px;
+      pointer-events: none;
+    }
+
+    .visual-content {
+      position: relative;
+      z-index: 1;
+      max-width: 440px;
+    }
+
+    .eyebrow {
+      color: #e7c990;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 17px;
+    }
+
+    .visual h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(38px, 4vw, 54px);
+      font-weight: 500;
+      line-height: 1.14;
+      margin-bottom: 18px;
+    }
+
+    .visual-content > p {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14px;
+      line-height: 1.9;
+      max-width: 370px;
+    }
+
+    .visual-note {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .note-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 18px;
+    }
+
+    /* Signup form */
+    .form-section {
+      width: 100%;
+      max-width: 510px;
+      margin: auto;
+      padding: 10px 0;
+    }
+
+    .form-heading {
+      margin-bottom: 29px;
+    }
+
+    .form-heading .eyebrow {
+      color: var(--wine);
+      margin-bottom: 11px;
+    }
+
+    .form-heading h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(34px, 3vw, 43px);
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .form-heading p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #514248;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .field input {
+      width: 100%;
+      height: 49px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-size: 13px;
+    }
+
+    .field input::placeholder {
+      color: #b4a9aa;
+    }
+
+    .field input:focus {
+      border-color: var(--wine);
+      box-shadow: 0 0 0 3px rgba(112, 43, 59, 0.08);
+    }
+
+    .field input.invalid {
+      border-color: #c84b55;
+    }
+
+    .password-input {
+      padding-right: 67px !important;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: none;
+      color: var(--wine);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .password-meter {
+      display: flex;
+      gap: 5px;
+      margin-top: 9px;
+    }
+
+    .meter-bar {
+      height: 4px;
+      flex: 1;
+      border-radius: 5px;
+      background: #eae2dc;
+      transition: background 0.2s;
+    }
+
+    .meter-bar.active.weak { background: #d45b5b; }
+    .meter-bar.active.medium { background: #d5a344; }
+    .meter-bar.active.strong { background: var(--green); }
+
+    .password-hint {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 6px;
+    }
+
+    .error {
+      display: none;
+      color: #b63e4a;
+      font-size: 11px;
+      margin-top: 6px;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    .terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 3px 0 21px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .terms input {
+      margin-top: 4px;
+      accent-color: var(--wine);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .terms a {
+      color: var(--wine);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .create-btn {
+      width: 100%;
+      height: 51px;
+      border: none;
+      border-radius: 8px;
+      background: var(--wine);
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .create-btn:hover {
+      background: var(--wine-dark);
+      transform: translateY(-1px);
+    }
+
+    .create-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 23px 0;
+      color: #aa9da0;
+      font-size: 11px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .social-btn {
+      width: 100%;
+      height: 47px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #45383e;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .social-btn:hover {
+      border-color: var(--wine);
+    }
+
+    .google-icon {
+      width: 17px;
+      height: 17px;
+      font-weight: 700;
+      font-size: 16px;
+      color: #4285f4;
+    }
+
+    .login-prompt {
+      text-align: center;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .login-prompt a {
+      color: var(--wine);
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
+    .secure-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 23px;
+      font-size: 10px;
+      color: #998b8e;
+    }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      max-width: calc(100vw - 48px);
+      padding: 15px 20px;
+      border-radius: 10px;
+      background: var(--wine-dark);
+      color: white;
+      font-size: 12px;
+      line-height: 1.6;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: 0.25s;
+      z-index: 20;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1050px) {
+      .page {
+        padding: 35px 5%;
+        gap: 40px;
+      }
+
+      .visual {
+        min-height: 600px;
+        padding: 32px;
+      }
+
+      .visual h1 {
+        font-size: 42px;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .topbar {
+        height: 70px;
+        padding: 0 6%;
+      }
+
+      .brand {
+        font-size: 25px;
+      }
+
+      .page {
+        display: block;
+        padding: 42px 6% 50px;
+      }
+
+      .visual {
+        display: none;
+      }
+
+      .form-section {
+        max-width: 520px;
+      }
+
+      .form-heading h2 {
+        font-size: 37px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .topbar {
+        height: 65px;
+      }
+
+      .brand {
+        font-size: 23px;
+      }
+
+      .top-link {
+        font-size: 11px;
+      }
+
+      .page {
+        padding-top: 33px;
+      }
+
+      .form-heading h2 {
+        font-size: 33px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">MakeIt<span>Mine.</span></a>
+    <p class="top-link">
+      Already a member?
+      <a href="login.html">Log in</a>
+    </p>
+  </header>
+
+  <main class="page">
+    <section class="visual">
+      <div class="visual-content">
+        <p class="eyebrow">A little more personal</p>
+        <h1>Make every gift feel like it was made just for them.</h1>
+        <p>
+          Discover thoughtful gifts, add your personal touch, and turn
+          ordinary moments into memories worth keeping.
+        </p>
+
+        <div class="visual-note">
+          <div class="note-icon">🎁</div>
+          <div>
+            <strong>Made meaningful. Made yours.</strong>
+            <p style="margin-top:4px;font-size:11px;">
+              Your gifting journey starts here.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <div class="form-heading">
+        <p class="eyebrow">Join our little world</p>
+        <h2>Create your account</h2>
+        <p>Sign up to save your favourites and make gifting more personal.</p>
+      </div>
+
+      <form id="signupForm" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="firstName">First name</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="Your first name"
+              autocomplete="given-name"
+              required
+            />
+            <p class="error" id="firstNameError">Please enter your first name.</p>
+          </div>
+
+          <div class="field">
+            <label for="lastName">Last name</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Your last name"
+              autocomplete="family-name"
+              required
+            />
+            <p class="error" id="lastNameError">Please enter your last name.</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+          />
+          <p class="error" id="emailError">Please enter a valid email address.</p>
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone number <span style="color:#a99b9d;font-weight:400;">(optional)</span></label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Enter your phone number"
+            autocomplete="tel"
+            inputmode="tel"
+          />
+          <p class="error" id="phoneError">Please enter a valid phone number.</p>
+        </div>
+
+        <div class="field">
+          <label for="password">Create password</label>
+          <div class="input-wrap">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="password-input"
+              placeholder="At least 8 characters"
+              autocomplete="new-password"
+              required
+            />
+            <button class="toggle-password" type="button" data-target="password">
+              Show
+            </button>
+          </div>
+
+          <div class="password-meter" aria-label="Password strength">
+            <span class="meter-bar"></span>
+            <span class="meter-bar"></span>
+            <span class="meter-bar"></span>
+            <span class="meter-bar"></span>
+          </div>
+          <p class="password-hint" id="passwordHint">
+            Use 8+ characters with letters and numbers.
+          </p>
+          <p class="error" id="passwordError">Use at least 8 characters.</p>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">Confirm password</label>
+          <div class="input-wrap">
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              class="password-input"
+              placeholder="Enter your password again"
+              autocomplete="new-password"
+              required
+            />
+            <button class="toggle-password" type="button" data-target="confirmPassword">
+              Show
+            </button>
+          </div>
+          <p class="error" id="confirmError">Passwords do not match.</p>
+        </div>
+
+        <label class="terms">
+          <input type="checkbox" id="terms" required />
+          <span>
+            I agree to the <a href="terms.html">Terms &amp; Conditions</a>
+            and <a href="privacy.html">Privacy Policy</a> of MakeItMine.
+          </span>
+        </label>
+        <p class="error" id="termsError" style="margin-top:-13px;margin-bottom:15px;">
+          Please accept the terms to continue.
+        </p>
+
+        <button class="create-btn" type="submit" id="createBtn">
+          Create My Account &nbsp; →
+        </button>
+
+        <div class="divider">OR</div>
+
+        <button class="social-btn" type="button" id="googleBtn">
+          <span class="google-icon">G</span>
+          Continue with Google
+        </button>
+
+        <p class="login-prompt">
+          Already have an account?
+          <a href="login.html">Log in here</a>
+        </p>
+
+        <div class="secure-note">
+          <span>♢</span>
+          <span>Your personal information deserves to stay private.</span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const passwordHint = document.getElementById("passwordHint");
+    const meterBars = document.querySelectorAll(".meter-bar");
+    const toast = document.getElementById("toast");
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3500);
+    }
+
+    function setError(inputId, errorId, show) {
+      const input = document.getElementById(inputId);
+      const error = document.getElementById(errorId);
+
+      input.classList.toggle("invalid", show);
+      error.classList.toggle("show", show);
+    }
+
+    document.querySelectorAll(".toggle-password").forEach(button => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.target);
+        const shouldShow = input.type === "password";
+
+        input.type = shouldShow ? "text" : "password";
+        button.textContent = shouldShow ? "Hide" : "Show";
+      });
+    });
+
+    function updatePasswordStrength() {
+      const value = password.value;
+      let score = 0;
+
+      if (value.length >= 8) score++;
+      if (/[a-z]/.test(value) && /[A-Z]/.test(value)) score++;
+      if (/\d/.test(value)) score++;
+      if (/[^A-Za-z0-9]/.test(value)) score++;
+
+      const level = score <= 1 ? "weak" : score <= 2 ? "medium" : "strong";
+
+      meterBars.forEach((bar, index) => {
+        bar.className = "meter-bar";
+
+        if (index < score && value.length > 0) {
+          bar.classList.add("active", level);
+        }
+      });
+
+      if (!value) {
+        passwordHint.textContent =
+          "Use 8+ characters with letters and numbers.";
+      } else if (score <= 1) {
+        passwordHint.textContent = "Weak password — add more variety.";
+      } else if (score <= 2) {
+        passwordHint.textContent = "Getting there — make it harder to guess.";
+      } else {
+        passwordHint.textContent = "Good password strength.";
+      }
+    }
+
+    password.addEventListener("input", () => {
+      updatePasswordStrength();
+
+      if (password.value.length >= 8) {
+        setError("password", "passwordError", false);
+      }
+
+      if (confirmPassword.value) {
+        setError(
+          "confirmPassword",
+          "confirmError",
+          password.value !== confirmPassword.value
+        );
+      }
+    });
+
+    confirmPassword.addEventListener("input", () => {
+      setError(
+        "confirmPassword",
+        "confirmError",
+        confirmPassword.value !== password.value
+      );
+    });
+
+    ["firstName", "lastName", "email", "phone"].forEach(id => {
+      document.getElementById(id).addEventListener("input", () => {
+        document.getElementById(id).classList.remove("invalid");
+      });
+    });
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const termsAccepted = document.getElementById("terms").checked;
+
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const phoneValid = !phone || /^[+()\d\s-]{7,20}$/.test(phone);
+      const passwordValid = password.value.length >= 8;
+      const confirmValid = confirmPassword.value === password.value;
+
+      setError("firstName", "firstNameError", !firstName);
+      setError("lastName", "lastNameError", !lastName);
+      setError("email", "emailError", !emailValid);
+      setError("phone", "phoneError", !phoneValid);
+      setError("password", "passwordError", !passwordValid);
+      setError("confirmPassword", "confirmError", !confirmValid);
+      document.getElementById("termsError").classList.toggle(
+        "show",
+        !termsAccepted
+      );
+
+      if (
+        !firstName ||
+        !lastName ||
+        !emailValid ||
+        !phoneValid ||
+        !passwordValid ||
+        !confirmValid ||
+        !termsAccepted
+      ) {
+        showToast("Please check the highlighted fields.");
+        return;
+      }
+
+      
+
+      showToast(
+        "Form validated! Connect Firebase Auth or your backend to create your account."
+      );
+    });
+
+    document.getElementById("googleBtn").addEventListener("click", () => {
+      showToast("Google sign-in needs to be configured with Firebase Authentication.");
+    });
+  </script>
+ <script type="module" src="js/app.js"></script>
+</body>
+</html>

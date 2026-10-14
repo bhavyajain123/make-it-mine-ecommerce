@@ -1,0 +1,2312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customize Your Gift | MakeItMine</title>
+<meta name="description" content="Create a thoughtful personalised gift with MakeItMine. Choose a gift, add a personal message and make it uniquely yours.">
+<link rel="stylesheet" href="style.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+    --wine: #702b3b;
+    --wine-dark: #51202d;
+    --cream: #fbf7f2;
+    --cream-dark: #f0e5d9;
+    --gold: #bd8b4d;
+    --text: #30251f;
+    --muted: #81746b;
+    --border: #e5d7ca;
+    --white: #ffffff;
+    --green: #53765d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.7;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.announcement {
+    background: var(--wine-dark);
+    color: white;
+    padding: 8px 14px;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+}
+
+.announcement span {
+    color: #e6c28a;
+}
+
+.navbar {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 100;
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: auto;
+    padding: 14px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+}
+
+.logo {
+    color: var(--wine);
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.2;
+    flex-shrink: 0;
+}
+
+.logo small {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    text-align: center;
+    font-size: 7px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-links a {
+    font-size: 12px;
+    font-weight: 600;
+    color: #55463e;
+    transition: color .2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--wine);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.nav-icon {
+    color: var(--wine);
+    font-size: 22px;
+    position: relative;
+}
+
+.count {
+    position: absolute;
+    right: -8px;
+    top: -6px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 3px;
+    border-radius: 50%;
+    background: var(--wine);
+    color: white;
+    font-size: 9px;
+    display: grid;
+    place-items: center;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--wine);
+    font-size: 24px;
+}
+
+.container {
+    width: calc(100% - 48px);
+    max-width: 1200px;
+    margin: auto;
+}
+
+.breadcrumb {
+    padding: 22px 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.breadcrumb span {
+    padding: 0 8px;
+}
+
+.breadcrumb strong {
+    color: var(--wine);
+}
+
+/* HERO */
+
+.hero {
+    background: var(--cream-dark);
+    border: 1px solid #e6d7c7;
+    padding: 42px 48px;
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    align-items: center;
+    gap: 30px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 55px;
+}
+
+.hero-copy {
+    position: relative;
+    z-index: 1;
+}
+
+.eyebrow {
+    color: var(--wine);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    font-size: 10px;
+    margin-bottom: 12px;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(39px, 5vw, 60px);
+    line-height: 1.12;
+    font-weight: 600;
+    max-width: 600px;
+}
+
+.hero h1 em {
+    color: var(--wine);
+    font-weight: 500;
+}
+
+.hero-copy > p {
+    color: #76665c;
+    max-width: 500px;
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.primary-link {
+    display: inline-flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 25px;
+    background: var(--wine);
+    color: white;
+    padding: 14px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .25s;
+}
+
+.primary-link:hover {
+    background: var(--wine-dark);
+    transform: translateY(-2px);
+}
+
+.hero-art {
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-art::before {
+    content: "";
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.48);
+    position: absolute;
+}
+
+.hero-gift {
+    position: relative;
+    width: 190px;
+    height: 180px;
+    z-index: 1;
+}
+
+.hero-gift-box {
+    width: 135px;
+    height: 105px;
+    position: absolute;
+    bottom: 15px;
+    left: 27px;
+    background: var(--wine);
+    box-shadow: 0 22px 35px rgba(81,32,45,.2);
+}
+
+.hero-gift-box::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 23px;
+    background: #d6ae78;
+    left: 56px;
+}
+
+.hero-gift-lid {
+    width: 153px;
+    height: 23px;
+    position: absolute;
+    left: 18px;
+    bottom: 120px;
+    background: #853b4e;
+}
+
+.hero-gift-lid::after {
+    content: "";
+    position: absolute;
+    left: 65px;
+    height: 23px;
+    width: 23px;
+    background: #d6ae78;
+}
+
+.hero-bow {
+    width: 48px;
+    height: 42px;
+    border: 8px solid #d6ae78;
+    border-radius: 50% 50% 0 50%;
+    position: absolute;
+    left: 53px;
+    top: 2px;
+    transform: rotate(-24deg);
+}
+
+.hero-bow.second {
+    left: 92px;
+    transform: scaleX(-1) rotate(-24deg);
+}
+
+.hero-heart {
+    position: absolute;
+    right: -4px;
+    top: 10px;
+    color: var(--wine);
+    font-size: 27px;
+}
+
+.hero-star {
+    position: absolute;
+    left: -5px;
+    top: 50px;
+    color: var(--gold);
+    font-size: 28px;
+}
+
+/* INTRO STRIP */
+
+.benefits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 55px;
+}
+
+.benefit {
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    padding: 18px;
+    background: white;
+    border: 1px solid var(--border);
+}
+
+.benefit-icon {
+    height: 43px;
+    width: 43px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: #f5e9e4;
+    color: var(--wine);
+    font-size: 21px;
+}
+
+.benefit h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+.benefit p {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+/* SECTION HEADINGS */
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.section-heading .eyebrow {
+    margin-bottom: 8px;
+}
+
+.section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(29px, 3vw, 39px);
+    line-height: 1.25;
+    font-weight: 600;
+}
+
+.section-heading h2 em {
+    color: var(--wine);
+    font-weight: 500;
+}
+
+.section-heading p {
+    max-width: 570px;
+    margin: 12px auto 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* CUSTOMIZER LAYOUT */
+
+.customizer-section {
+    margin-bottom: 70px;
+    scroll-margin-top: 25px;
+}
+
+.customizer-layout {
+    display: grid;
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.preview-panel {
+    background: white;
+    border: 1px solid var(--border);
+    position: sticky;
+    top: 20px;
+}
+
+.preview-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 19px 22px;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+}
+
+.preview-heading h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+}
+
+.preview-tag {
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--green);
+    background: #edf4ed;
+    padding: 6px 9px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.preview-stage {
+    min-height: 360px;
+    background: #f2e8df;
+    padding: 30px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.preview-stage::before,
+.preview-stage::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(112,43,59,.09);
+    border-radius: 50%;
+}
+
+.preview-stage::before {
+    width: 300px;
+    height: 300px;
+}
+
+.preview-stage::after {
+    width: 230px;
+    height: 230px;
+}
+
+.preview-object {
+    position: relative;
+    z-index: 1;
+    width: 260px;
+    max-width: 100%;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-product {
+    width: 230px;
+    max-width: 100%;
+    min-height: 255px;
+    background: #fffdfb;
+    border: 1px solid rgba(81,32,45,.12);
+    padding: 22px 18px;
+    box-shadow: 0 20px 45px rgba(81,32,45,.13);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: background .25s, border-radius .25s;
+}
+
+.preview-emoji {
+    font-size: 69px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+}
+
+.preview-brand {
+    font-size: 8px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.preview-name {
+    font-family: 'Playfair Display', serif;
+    color: var(--wine);
+    font-size: 29px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+}
+
+.preview-message {
+    font-size: 11px;
+    color: #6f5a4f;
+    max-width: 180px;
+    margin-top: 8px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.preview-decoration {
+    margin-top: 12px;
+    color: var(--gold);
+    font-size: 15px;
+    letter-spacing: 3px;
+}
+
+.preview-bottom {
+    padding: 17px 22px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    border-top: 1px solid var(--border);
+}
+
+.preview-bottom p {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.preview-bottom strong {
+    color: var(--wine);
+    font-size: 19px;
+    white-space: nowrap;
+}
+
+/* CUSTOMIZATION FORM */
+
+.editor-panel {
+    background: white;
+    border: 1px solid var(--border);
+}
+
+.editor-top {
+    padding: 22px 25px;
+    background: #fffdfb;
+    border-bottom: 1px solid var(--border);
+}
+
+.editor-top h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+}
+
+.editor-top p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.editor-content {
+    padding: 25px;
+}
+
+.step {
+    display: flex;
+    gap: 13px;
+    margin-bottom: 25px;
+}
+
+.step:last-child {
+    margin-bottom: 0;
+}
+
+.step-number {
+    width: 31px;
+    height: 31px;
+    flex-shrink: 0;
+    border: 1px solid #d7b5ac;
+    color: var(--wine);
+    background: #f9efeb;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.step-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.step-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.step-description {
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 13px;
+}
+
+.field-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    outline: none;
+    border-radius: 0;
+    background: #fffdfb;
+    color: var(--text);
+    font-size: 12px;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.form-control:focus {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 3px rgba(112,43,59,.07);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.field-help {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+/* GIFT TYPE OPTIONS */
+
+.gift-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.gift-option {
+    position: relative;
+}
+
+.gift-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gift-option label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 11px;
+    border: 1px solid var(--border);
+    background: #fffdfb;
+    min-height: 76px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.gift-option label:hover {
+    border-color: #c69ca0;
+}
+
+.gift-option input:checked + label {
+    border-color: var(--wine);
+    background: #fbf1ed;
+    box-shadow: inset 0 0 0 1px var(--wine);
+}
+
+.gift-option input:focus-visible + label {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+.option-emoji {
+    font-size: 29px;
+    flex-shrink: 0;
+}
+
+.option-text strong {
+    display: block;
+    font-size: 11px;
+}
+
+.option-text small {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    margin-top: 2px;
+}
+
+/* COLORS */
+
+.color-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 5px 0;
+}
+
+.color-option {
+    position: relative;
+}
+
+.color-option input {
+    position: absolute;
+    opacity: 0;
+}
+
+.color-swatch {
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 3px solid white;
+    outline: 1px solid var(--border);
+    cursor: pointer;
+    transition: .2s;
+}
+
+.color-option input:checked + .color-swatch {
+    outline: 2px solid var(--wine);
+    outline-offset: 2px;
+}
+
+.color-option input:focus-visible + .color-swatch {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+}
+
+/* WRAPPING */
+
+.wrap-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.wrap-option input {
+    position: absolute;
+    opacity: 0;
+}
+
+.wrap-option label {
+    border: 1px solid var(--border);
+    padding: 11px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    font-size: 11px;
+    min-height: 50px;
+}
+
+.wrap-option input:checked + label {
+    border-color: var(--wine);
+    background: #fbf1ed;
+}
+
+.wrap-option input:focus-visible + label {
+    outline: 2px solid var(--gold);
+}
+
+.wrap-option span {
+    font-size: 22px;
+}
+
+/* EXTRAS */
+
+.extra-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee5dc;
+    font-size: 11px;
+}
+
+.extra-row:last-child {
+    border-bottom: none;
+}
+
+.extra-row label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.extra-row input {
+    accent-color: var(--wine);
+    width: 15px;
+    height: 15px;
+}
+
+.extra-price {
+    color: var(--wine);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.editor-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+}
+
+/* PRICE SUMMARY */
+
+.price-summary {
+    background: #f8f0e9;
+    border: 1px solid #ead9c8;
+    padding: 19px;
+    margin-top: 24px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    font-size: 11px;
+    color: #77685d;
+    margin-bottom: 9px;
+}
+
+.price-row:last-child {
+    margin-bottom: 0;
+}
+
+.price-row.total {
+    padding-top: 13px;
+    margin-top: 13px;
+    border-top: 1px solid #dfcbbb;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.price-row.total strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--wine);
+}
+
+.add-button {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 19px;
+    margin-top: 16px;
+    background: var(--wine);
+    border: 1px solid var(--wine);
+    color: white;
+    font-size: 11px;
+    letter-spacing: .5px;
+    font-weight: 700;
+    transition: .25s;
+}
+
+.add-button:hover {
+    background: var(--wine-dark);
+    transform: translateY(-2px);
+}
+
+.add-button:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.secure-note {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+    text-align: center;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 13px;
+}
+
+/* OCCASIONS */
+
+.occasion-section {
+    margin-bottom: 70px;
+}
+
+.occasion-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 17px;
+}
+
+.occasion-card {
+    background: white;
+    border: 1px solid var(--border);
+    text-align: center;
+    padding: 26px 15px;
+    transition: .25s;
+}
+
+.occasion-card:hover {
+    border-color: #c69ca0;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(75,45,32,.05);
+}
+
+.occasion-emoji {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 14px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #f7ebe5;
+    font-size: 32px;
+}
+
+.occasion-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+}
+
+.occasion-card p {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 7px;
+}
+
+/* HOW IT WORKS */
+
+.how-section {
+    background: #f2e8de;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 55px 0 60px;
+    margin-bottom: 65px;
+}
+
+.how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.how-card {
+    text-align: center;
+    padding: 10px 18px;
+}
+
+.how-number {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 17px;
+    border: 1px solid #c9a28d;
+    color: var(--wine);
+    background: rgba(255,255,255,.45);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+}
+
+.how-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.how-card p {
+    color: #796a60;
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+/* CTA */
+
+.final-cta {
+    margin-bottom: 65px;
+    background: var(--wine);
+    color: white;
+    text-align: center;
+    padding: 43px 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.final-cta::before,
+.final-cta::after {
+    content: "✧";
+    position: absolute;
+    color: rgba(255,255,255,.2);
+    font-size: 100px;
+}
+
+.final-cta::before {
+    left: 35px;
+    top: -22px;
+}
+
+.final-cta::after {
+    right: 35px;
+    bottom: -45px;
+}
+
+.final-cta .eyebrow {
+    color: #e8c99f;
+}
+
+.final-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(29px, 4vw, 41px);
+    line-height: 1.25;
+}
+
+.final-cta p {
+    max-width: 530px;
+    margin: 12px auto 20px;
+    color: #ead8d3;
+    font-size: 12px;
+}
+
+.cta-button {
+    display: inline-block;
+    background: #f4e4d0;
+    color: var(--wine-dark);
+    padding: 13px 23px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.cta-button:hover {
+    background: white;
+    transform: translateY(-2px);
+}
+
+/* FOOTER */
+
+footer {
+    background: #321e1f;
+    color: #f8eee5;
+}
+
+.footer-main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 43px 25px 34px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 32px;
+}
+
+.footer-brand .logo {
+    display: inline-block;
+    color: #f3d7b1;
+    margin-bottom: 17px;
+}
+
+.footer-brand .logo small {
+    color: #cbb7a9;
+}
+
+.footer-brand p {
+    font-size: 11px;
+    color: #cdbbb0;
+    max-width: 260px;
+    line-height: 1.9;
+}
+
+.footer-col h4 {
+    color: #f4ddc3;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+
+.footer-col a {
+    display: block;
+    font-size: 11px;
+    color: #cdbbb0;
+    margin-bottom: 10px;
+}
+
+.footer-col a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: auto;
+    padding: 16px 25px;
+    border-top: 1px solid rgba(255,255,255,.14);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 10px;
+    color: #cdbbb0;
+}
+
+.footer-bottom span {
+    color: #e3c39b;
+}
+
+/* TOAST */
+
+.toast {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 300;
+    background: #342421;
+    color: white;
+    padding: 14px 19px;
+    font-size: 12px;
+    max-width: calc(100% - 32px);
+    box-shadow: 0 8px 25px rgba(0,0,0,.16);
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: .25s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+    .nav-links {
+        gap: 13px;
+    }
+
+    .hero {
+        padding: 35px 28px;
+    }
+
+    .customizer-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-panel {
+        position: static;
+    }
+
+    .preview-stage {
+        min-height: 320px;
+    }
+
+    .occasion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 720px) {
+    .nav-inner {
+        padding: 13px 17px;
+    }
+
+    .menu-toggle {
+        display: block;
+        order: -1;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        background: var(--cream);
+        border-bottom: 1px solid var(--border);
+        padding: 20px 24px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .container {
+        width: calc(100% - 32px);
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 30px 24px 15px;
+        gap: 0;
+    }
+
+    .hero-art {
+        min-height: 200px;
+    }
+
+    .benefits {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 45px;
+    }
+
+    .benefit {
+        padding: 14px;
+    }
+
+    .customizer-section {
+        margin-bottom: 50px;
+    }
+
+    .editor-content {
+        padding: 20px;
+    }
+
+    .editor-top {
+        padding: 19px 20px;
+    }
+
+    .occasion-section {
+        margin-bottom: 50px;
+    }
+
+    .how-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .how-section {
+        padding: 42px 0;
+        margin-bottom: 45px;
+    }
+
+    .final-cta {
+        margin-bottom: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .announcement {
+        font-size: 9px;
+        letter-spacing: .5px;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .nav-actions {
+        gap: 12px;
+    }
+
+    .nav-icon {
+        font-size: 19px;
+    }
+
+    .hero h1 {
+        font-size: 39px;
+    }
+
+    .hero-copy > p {
+        font-size: 12px;
+    }
+
+    .section-heading h2 {
+        font-size: 29px;
+    }
+
+    .gift-options {
+        grid-template-columns: 1fr;
+    }
+
+    .gift-option label {
+        min-height: 65px;
+    }
+
+    .wrap-options {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-stage {
+        min-height: 300px;
+        padding: 20px 10px;
+    }
+
+    .preview-product {
+        width: 215px;
+    }
+
+    .occasion-grid {
+        gap: 10px;
+    }
+
+    .occasion-card {
+        padding: 20px 9px;
+    }
+
+    .occasion-card h3 {
+        font-size: 17px;
+    }
+
+    .footer-main {
+        padding: 34px 18px;
+        gap: 25px 16px;
+    }
+
+    .footer-bottom {
+        padding: 16px 18px;
+    }
+
+    .toast {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        text-align: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *, *::before, *::after {
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="announcement">
+    MAKE IT PERSONAL <span>✦</span> MAKE IT MEMORABLE
+</div>
+
+<header class="navbar">
+    <div class="nav-inner">
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+
+        <a href="index.html" class="logo">
+            MakeItMine
+            <small>MADE JUST FOR YOU</small>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="categories.html">Categories</a>
+            <a href="customize.html" class="active">Customize</a>
+            <a href="about.html">Our Story</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">
+                ♡ <span class="count" id="wishlistCount">0</span>
+            </a>
+            <a href="cart.html" class="nav-icon" aria-label="Shopping bag">
+                ♧ <span class="count" id="cartCount">0</span>
+            </a>
+        </div>
+
+    </div>
+</header>
+
+<main>
+
+<div class="container">
+
+    <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <strong>Customize Your Gift</strong>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+
+        <div class="hero-copy">
+            <div class="eyebrow">Designed by you, made with love</div>
+
+            <h1>A gift that's <em>uniquely yours.</em></h1>
+
+            <p>
+                A name, a special message, a favourite colour — sometimes the
+                smallest details make the biggest difference. Create a gift
+                that feels personal from the very first glance.
+            </p>
+
+            <a href="#customizer" class="primary-link">
+                START CREATING <span>→</span>
+            </a>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+            <div class="hero-gift">
+                <span class="hero-heart">♡</span>
+                <span class="hero-star">✧</span>
+                <div class="hero-bow"></div>
+                <div class="hero-bow second"></div>
+                <div class="hero-gift-lid"></div>
+                <div class="hero-gift-box"></div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="benefits">
+
+        <article class="benefit">
+            <div class="benefit-icon">✎</div>
+            <div>
+                <h3>Your Personal Touch</h3>
+                <p>Add a name and a heartfelt message.</p>
+            </div>
+        </article>
+
+        <article class="benefit">
+            <div class="benefit-icon">◈</div>
+            <div>
+                <h3>Your Favourite Style</h3>
+                <p>Choose the colour and wrapping.</p>
+            </div>
+        </article>
+
+        <article class="benefit">
+            <div class="benefit-icon">♡</div>
+            <div>
+                <h3>Made for Your Moment</h3>
+                <p>Create something worth remembering.</p>
+            </div>
+        </article>
+
+    </section>
+
+    <!-- CUSTOMIZER -->
+    <section class="customizer-section" id="customizer">
+
+        <div class="section-heading">
+            <div class="eyebrow">Your gift, your rules</div>
+            <h2>Let's create something <em>beautiful.</em></h2>
+            <p>
+                Follow the steps, explore your options and watch your gift
+                preview change as you personalise it.
+            </p>
+        </div>
+
+        <div class="customizer-layout">
+
+            <!-- LIVE PREVIEW -->
+            <aside class="preview-panel">
+
+                <div class="preview-heading">
+                    <h3>Your Gift Preview</h3>
+                    <span class="preview-tag">Live Preview</span>
+                </div>
+
+                <div class="preview-stage" id="previewStage">
+
+                    <div class="preview-object">
+                        <div class="preview-product" id="previewProduct">
+
+                            <div class="preview-emoji" id="previewEmoji">🎁</div>
+
+                            <div class="preview-brand">Made Just For You</div>
+
+                            <div class="preview-name" id="previewName">Your Name</div>
+
+                            <div class="preview-message" id="previewMessage">
+                                A little gift, a lot of love.
+                            </div>
+
+                            <div class="preview-decoration">✧ ♡ ✧</div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="preview-bottom">
+                    <div>
+                        <p>Your personalised creation</p>
+                        <p id="previewTypeLabel">Personalised Gift Box</p>
+                    </div>
+                    <strong id="previewPrice">₹799</strong>
+                </div>
+
+            </aside>
+
+            <!-- CUSTOMIZATION EDITOR -->
+            <div class="editor-panel">
+
+                <div class="editor-top">
+                    <h3>Make It Yours</h3>
+                    <p>Choose your options below to create your personalised gift.</p>
+                </div>
+
+                <div class="editor-content">
+
+                    <!-- STEP 1 -->
+                    <section class="step">
+
+                        <div class="step-number">01</div>
+
+                        <div class="step-content">
+                            <h4 class="step-title">Choose Your Gift</h4>
+                            <p class="step-description">Pick the perfect starting point.</p>
+
+                            <div class="gift-options">
+
+                                <div class="gift-option">
+                                    <input type="radio" name="giftType" id="giftBox"
+                                        value="Gift Box" data-price="799" data-emoji="🎁" checked>
+                                    <label for="giftBox">
+                                        <span class="option-emoji">🎁</span>
+                                        <span class="option-text">
+                                            <strong>Gift Box</strong>
+                                            <small>Starting ₹799</small>
+                                        </span>
+                                    </label>
+                                </div>
+
+                                <div class="gift-option">
+                                    <input type="radio" name="giftType" id="mug"
+                                        value="Personalised Mug" data-price="399" data-emoji="☕">
+                                    <label for="mug">
+                                        <span class="option-emoji">☕</span>
+                                        <span class="option-text">
+                                            <strong>Personalised Mug</strong>
+                                            <small>Starting ₹399</small>
+                                        </span>
+                                    </label>
+                                </div>
+
+                                <div class="gift-option">
+                                    <input type="radio" name="giftType" id="photoFrame"
+                                        value="Photo Frame" data-price="599" data-emoji="🖼️">
+                                    <label for="photoFrame">
+                                        <span class="option-emoji">🖼️</span>
+                                        <span class="option-text">
+                                            <strong>Photo Frame</strong>
+                                            <small>Starting ₹599</small>
+                                        </span>
+                                    </label>
+                                </div>
+
+                                <div class="gift-option">
+                                    <input type="radio" name="giftType" id="teddy"
+                                        value="Teddy Gift" data-price="699" data-emoji="🧸">
+                                    <label for="teddy">
+                                        <span class="option-emoji">🧸</span>
+                                        <span class="option-text">
+                                            <strong>Teddy Gift</strong>
+                                            <small>Starting ₹699</small>
+                                        </span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <hr class="editor-divider">
+
+                    <!-- STEP 2 -->
+                    <section class="step">
+
+                        <div class="step-number">02</div>
+
+                        <div class="step-content">
+                            <h4 class="step-title">Add a Personal Touch</h4>
+                            <p class="step-description">A name or a few heartfelt words make it special.</p>
+
+                            <label class="field-label" for="recipientName">
+                                Name to Personalise
+                            </label>
+
+                            <input class="form-control" type="text" id="recipientName"
+                                maxlength="30" placeholder="e.g. Ananya">
+
+                            <p class="field-help">Maximum 30 characters.</p>
+
+                            <label class="field-label" for="personalMessage" style="margin-top:17px;">
+                                Your Special Message
+                            </label>
+
+                            <textarea class="form-control" id="personalMessage"
+                                maxlength="100" placeholder="e.g. You make every day brighter!"></textarea>
+
+                            <p class="field-help">
+                                <span id="messageCount">0</span>/100 characters
+                            </p>
+                        </div>
+
+                    </section>
+
+                    <hr class="editor-divider">
+
+                    <!-- STEP 3 -->
+                    <section class="step">
+
+                        <div class="step-number">03</div>
+
+                        <div class="step-content">
+                            <h4 class="step-title">Choose Your Colour</h4>
+                            <p class="step-description">Select the look that feels just right.</p>
+
+                            <div class="color-options">
+
+                                <label class="color-option" title="Burgundy">
+                                    <input type="radio" name="giftColor" value="Burgundy"
+                                        data-color="#702b3b" checked>
+                                    <span class="color-swatch" style="background:#702b3b;"></span>
+                                </label>
+
+                                <label class="color-option" title="Blush Pink">
+                                    <input type="radio" name="giftColor" value="Blush Pink"
+                                        data-color="#e6b7b7">
+                                    <span class="color-swatch" style="background:#e6b7b7;"></span>
+                                </label>
+
+                                <label class="color-option" title="Sage Green">
+                                    <input type="radio" name="giftColor" value="Sage Green"
+                                        data-color="#9cac91">
+                                    <span class="color-swatch" style="background:#9cac91;"></span>
+                                </label>
+
+                                <label class="color-option" title="Cream">
+                                    <input type="radio" name="giftColor" value="Cream"
+                                        data-color="#e8d7b8">
+                                    <span class="color-swatch" style="background:#e8d7b8;"></span>
+                                </label>
+
+                                <label class="color-option" title="Midnight Blue">
+                                    <input type="radio" name="giftColor" value="Midnight Blue"
+                                        data-color="#394d70">
+                                    <span class="color-swatch" style="background:#394d70;"></span>
+                                </label>
+
+                            </div>
+
+                            <p class="field-help" id="selectedColorLabel">Selected colour: Burgundy</p>
+                        </div>
+
+                    </section>
+
+                    <hr class="editor-divider">
+
+                    <!-- STEP 4 -->
+                    <section class="step">
+
+                        <div class="step-number">04</div>
+
+                        <div class="step-content">
+                            <h4 class="step-title">Make the Packaging Special</h4>
+                            <p class="step-description">Finish your gift with a thoughtful touch.</p>
+
+                            <div class="wrap-options">
+
+                                <div class="wrap-option">
+                                    <input type="radio" name="wrapping" id="standardWrap"
+                                        value="Standard Wrapping" data-price="0" checked>
+                                    <label for="standardWrap">
+                                        <span>📦</span> Standard Wrap
+                                    </label>
+                                </div>
+
+                                <div class="wrap-option">
+                                    <input type="radio" name="wrapping" id="premiumWrap"
+                                        value="Premium Gift Wrap" data-price="99">
+                                    <label for="premiumWrap">
+                                        <span>🎀</span> Premium +₹99
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <hr class="editor-divider">
+
+                    <!-- STEP 5 -->
+                    <section class="step">
+
+                        <div class="step-number">05</div>
+
+                        <div class="step-content">
+                            <h4 class="step-title">Add the Finishing Touches</h4>
+                            <p class="step-description">Optional extras to make your gift even more thoughtful.</p>
+
+                            <div class="extra-row">
+                                <label for="giftCard">
+                                    <input type="checkbox" id="giftCard" data-price="49">
+                                    <span>Handwritten-style Gift Card</span>
+                                </label>
+                                <span class="extra-price">+₹49</span>
+                            </div>
+
+                            <div class="extra-row">
+                                <label for="ribbon">
+                                    <input type="checkbox" id="ribbon" data-price="39">
+                                    <span>Decorative Ribbon</span>
+                                </label>
+                                <span class="extra-price">+₹39</span>
+                            </div>
+
+                            <div class="extra-row">
+                                <label for="keepsake">
+                                    <input type="checkbox" id="keepsake" data-price="149">
+                                    <span>Mini Keepsake Add-on</span>
+                                </label>
+                                <span class="extra-price">+₹149</span>
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <!-- PRICE SUMMARY -->
+                    <div class="price-summary">
+
+                        <div class="price-row">
+                            <span>Base gift</span>
+                            <span id="basePrice">₹799</span>
+                        </div>
+
+                        <div class="price-row">
+                            <span>Gift wrapping</span>
+                            <span id="wrapPrice">₹0</span>
+                        </div>
+
+                        <div class="price-row">
+                            <span>Personalisation extras</span>
+                            <span id="extrasPrice">₹0</span>
+                        </div>
+
+                        <div class="price-row total">
+                            <span>Total Price</span>
+                            <strong id="totalPrice">₹799</strong>
+                        </div>
+
+                    </div>
+
+                    <button class="add-button" type="button" id="addToCart">
+                        <span>ADD YOUR CREATION TO CART</span>
+                        <span>→</span>
+                    </button>
+
+                    <p class="secure-note">
+                        ♡ Your creation is saved in your shopping bag when added.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- OCCASIONS -->
+    <section class="occasion-section">
+
+        <div class="section-heading">
+            <div class="eyebrow">Every moment matters</div>
+            <h2>Who are you making it <em>for?</em></h2>
+            <p>
+                Let the occasion inspire your next thoughtful creation.
+            </p>
+        </div>
+
+        <div class="occasion-grid">
+
+            <a href="categories.html" class="occasion-card">
+                <div class="occasion-emoji">💑</div>
+                <h3>For Your Person</h3>
+                <p>Little reminders of a big love.</p>
+            </a>
+
+            <a href="categories.html" class="occasion-card">
+                <div class="occasion-emoji">🎂</div>
+                <h3>Birthdays</h3>
+                <p>Make their special day even brighter.</p>
+            </a>
+
+            <a href="categories.html" class="occasion-card">
+                <div class="occasion-emoji">🫶</div>
+                <h3>For Friends</h3>
+                <p>Celebrate the people who get you.</p>
+            </a>
+
+            <a href="categories.html" class="occasion-card">
+                <div class="occasion-emoji">🌷</div>
+                <h3>Just Because</h3>
+                <p>No occasion needed to show you care.</p>
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="eyebrow">Simple, thoughtful, personal</div>
+            <h2>Three steps to something <em>special.</em></h2>
+        </div>
+
+        <div class="how-grid">
+
+            <article class="how-card">
+                <div class="how-number">01</div>
+                <h3>Choose</h3>
+                <p>
+                    Start with a gift that suits your person and the moment
+                    you want to celebrate.
+                </p>
+            </article>
+
+            <article class="how-card">
+                <div class="how-number">02</div>
+                <h3>Personalise</h3>
+                <p>
+                    Add names, messages, colours and thoughtful extras to
+                    make your creation feel personal.
+                </p>
+            </article>
+
+            <article class="how-card">
+                <div class="how-number">03</div>
+                <h3>Add to Bag</h3>
+                <p>
+                    Review your selections and add your creation to the
+                    shopping bag to continue checkout.
+                </p>
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="container">
+
+    <section class="final-cta">
+        <div class="eyebrow">The thought is what counts</div>
+        <h2>Make their moment unforgettable.</h2>
+        <p>
+            It doesn't have to be grand. It just has to feel like them.
+            Start creating a gift with your own personal touch.
+        </p>
+        <a href="#customizer" class="cta-button">CREATE YOUR GIFT →</a>
+    </section>
+
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="footer-main">
+
+        <div class="footer-brand">
+            <a href="index.html" class="logo">
+                MakeItMine
+                <small>MADE JUST FOR YOU</small>
+            </a>
+
+            <p>
+                Thoughtful gifts, personal touches and little things that
+                turn ordinary moments into meaningful memories.
+            </p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop All Gifts</a>
+            <a href="categories.html">Categories</a>
+            <a href="customize.html">Customise a Gift</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Customer Care</h4>
+            <a href="contact.html">Contact Us</a>
+            <a href="shipping.html">Shipping Information</a>
+            <a href="returns.html">Returns & Exchanges</a>
+            <a href="contact.html">FAQs</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Your Account</h4>
+            <a href="cart.html">Shopping Bag</a>
+            <a href="wishlist.html">Wishlist</a>
+            <a href="checkout.html">Checkout</a>
+            <a href="mailto:hello@makeitmine.com">Email Us</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <div>© <span id="currentYear"></span> MakeItMine. All rights reserved.</div>
+        <div>Made with <span>♥</span> for your special moments.</div>
+    </div>
+
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const $ = function (selector) {
+        return document.querySelector(selector);
+    };
+
+    const $$ = function (selector) {
+        return Array.from(document.querySelectorAll(selector));
+    };
+
+    const rupees = function (amount) {
+        return "₹" + Number(amount).toLocaleString("en-IN");
+    };
+
+    // MOBILE NAVIGATION
+    const menuToggle = $("#menuToggle");
+    const navLinks = $("#navLinks");
+
+    menuToggle.addEventListener("click", function () {
+        navLinks.classList.toggle("open");
+        menuToggle.textContent = navLinks.classList.contains("open") ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+            navLinks.classList.remove("open");
+            menuToggle.textContent = "☰";
+        });
+    });
+
+    function readStorage(key) {
+        try {
+            const value = JSON.parse(localStorage.getItem(key) || "[]");
+            return Array.isArray(value) ? value : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function updateHeaderCounts() {
+        const cart = readStorage("mim_cart");
+        const wishlist = readStorage("mim_wishlist");
+
+        const quantity = cart.reduce(function (sum, item) {
+            return sum + Math.max(1, parseInt(item.quantity, 10) || 1);
+        }, 0);
+
+        $("#cartCount").textContent = quantity;
+        $("#wishlistCount").textContent = wishlist.length;
+    }
+
+    updateHeaderCounts();
+
+  
+    const nameInput = $("#recipientName");
+    const messageInput = $("#personalMessage");
+
+    const previewProduct = $("#previewProduct");
+    const previewEmoji = $("#previewEmoji");
+    const previewName = $("#previewName");
+    const previewMessage = $("#previewMessage");
+    const previewTypeLabel = $("#previewTypeLabel");
+
+    const basePriceElement = $("#basePrice");
+    const wrapPriceElement = $("#wrapPrice");
+    const extrasPriceElement = $("#extrasPrice");
+    const totalPriceElement = $("#totalPrice");
+    const previewPriceElement = $("#previewPrice");
+
+    let currentConfiguration = {};
+
+    function getSelectedGift() {
+        const selected = $('input[name="giftType"]:checked');
+
+        return {
+            type: selected.value,
+            price: Number(selected.dataset.price),
+            emoji: selected.dataset.emoji
+        };
+    }
+
+    function getSelectedColor() {
+        const selected = $('input[name="giftColor"]:checked');
+
+        return {
+            name: selected.value,
+            color: selected.dataset.color
+        };
+    }
+
+    function getSelectedWrapping() {
+        const selected = $('input[name="wrapping"]:checked');
+
+        return {
+            name: selected.value,
+            price: Number(selected.dataset.price)
+        };
+    }
+
+    function getSelectedExtras() {
+        const extras = [];
+
+        if ($("#giftCard").checked) {
+            extras.push({
+                name: "Gift Card",
+                price: Number($("#giftCard").dataset.price)
+            });
+        }
+
+        if ($("#ribbon").checked) {
+            extras.push({
+                name: "Decorative Ribbon",
+                price: Number($("#ribbon").dataset.price)
+            });
+        }
+
+        if ($("#keepsake").checked) {
+            extras.push({
+                name: "Mini Keepsake",
+                price: Number($("#keepsake").dataset.price)
+            });
+        }
+
+        return extras;
+    }
+
+    function calculateConfiguration() {
+        const gift = getSelectedGift();
+        const color = getSelectedColor();
+        const wrapping = getSelectedWrapping();
+        const extras = getSelectedExtras();
+
+        const extrasTotal = extras.reduce(function (sum, extra) {
+            return sum + extra.price;
+        }, 0);
+
+        const total = gift.price + wrapping.price + extrasTotal;
+
+        currentConfiguration = {
+            id: "custom-" + gift.type.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+            name: gift.type,
+            type: gift.type,
+            basePrice: gift.price,
+            price: total,
+            quantity: 1,
+            emoji: gift.emoji,
+            personalisation: {
+                name: nameInput.value.trim(),
+                message: messageInput.value.trim(),
+                color: color.name,
+                colorHex: color.color,
+                wrapping: wrapping.name,
+                extras: extras.map(function (extra) {
+                    return extra.name;
+                })
+            }
+        };
+
+        return {
+            gift: gift,
+            color: color,
+            wrapping: wrapping,
+            extras: extras,
+            extrasTotal: extrasTotal,
+            total: total
+        };
+    }
+
+    function updatePreview() {
+        const data = calculateConfiguration();
+
+        previewEmoji.textContent = data.gift.emoji;
+        previewName.textContent = nameInput.value.trim() || "Your Name";
+        previewMessage.textContent =
+            messageInput.value.trim() || "A little gift, a lot of love.";
+
+        previewTypeLabel.textContent = data.gift.type;
+        previewProduct.style.backgroundColor = data.color.color + "20";
+        previewProduct.style.borderTop = "5px solid " + data.color.color;
+
+        $("#selectedColorLabel").textContent =
+            "Selected colour: " + data.color.name;
+
+        $("#messageCount").textContent = messageInput.value.length;
+
+        basePriceElement.textContent = rupees(data.gift.price);
+        wrapPriceElement.textContent = rupees(data.wrapping.price);
+        extrasPriceElement.textContent = rupees(data.extrasTotal);
+        totalPriceElement.textContent = rupees(data.total);
+        previewPriceElement.textContent = rupees(data.total);
+    }
+
+
+    $$('input[name="giftType"]').forEach(function (input) {
+        input.addEventListener("change", updatePreview);
+    });
+
+    $$('input[name="giftColor"]').forEach(function (input) {
+        input.addEventListener("change", updatePreview);
+    });
+
+    $$('input[name="wrapping"]').forEach(function (input) {
+        input.addEventListener("change", updatePreview);
+    });
+
+    $$("#giftCard, #ribbon, #keepsake").forEach(function (input) {
+        input.addEventListener("change", updatePreview);
+    });
+
+    nameInput.addEventListener("input", updatePreview);
+    messageInput.addEventListener("input", updatePreview);
+
+   
+    function showToast(message) {
+        const toast = $("#toast");
+
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        clearTimeout(window.makeItMineToastTimer);
+
+        window.makeItMineToastTimer = setTimeout(function () {
+            toast.classList.remove("show");
+        }, 3000);
+    }
+
+   
+    // ADD CONFIGURED GIFT TO CART
+    $("#addToCart").addEventListener("click", async function () {
+        const button = this;
+        const config = calculateConfiguration();
+        const token = localStorage.getItem("mim_token");
+
+        if (!token) {
+            showToast("Please login before saving your design.");
+            return;
+        }
+
+        button.disabled = true;
+
+        try {
+            // Save design in MongoDB through backend API
+            const designResponse = await fetch(
+                "http://localhost:5000/api/designs",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        name: config.gift.type + " - " +
+                            (nameInput.value.trim() || "My Design"),
+                        productType: "others",
+                        customization: {
+                            text: messageInput.value.trim(),
+                            font: "Arial",
+                            textColor: "#000000",
+                            backgroundColor: config.color.color,
+                            imageUrl: "",
+                            placement: "front",
+                            options: {
+                                recipientName: nameInput.value.trim(),
+                                giftType: config.gift.type,
+                                giftColor: config.color.name,
+                                wrapping: config.wrapping.name,
+                                extras: config.extras.map(extra => ({
+                                    name: extra.name,
+                                    price: extra.price
+                                })),
+                                basePrice: config.gift.price,
+                                totalPrice: config.total
+                            }
+                        },
+                        previewImage: "/images/gift-box.png"
+                    })
+                }
+            );
+
+            const designResult = await designResponse.json();
+
+            if (!designResponse.ok) {
+                throw new Error(
+                    designResult.message || "Could not save design."
+                );
+            }
+
+           
+const cartResponse = await fetch("http://localhost:5000/api/cart/items", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+        designId: designResult.design._id,
+        quantity: 1,
+        size: "",
+        color: config.color.name,
+        customPrice: config.total
+    })
+});
+
+const cartResult = await cartResponse.json();
+
+if (!cartResponse.ok) {
+    throw new Error(cartResult.message || "Unable to add design to cart.");
+}
+
+updateHeaderCounts();
+button.querySelector("span:first-child").textContent = "ADDED TO CART ✓";
+showToast("Customized gift added to cart!");
+} catch (error) {
+    console.error("Save design error:", error);
+    showToast(error.message || "Unable to add design to cart.");
+} finally {
+    button.disabled = false;
+}
+});
+
+
+    
+
+    $("#currentYear").textContent = new Date().getFullYear();
+
+
+    updatePreview();
+
+});
+</script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

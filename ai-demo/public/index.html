@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fffaf5" />
+  <title>MakeItMine | AI Gift Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="/">MakeIt<span>Mine.</span></a>
+    <span class="ai-label">✦ AI GIFT ASSISTANT</span>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="eyebrow">YOUR PERSONAL GIFT FINDER</div>
+      <h1>Find a gift that<br /><span>feels personal.</span></h1>
+      <p>Tell us who you're shopping for. Let AI help you find a thoughtful idea within your budget.</p>
+    </section>
+
+    <section class="panel">
+      <form id="giftForm">
+        <div class="field">
+          <label for="occasion">What's the occasion?</label>
+          <select id="occasion" required>
+            <option value="">Choose an occasion</option>
+            <option>Birthday</option>
+            <option>Anniversary</option>
+            <option>Wedding</option>
+            <option>Graduation</option>
+            <option>Festival</option>
+            <option>Just because</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="recipient">Who is the gift for?</label>
+          <input id="recipient" maxlength="100"
+            placeholder="e.g. My best friend, sister, partner"
+            required />
+        </div>
+
+        <div class="field">
+          <label for="budget">Your budget (₹)</label>
+          <input id="budget" type="number" min="1" max="1000000"
+            placeholder="e.g. 1000" required />
+        </div>
+
+        <div class="field">
+          <label for="interests">Their interests and personality</label>
+          <textarea id="interests" maxlength="300" rows="3"
+            placeholder="e.g. Loves books, coffee, art and minimal design"
+            required></textarea>
+        </div>
+
+        <button id="submitBtn" type="submit">
+          Find my gift ideas <span>→</span>
+        </button>
+      </form>
+      <p class="privacy">✦ AI-generated ideas with approximate prices, not confirmed store inventory.</p>
+    </section>
+
+    <section id="results" class="results" aria-live="polite" hidden>
+      <div class="results-heading">
+        <div class="eyebrow">MADE FOR YOUR PERSON</div>
+        <h2>Your gift shortlist</h2>
+        <p id="intro"></p>
+      </div>
+      <div id="giftCards" class="gift-grid"></div>
+    </section>
+
+    <p id="errorMessage" class="error" role="alert" hidden></p>
+  </main>
+
+  <footer>Thoughtful gifting starts here. <strong>MakeItMine.</strong></footer>
+</body>
+</html>

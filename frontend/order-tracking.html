@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf6f0">
+  <title>Track Your Order | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Interactive map library -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <style>
+    :root {
+      --cream: #faf6f0;
+      --cream-dark: #f0e7dc;
+      --wine: #702b3b;
+      --wine-dark: #4d1b29;
+      --wine-light: #925565;
+      --gold: #c5a15b;
+      --gold-light: #ead8aa;
+      --text: #302522;
+      --muted: #877970;
+      --white: #fffdf9;
+      --border: #e8ddd1;
+      --green: #467957;
+      --green-bg: #eaf2e7;
+      --shadow: 0 10px 35px rgba(77, 27, 41, 0.07);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .announcement {
+      padding: 10px 15px;
+      background: var(--wine-dark);
+      color: #fff6ec;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .announcement span {
+      color: var(--gold-light);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(250, 246, 240, 0.96);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar {
+      max-width: 1380px;
+      margin: auto;
+      min-height: 80px;
+      padding: 13px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 29px;
+      font-weight: 700;
+      color: var(--wine);
+      letter-spacing: -1px;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .logo small {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      text-align: center;
+      color: var(--muted);
+      letter-spacing: 2.6px;
+      font-weight: 500;
+      margin-top: -2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: #62534d;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--wine);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .bag-link {
+      background: var(--wine);
+      color: white;
+      padding: 11px 16px;
+      border-radius: 3px;
+    }
+
+    main {
+      max-width: 1380px;
+      margin: auto;
+      padding: 35px 28px 75px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 29px;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--wine);
+    }
+
+    .breadcrumb span:last-child {
+      color: var(--wine);
+      font-weight: 700;
+    }
+
+    .page-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 29px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    h1 {
+      color: var(--wine-dark);
+      font-size: clamp(34px, 4vw, 48px);
+      font-weight: 500;
+      letter-spacing: -1px;
+      line-height: 1.15;
+    }
+
+    .heading-description {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 11px;
+      line-height: 1.8;
+    }
+
+    .order-search {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--white);
+      width: min(100%, 370px);
+    }
+
+    .search-icon {
+      padding-left: 8px;
+      color: var(--muted);
+      font-size: 19px;
+    }
+
+    .order-search input {
+      min-width: 0;
+      flex: 1;
+      padding: 10px 2px;
+      outline: none;
+      border: none;
+      color: var(--text);
+      background: transparent;
+      font-size: 12px;
+    }
+
+    .order-search input::placeholder {
+      color: #a79b92;
+    }
+
+    .search-btn {
+      background: var(--wine);
+      border: none;
+      color: white;
+      padding: 11px 15px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .search-btn:hover {
+      background: var(--wine-dark);
+    }
+
+    .search-feedback {
+      font-size: 11px;
+      color: var(--wine);
+      margin-top: 8px;
+      min-height: 15px;
+    }
+
+    /* Main status banner */
+
+    .status-banner {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 30px 34px;
+      margin-bottom: 24px;
+      background: var(--wine-dark);
+      border-radius: 6px;
+      color: white;
+      box-shadow: 0 12px 30px rgba(77, 27, 41, 0.12);
+    }
+
+    .status-banner::before {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 1px solid rgba(234, 216, 170, 0.15);
+      right: 65px;
+      top: -180px;
+    }
+
+    .status-banner::after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 1px solid rgba(234, 216, 170, 0.13);
+      right: -45px;
+      bottom: -150px;
+    }
+
+    .banner-content, .eta-box {
+      position: relative;
+      z-index: 1;
+    }
+
+    .banner-kicker {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+
+    .banner-content h2 {
+      font-size: clamp(23px, 3vw, 31px);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .banner-content p {
+      font-size: 12px;
+      color: #e1cfd0;
+      line-height: 1.8;
+      max-width: 550px;
+    }
+
+    .banner-content strong {
+      color: white;
+    }
+
+    .eta-box {
+      text-align: right;
+      padding-left: 35px;
+      border-left: 1px solid rgba(234, 216, 170, 0.25);
+    }
+
+    .eta-label {
+      color: var(--gold-light);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .eta-date {
+      font-family: 'Playfair Display', serif;
+      font-size: 27px;
+      white-space: nowrap;
+      margin-bottom: 6px;
+    }
+
+    .eta-note {
+      color: #d7c2c4;
+      font-size: 10px;
+    }
+
+    /* Shipment progress */
+
+    .progress-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 29px 31px 25px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 34px;
+      flex-wrap: wrap;
+    }
+
+    .card-heading h2 {
+      color: var(--wine-dark);
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .muted-small {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .progress-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .progress-track::before {
+      content: "";
+      height: 2px;
+      background: #e8ded4;
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 19px;
+    }
+
+    .progress-line {
+      position: absolute;
+      left: 8%;
+      top: 19px;
+      height: 2px;
+      background: var(--gold);
+      width: 0%;
+      transition: width 0.5s ease;
+      max-width: 84%;
+    }
+
+    .progress-step {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .step-circle {
+      width: 39px;
+      height: 39px;
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 1px solid #ded3c8;
+      color: #a99c91;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.completed .step-circle {
+      background: var(--wine);
+      color: white;
+      border-color: var(--wine);
+    }
+
+    .progress-step.current .step-circle {
+      background: var(--gold);
+      color: var(--wine-dark);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 5px rgba(197, 161, 91, 0.15);
+    }
+
+    .progress-step h4 {
+      font-size: 10px;
+      color: #a49a91;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .progress-step.completed h4,
+    .progress-step.current h4 {
+      color: var(--wine-dark);
+    }
+
+    .progress-step p {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.6;
+    }
+
+    /* Main layout */
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(310px, 0.85fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .left-column, .right-column {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 23px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .panel-header h2 {
+      font-size: 21px;
+      color: var(--wine-dark);
+      font-weight: 600;
+    }
+
+    .panel-header p {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 6px;
+    }
+
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 11px;
+      background: var(--green-bg);
+      color: var(--green);
+      border-radius: 30px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: #62a171;
+      border-radius: 50%;
+      animation: blink 1.8s infinite;
+    }
+
+    .map-wrap {
+      position: relative;
+      height: 440px;
+      background: #e9e6dc;
+    }
+
+    #trackingMap {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: #e8e4d9;
+    }
+
+    .map-legend {
+      position: absolute;
+      bottom: 17px;
+      left: 17px;
+      z-index: 500;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      padding: 13px 15px;
+      background: rgba(255, 253, 249, 0.96);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: 0 4px 14px rgba(48, 37, 34, 0.08);
+      font-size: 10px;
+      color: #62534d;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-line {
+      width: 20px;
+      height: 3px;
+      background: var(--wine);
+      border-radius: 5px;
+    }
+
+    .map-footer {
+      padding: 16px 23px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+    }
+
+    .map-footer p {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .map-footer strong {
+      color: var(--wine);
+    }
+
+    .map-button {
+      padding: 10px 13px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--wine);
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .map-button:hover {
+      background: #f7eee5;
+    }
+
+    /* Custom map markers */
+
+    .custom-map-marker {
+      background: transparent;
+      border: none;
+    }
+
+    .marker-pin {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 3px solid white;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow: 0 3px 12px rgba(48, 37, 34, 0.24);
+      font-size: 15px;
+    }
+
+    .marker-pin span {
+      transform: rotate(45deg);
+    }
+
+    .marker-warehouse {
+      background: var(--wine);
+      color: white;
+    }
+
+    .marker-destination {
+      background: var(--gold);
+      color: var(--wine-dark);
+    }
+
+    .vehicle-marker {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      background: var(--wine-dark);
+      border: 3px solid white;
+      border-radius: 50%;
+      color: white;
+      font-size: 23px;
+      box-shadow: 0 4px 15px rgba(48, 37, 34, 0.3);
+    }
+
+    .leaflet-popup-content-wrapper {
+      background: var(--white);
+      color: var(--text);
+      border-radius: 5px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .leaflet-popup-content {
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .leaflet-popup-content strong {
+      color: var(--wine);
+      font-size: 12px;
+    }
+
+    /* Event timeline */
+
+    .events-body {
+      padding: 25px;
+    }
+
+    .event {
+      position: relative;
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 13px;
+      padding-bottom: 27px;
+    }
+
+    .event:last-child {
+      padding-bottom: 0;
+    }
+
+    .event:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      left: 17px;
+      top: 38px;
+      bottom: 5px;
+      background: #e4d9ce;
+    }
+
+    .event-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #f3e9df;
+      color: var(--muted);
+      font-size: 15px;
+      border: 1px solid #e7d9c9;
+      z-index: 1;
+    }
+
+    .event.done .event-icon {
+      background: var(--green-bg);
+      border-color: #d5e4d0;
+      color: var(--green);
+    }
+
+    .event.current .event-icon {
+      background: var(--wine);
+      border-color: var(--wine);
+      color: white;
+      box-shadow: 0 0 0 4px #f3e9e9;
+    }
+
+    .event h4 {
+      font-size: 12px;
+      color: #b0a49b;
+      font-weight: 600;
+      margin: 3px 0 6px;
+    }
+
+    .event.done h4,
+    .event.current h4 {
+      color: var(--wine-dark);
+    }
+
+    .event p {
+      font-size: 10px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .event-time {
+      color: #a69a90;
+      font-size: 9px;
+      white-space: nowrap;
+      padding-top: 5px;
+    }
+
+    .event.done .event-time,
+    .event.current .event-time {
+      color: var(--wine);
+    }
+
+    /* Right side panels */
+
+    .package-body {
+      padding: 23px;
+    }
+
+    .product-preview {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .product-emoji {
+      width: 76px;
+      height: 76px;
+      flex-shrink: 0;
+      background: #f2e8dd;
+      display: grid;
+      place-items: center;
+      border-radius: 4px;
+      font-size: 34px;
+    }
+
+    .product-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 7px;
+      line-height: 1.6;
+    }
+
+    .product-meta {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    .package-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 15px;
+      font-size: 11px;
+    }
+
+    .package-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .package-row span {
+      color: var(--muted);
+    }
+
+    .package-row strong {
+      color: var(--text);
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .package-divider {
+      border-top: 1px solid var(--border);
+      margin: 20px 0;
+    }
+
+    .address-block {
+      padding: 14px;
+      background: #faf4eb;
+      border: 1px solid #eee1d0;
+      border-radius: 4px;
+      display: flex;
+      gap: 12px;
+      margin-top: 17px;
+    }
+
+    .address-symbol {
+      color: var(--wine);
+      font-size: 18px;
+    }
+
+    .address-content h4 {
+      font-size: 10px;
+      color: var(--wine);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .address-content p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+    }
+
+    .address-content strong {
+      color: var(--text);
+    }
+
+    .support-body {
+      padding: 23px;
+    }
+
+    .support-intro {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .support-option {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 14px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .support-icon {
+      width: 39px;
+      height: 39px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #f2e7dc;
+      color: var(--wine);
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .support-option h4 {
+      color: var(--wine-dark);
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .support-option p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .support-option a {
+      margin-left: auto;
+      color: var(--wine);
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .need-help {
+      display: block;
+      margin-top: 12px;
+      width: 100%;
+      text-align: center;
+      padding: 13px;
+      border: 1px solid var(--wine);
+      background: var(--wine);
+      color: white;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .need-help:hover {
+      background: var(--wine-dark);
+    }
+
+    .bottom-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.8;
+      margin-top: 30px;
+    }
+
+    .bottom-note span {
+      color: var(--gold);
+      font-size: 20px;
+    }
+
+    footer {
+      padding: 35px 20px;
+      text-align: center;
+      background: var(--wine-dark);
+      color: #e8dcd4;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 25px;
+      color: white;
+      margin-bottom: 9px;
+    }
+
+    .footer-logo span {
+      color: var(--gold-light);
+    }
+
+    footer p {
+      font-size: 10px;
+      color: #c7b4ad;
+      line-height: 1.8;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 3000;
+      bottom: 25px;
+      left: 50%;
+      transform: translate(-50%, 25px);
+      background: var(--wine-dark);
+      color: white;
+      padding: 14px 21px;
+      border-radius: 4px;
+      box-shadow: 0 8px 25px rgba(48, 37, 34, 0.2);
+      font-size: 11px;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+      width: max-content;
+      max-width: calc(100vw - 30px);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    @media (max-width: 1000px) {
+      .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .right-column {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+
+      .nav-links a:nth-child(4) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .announcement {
+        font-size: 9px;
+        letter-spacing: 0.8px;
+      }
+
+      .navbar {
+        min-height: 68px;
+        padding: 12px 15px;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-actions {
+        gap: 10px;
+        font-size: 11px;
+      }
+
+      .bag-link {
+        padding: 10px;
+      }
+
+      main {
+        padding: 25px 13px 55px;
+      }
+
+      .breadcrumb {
+        margin-bottom: 23px;
+      }
+
+      .page-heading {
+        align-items: stretch;
+        gap: 20px;
+      }
+
+      .order-search {
+        width: 100%;
+      }
+
+      .status-banner {
+        grid-template-columns: 1fr;
+        padding: 24px 21px;
+        gap: 22px;
+      }
+
+      .eta-box {
+        padding: 18px 0 0;
+        border-left: none;
+        border-top: 1px solid rgba(234, 216, 170, 0.25);
+        text-align: left;
+      }
+
+      .eta-date {
+        font-size: 25px;
+      }
+
+      .progress-card {
+        padding: 22px 12px;
+      }
+
+      .card-heading {
+        padding: 0 5px;
+        margin-bottom: 26px;
+      }
+
+      .card-heading h2 {
+        font-size: 19px;
+      }
+
+      .progress-track {
+        gap: 2px;
+      }
+
+      .progress-track::before {
+        left: 9%;
+        right: 9%;
+        top: 15px;
+      }
+
+      .progress-line {
+        left: 9%;
+        top: 15px;
+        max-width: 82%;
+      }
+
+      .step-circle {
+        width: 31px;
+        height: 31px;
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+
+      .progress-step h4 {
+        font-size: 8px;
+        line-height: 1.5;
+      }
+
+      .progress-step p {
+        font-size: 8px;
+        overflow-wrap: anywhere;
+      }
+
+      .dashboard-grid,
+      .left-column,
+      .right-column {
+        gap: 18px;
+      }
+
+      .right-column {
+        display: flex;
+      }
+
+      .panel-header {
+        padding: 19px 17px;
+      }
+
+      .panel-header h2 {
+        font-size: 19px;
+      }
+
+      .map-wrap {
+        height: 350px;
+      }
+
+      .map-legend {
+        left: 9px;
+        bottom: 9px;
+        padding: 10px;
+        font-size: 9px;
+      }
+
+      .map-footer {
+        padding: 14px;
+      }
+
+      .events-body {
+        padding: 20px 15px;
+      }
+
+      .event {
+        grid-template-columns: 32px minmax(0, 1fr) auto;
+        gap: 10px;
+      }
+
+      .event-icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .event:not(:last-child)::after {
+        left: 15px;
+        top: 34px;
+      }
+
+      .event h4 {
+        font-size: 11px;
+      }
+
+      .event p {
+        font-size: 9px;
+      }
+
+      .event-time {
+        font-size: 8px;
+      }
+
+      .package-body,
+      .support-body {
+        padding: 19px 17px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="announcement">
+    THOUGHTFULLY MADE, BEAUTIFULLY DELIVERED
+    <span>✦</span>
+    EVERY GIFT CARRIES A LITTLE LOVE
+  </div>
+
+  <header>
+    <nav class="navbar">
+      <a href="home.html" class="logo">
+        MakeIt<span>Mine</span>
+        <small>Made personal. Made with love.</small>
+      </a>
+
+      <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="categories.html">Shop Gifts</a>
+        <a href="customize.html">Customize</a>
+        <a href="about.html">Our Story</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="login.html">My Account</a>
+        <a href="cart.html" class="bag-link">
+          Bag <span id="cartCount">0</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="breadcrumb">
+      <a href="home.html">Home</a>
+      <span>›</span>
+      <a href="cart.html">My Orders</a>
+      <span>›</span>
+      <span>Track Shipment</span>
+    </div>
+
+    <section class="page-heading">
+      <div>
+        <div class="eyebrow">Your gift's journey</div>
+        <h1>Track Your Order</h1>
+        <p class="heading-description">
+          From our hands to your doorstep, follow every step of your
+          MakeItMine delivery.
+        </p>
+      </div>
+
+      <div>
+        <form class="order-search" id="searchForm">
+          <span class="search-icon">⌕</span>
+          <input
+            id="orderSearch"
+            type="text"
+            placeholder="Enter your order ID"
+            aria-label="Order ID"
+          >
+          <button class="search-btn" type="submit">Track</button>
+        </form>
+        <div class="search-feedback" id="searchFeedback"></div>
+      </div>
+    </section>
+
+    <!-- Current shipment status -->
+
+    <section class="status-banner">
+      <div class="banner-content">
+        <div class="banner-kicker">✦ Your order is on its journey</div>
+        <h2 id="statusHeading">Your gift is being prepared</h2>
+        <p id="statusDescription">
+          We're getting your order ready with care. Your shipment updates
+          will appear here as its status changes.
+        </p>
+      </div>
+
+      <div class="eta-box">
+        <div class="eta-label">Estimated delivery</div>
+        <div class="eta-date" id="estimatedDate">Calculating...</div>
+        <div class="eta-note" id="estimatedNote">
+          Estimated date, subject to dispatch
+        </div>
+      </div>
+    </section>
+
+    <!-- Shipment progress -->
+
+    <section class="progress-card">
+      <div class="card-heading">
+        <h2>Delivery Progress</h2>
+        <span class="muted-small" id="progressLabel">Shipment journey</span>
+      </div>
+
+      <div class="progress-track" id="progressTrack">
+        <div class="progress-line" id="progressLine"></div>
+
+        <div class="progress-step" data-step="0">
+          <div class="step-circle">✓</div>
+          <h4>Order Placed</h4>
+          <p>Confirmed</p>
+        </div>
+
+        <div class="progress-step" data-step="1">
+          <div class="step-circle">▣</div>
+          <h4>Processing</h4>
+          <p>Preparing gift</p>
+        </div>
+
+        <div class="progress-step" data-step="2">
+          <div class="step-circle">↗</div>
+          <h4>Shipped</h4>
+          <p>On the way</p>
+        </div>
+
+        <div class="progress-step" data-step="3">
+          <div class="step-circle">♧</div>
+          <h4>Out for Delivery</h4>
+          <p>Near you</p>
+        </div>
+
+        <div class="progress-step" data-step="4">
+          <div class="step-circle">♥</div>
+          <h4>Delivered</h4>
+          <p>At your door</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main dashboard -->
+
+    <div class="dashboard-grid">
+
+      <div class="left-column">
+
+        <!-- Interactive map -->
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Shipment Map</h2>
+              <p>Explore your delivery route on the map</p>
+            </div>
+
+            <div class="live-pill">
+              <span class="live-dot"></span>
+              <span id="mapStatus">Route Preview</span>
+            </div>
+          </div>
+
+          <div class="map-wrap">
+            <div id="trackingMap" aria-label="Interactive delivery map"></div>
+
+            <div class="map-legend">
+              <div class="legend-row">
+                <span class="legend-dot" style="background:#702b3b"></span>
+                Dispatch point
+              </div>
+
+              <div class="legend-row">
+                <span class="legend-line"></span>
+                Delivery route
+              </div>
+
+              <div class="legend-row">
+                <span class="legend-dot" style="background:#c5a15b"></span>
+                Destination
+              </div>
+            </div>
+          </div>
+
+          <div class="map-footer">
+            <p>
+              <strong id="mapRouteTitle">Dispatch point → Your destination</strong>
+              <br>
+              <span id="mapRouteNote">
+                Illustrative route preview. Courier GPS tracking is not connected.
+              </span>
+            </p>
+
+            <button class="map-button" id="recenterMap" type="button">
+              ⊙ Recenter Map
+            </button>
+          </div>
+        </section>
+
+        <!-- Shipment activity -->
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Shipment Activity</h2>
+              <p>Updates associated with your order</p>
+            </div>
+          </div>
+
+          <div class="events-body" id="eventTimeline"></div>
+        </section>
+
+      </div>
+
+      <aside class="right-column">
+
+        <!-- Package information -->
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Package Details</h2>
+              <p>Your order at a glance</p>
+            </div>
+          </div>
+
+          <div class="package-body">
+
+            <div class="product-preview">
+              <div class="product-emoji" id="productEmoji">🎁</div>
+
+              <div>
+                <div class="product-name" id="productName">
+                  Your Personalized Gift
+                </div>
+                <div class="product-meta" id="productMeta">
+                  Order items will appear here
+                </div>
+              </div>
+            </div>
+
+            <div class="package-row">
+              <span>Order ID</span>
+              <strong id="orderId">—</strong>
+            </div>
+
+            <div class="package-row">
+              <span>Order date</span>
+              <strong id="orderDate">—</strong>
+            </div>
+
+            <div class="package-row">
+              <span>Shipment status</span>
+              <strong id="packageStatus">Processing</strong>
+            </div>
+
+            <div class="package-row">
+              <span>Payment method</span>
+              <strong id="paymentMethod">—</strong>
+            </div>
+
+            <div class="package-row">
+              <span>Order total</span>
+              <strong id="orderTotal">—</strong>
+            </div>
+
+            <div class="package-divider"></div>
+
+            <div class="package-row">
+              <span>Tracking number</span>
+              <strong id="trackingNumber">Not assigned</strong>
+            </div>
+
+            <div class="address-block">
+              <div class="address-symbol">⌖</div>
+
+              <div class="address-content">
+                <h4>Delivering to</h4>
+                <p id="deliveryAddress">
+                  <strong>Delivery address unavailable</strong><br>
+                  Add your delivery details at checkout to display them here.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Customer support -->
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Need a Hand?</h2>
+              <p>We're here to help</p>
+            </div>
+          </div>
+
+          <div class="support-body">
+            <p class="support-intro">
+              Questions about your package or need to update your delivery
+              details? Get in touch with the MakeItMine team.
+            </p>
+
+            <div class="support-option">
+              <div class="support-icon">✉</div>
+              <div>
+                <h4>Email Support</h4>
+                <p>Send us your order details</p>
+              </div>
+              <a href="contact.html">Contact →</a>
+            </div>
+
+            <div class="support-option">
+              <div class="support-icon">↗</div>
+              <div>
+                <h4>Order Information</h4>
+                <p>Review your order summary</p>
+              </div>
+              <a href="order-success.html">View →</a>
+            </div>
+
+            <a href="contact.html" class="need-help">
+              Contact Customer Support →
+            </a>
+          </div>
+        </section>
+
+      </aside>
+    </div>
+
+    <div class="bottom-note">
+      <span>✧</span>
+      <p>
+        Every MakeItMine gift is prepared with love.
+        Thank you for letting us be part of your special moments.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-logo">MakeIt<span>Mine</span></div>
+    <p>Made personal. Made with love.</p>
+    <p style="margin-top:12px">
+      © <span id="year"></span> MakeItMine. All rights reserved.
+    </p>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Interactive map library -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    "use strict";
+
+    const CART_KEY = "mim_cart";
+    const ORDER_KEY = "mim_last_order";
+
+    /*
+      Shipment status values:
+      0 = Order Placed
+      1 = Processing
+      2 = Shipped
+      3 = Out for Delivery
+      4 = Delivered
+
+      IMPORTANT:
+      The default map route and shipment status are illustrative.
+      Replace them with verified order and courier API data for live tracking.
+    */
+
+    const DEFAULT_WAREHOUSE = {
+      name: "MakeItMine Dispatch Centre",
+      lat: 28.6139,
+      lng: 77.2090
+    };
+
+    const DEFAULT_DESTINATION = {
+      name: "Delivery Destination",
+      lat: 28.5355,
+      lng: 77.3910
+    };
+
+    const STATUS_INFO = [
+      {
+        title: "Your order has been placed!",
+        description: "Thank you for shopping with MakeItMine. Your order details have been recorded.",
+        short: "Order Placed"
+      },
+      {
+        title: "Your gift is being prepared",
+        description: "We're getting your order ready with care. Your shipment updates will appear here as its status changes.",
+        short: "Processing"
+      },
+      {
+        title: "Your package is on its way",
+        description: "Your gift has been marked as shipped. Check the shipment activity for available updates.",
+        short: "Shipped"
+      },
+      {
+        title: "Your gift is out for delivery",
+        description: "Your package is marked as out for delivery. Please keep an eye out for your delivery.",
+        short: "Out for Delivery"
+      },
+      {
+        title: "Your gift has arrived!",
+        description: "Your order is marked as delivered. We hope it makes your moment extra special!",
+        short: "Delivered"
+      }
+    ];
+
+    const EVENT_ICONS = ["✓", "▣", "↗", "♧", "♥"];
+
+    let map;
+    let routeLayer;
+    let warehouseMarker;
+    let destinationMarker;
+    let vehicleMarker;
+    let routeCoordinates = [];
+    let activeOrder = null;
+    let toastTimeout;
+
+    function readStorage(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (error) {
+        console.warn("Unable to read local storage:", key);
+        return fallback;
+      }
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0
+      }).format(Number(amount) || 0);
+    }
+
+    function formatDate(value) {
+      if (!value) return "Not available";
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return String(value);
+      }
+
+      return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+    }
+
+    function getOrderItems(order) {
+      if (order && Array.isArray(order.items)) {
+        return order.items;
+      }
+
+      return readStorage(CART_KEY, []);
+    }
+
+    function getItemName(item) {
+      return item.name || item.title || item.productName || "Personalized Gift";
+    }
+
+    function getQuantity(item) {
+      return Math.max(1, Number(item.quantity) || 1);
+    }
+
+    function getUnitPrice(item) {
+      return Number(item.price ?? item.basePrice ?? item.amount ?? 0) || 0;
+    }
+
+    function getItemsTotal(items) {
+      return items.reduce((sum, item) => {
+        return sum + (
+          Number(item.totalPrice) ||
+          getUnitPrice(item) * getQuantity(item)
+        );
+      }, 0);
+    }
+
+    function getEmoji(item) {
+      if (item && item.emoji) return item.emoji;
+
+      const text = (
+        getItemName(item) + " " +
+        (item.type || "") + " " +
+        (item.category || "")
+      ).toLowerCase();
+
+      if (text.includes("mug") || text.includes("cup")) return "☕";
+      if (text.includes("frame") || text.includes("photo")) return "🖼️";
+      if (text.includes("hamper") || text.includes("box")) return "🎁";
+      if (text.includes("jewel") || text.includes("necklace")) return "💎";
+      if (text.includes("flower")) return "💐";
+      if (text.includes("candle")) return "🕯️";
+      if (text.includes("teddy")) return "🧸";
+
+      return "🎁";
+    }
+
+    
+function getStatusIndex(order) {
+  if (!order) return 0;
+
+  const status = String(
+    order.status || order.shipmentStatus || "placed"
+  ).toLowerCase().replaceAll("-", "_").replaceAll(" ", "_");
+
+  const statusMap = {
+    placed: 0,
+    confirmed: 0,
+    processing: 1,
+    shipped: 2,
+    out_for_delivery: 3,
+    delivered: 4,
+    cancellation_requested: 0,
+    cancelled: 0
+  };
+
+  return statusMap[status] ?? 0;
+}
+
+    function getOrderNumber(order) {
+      if (!order) return "No order loaded";
+
+      return order.orderNumber ||
+        order.orderId ||
+        order.id ||
+        "Order ID unavailable";
+    }
+
+    function getEstimatedDate(order) {
+      if (order && order.estimatedDelivery) {
+        return formatDate(order.estimatedDelivery);
+      }
+
+      const date = new Date();
+      date.setDate(date.getDate() + 5);
+      return formatDate(date);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(toastTimeout);
+
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3200);
+    }
+
+    function setStatusProgress(statusIndex) {
+      const steps = document.querySelectorAll(".progress-step");
+      const line = document.getElementById("progressLine");
+
+      steps.forEach((step, index) => {
+        step.classList.toggle("completed", index < statusIndex);
+        step.classList.toggle("current", index === statusIndex);
+
+        const circle = step.querySelector(".step-circle");
+
+        if (index < statusIndex) {
+          circle.textContent = "✓";
+        } else {
+          circle.textContent = ["✓", "▣", "↗", "♧", "♥"][index];
+        }
+      });
+
+      line.style.width = (statusIndex / 4) * 84 + "%";
+
+      document.getElementById("progressLabel").textContent =
+        statusIndex === 4
+          ? "Delivery completed"
+          : "Step " + (statusIndex + 1) + " of 5";
+
+
+const info = STATUS_INFO[statusIndex] || STATUS_INFO[0];
+
+document.getElementById("statusHeading").textContent =
+  info.title;
+
+document.getElementById("statusDescription").textContent =
+  info.description;
+
+document.getElementById("packageStatus").textContent =
+  info.short;
+
+
+      document.getElementById("mapStatus").textContent =
+        statusIndex >= 2 ? "Route Preview" : "Dispatch Preview";
+    }
+
+   
+function renderEvents(order, statusIndex) {
+  const container = document.getElementById("eventTimeline");
+
+  const statusLabels = [
+    { key: "placed", title: "Order placed", description: "Your order has been recorded in the system." },
+    { key: "confirmed", title: "Order confirmed", description: "Your order has been confirmed." },
+    { key: "processing", title: "Gift preparation", description: "Your order is being prepared for dispatch." },
+    { key: "shipped", title: "Package shipped", description: "Your parcel has been marked as shipped." },
+    { key: "out_for_delivery", title: "Out for delivery", description: "The package is on its way to you." },
+    { key: "delivered", title: "Delivered successfully", description: "Your package has been delivered." }
+  ];
+
+  const savedEvents = Array.isArray(order?.events) ? order.events : [];
+  const currentStatus = String(order?.status || "placed").toLowerCase();
+
+  const statusMap = {
+    placed: 0,
+    confirmed: 1,
+    processing: 2,
+    shipped: 3,
+    out_for_delivery: 4,
+    delivered: 5,
+    cancellation_requested: -1,
+    cancelled: -1
+  };
+
+  const currentIndex = statusMap[currentStatus] ?? 0;
+
+  if (currentStatus === "cancelled" || currentStatus === "cancellation_requested") {
+    container.innerHTML = `
+      <div class="event current">
+        <div class="event-icon">!</div>
+        <div>
+          <h4>${currentStatus === "cancelled" ? "Order cancelled" : "Cancellation requested"}</h4>
+          <p>${escapeHTML(order.cancellationReason || "Check your order details for more information.")}</p>
+        </div>
+        <div class="event-time">${order.updatedAt ? escapeHTML(formatDate(order?.createdAt)) : "Status updated"}</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = statusLabels
+    .map((event, index) => {
+      const saved = savedEvents
+        .filter(item => String(item.status || "").toLowerCase() === event.key)
+        .sort((a, b) => new Date(b.timestamp || b.changedAt || 0) - new Date(a.timestamp || a.changedAt || 0))[0];
+
+      const isComplete = index < currentIndex;
+      const isCurrent = index === currentIndex;
+      const isVisible = index <= currentIndex;
+
+     
+const timeValue = saved?.timestamp || saved?.changedAt || saved?.date ||
+  (index === 0 ? order?.createdAt : null);
+
+
+      const time = timeValue ? formatDate(timeValue) : "Pending update";
+
+      return `
+        <div class="event ${isComplete ? "done" : ""} ${isCurrent ? "current" : ""}">
+          <div class="event-icon">${isComplete ? "✓" : EVENT_ICONS[index] || "•"}</div>
+          <div>
+            <h4>${escapeHTML(event.title)}</h4>
+            <p>${escapeHTML(
+              saved?.description || saved?.note ||
+              (isVisible ? event.description : "Awaiting shipment update.")
+            )}</p>
+          </div>
+          <div class="event-time">${escapeHTML(time)}</div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+
+    function renderPackage(order) {
+      const items = getOrderItems(order);
+      const firstItem = items[0];
+
+      document.getElementById("orderId").textContent =
+        getOrderNumber(order);
+
+      document.getElementById("orderDate").textContent =
+        formatDate(order && (order.createdAt || order.orderDate));
+
+      document.getElementById("paymentMethod").textContent =
+        order && order.paymentMethod
+          ? order.paymentMethod
+          : "Not available";
+
+      document.getElementById("trackingNumber").textContent =
+        order && order.trackingNumber
+          ? order.trackingNumber
+          : "Not assigned";
+
+      document.getElementById("orderTotal").textContent =
+        formatCurrency(
+          order && order.total != null
+            ? order.total
+            : getItemsTotal(items)
+        );
+
+      if (firstItem) {
+        document.getElementById("productEmoji").textContent =
+          getEmoji(firstItem);
+
+        document.getElementById("productName").textContent =
+          items.length > 1
+            ? getItemName(firstItem) + " + " + (items.length - 1) + " more"
+            : getItemName(firstItem);
+
+        document.getElementById("productMeta").textContent =
+          items.reduce((sum, item) => sum + getQuantity(item), 0) +
+          " item(s) in your order";
+      } else {
+        document.getElementById("productEmoji").textContent = "🎁";
+        document.getElementById("productName").textContent =
+          "Your Personalized Gift";
+        document.getElementById("productMeta").textContent =
+          "Order items unavailable";
+      }
+
+      renderAddress(order);
+    }
+
+    function renderAddress(order) {
+      const container = document.getElementById("deliveryAddress");
+
+      const address = order && (
+        order.deliveryAddress ||
+        order.shippingAddress ||
+        order.address
+      );
+
+      if (!address) {
+        container.innerHTML =
+          "<strong>Delivery address unavailable</strong><br>" +
+          "Save the delivery address at checkout to display it here.";
+
+        return;
+      }
+
+      if (typeof address === "string") {
+        container.textContent = address;
+        return;
+      }
+
+      const name = address.name || order.customerName || "";
+      const phone = address.phone || order.phone || "";
+      const parts = [
+        name,
+        address.addressLine1 || address.line1 || address.street,
+        address.addressLine2 || address.line2,
+        address.landmark,
+        address.city,
+        address.state,
+        address.postalCode || address.pincode || address.zip,
+        address.country
+      ].filter(Boolean);
+
+      container.innerHTML =
+        (name ? "<strong>" + escapeHTML(name) + "</strong><br>" : "") +
+        parts
+          .filter(part => part !== name)
+          .map(part => escapeHTML(part))
+          .join("<br>") +
+        (phone ? "<br>Phone: " + escapeHTML(phone) : "");
+    }
+
+    function renderDeliveryDate(order) {
+      document.getElementById("estimatedDate").textContent =
+        getEstimatedDate(order);
+
+      document.getElementById("estimatedNote").textContent =
+        order && order.estimatedDelivery
+          ? "Estimated delivery from your order record"
+          : "Illustrative estimate — actual delivery may vary";
+    }
+
+    /*
+      Map setup:
+      The default map is centred on Delhi NCR as a demonstration.
+      Coordinates from the saved order can replace these defaults.
+    */
+
+    function validCoordinate(value) {
+      return Number.isFinite(Number(value));
+    }
+
+    function getCoordinates(order) {
+      const address = order && (
+        order.deliveryAddress ||
+        order.shippingAddress ||
+        order.address
+      );
+
+      const hasDestination =
+        address &&
+        typeof address === "object" &&
+        validCoordinate(address.lat) &&
+        validCoordinate(address.lng);
+
+      const hasWarehouse =
+        order &&
+        order.warehouse &&
+        validCoordinate(order.warehouse.lat) &&
+        validCoordinate(order.warehouse.lng);
+
+      return {
+        warehouse: hasWarehouse
+          ? {
+              lat: Number(order.warehouse.lat),
+              lng: Number(order.warehouse.lng),
+              name: order.warehouse.name || "Dispatch Centre"
+            }
+          : DEFAULT_WAREHOUSE,
+
+        destination: hasDestination
+          ? {
+              lat: Number(address.lat),
+              lng: Number(address.lng),
+              name: address.name || "Delivery Destination"
+            }
+          : DEFAULT_DESTINATION,
+
+        destinationIsReal: Boolean(hasDestination)
+      };
+    }
+
+    function markerIcon(kind, symbol) {
+      if (kind === "vehicle") {
+        return L.divIcon({
+          className: "custom-map-marker",
+          html: '<div class="vehicle-marker">' + symbol + "</div>",
+          iconSize: [48, 48],
+          iconAnchor: [24, 24]
+        });
+      }
+
+      return L.divIcon({
+        className: "custom-map-marker",
+        html:
+          '<div class="marker-pin ' +
+          (kind === "warehouse" ? "marker-warehouse" : "marker-destination") +
+          '"><span>' + symbol + "</span></div>",
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -38]
+      });
+    }
+
+    function createMap(order) {
+      if (!window.L) {
+        document.getElementById("trackingMap").innerHTML =
+          '<div style="padding:25px;color:#702b3b">' +
+          "The map library could not load. Please check your internet connection." +
+          "</div>";
+        return;
+      }
+
+      const coordinates = getCoordinates(order);
+
+      const warehouse = coordinates.warehouse;
+      const destination = coordinates.destination;
+
+      routeCoordinates = [
+        [warehouse.lat, warehouse.lng],
+        [destination.lat, destination.lng]
+      ];
+
+      map = L.map("trackingMap", {
+        scrollWheelZoom: false
+      }).setView(
+        [warehouse.lat, warehouse.lng],
+        10
+      );
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
+        maxZoom: 19
+      }).addTo(map);
+
+      warehouseMarker = L.marker(
+        [warehouse.lat, warehouse.lng],
+        { icon: markerIcon("warehouse", "⌂") }
+      ).addTo(map);
+
+      warehouseMarker.bindPopup(
+        "<strong>" + escapeHTML(warehouse.name) +
+        "</strong><br>Dispatch point"
+      );
+
+      destinationMarker = L.marker(
+        [destination.lat, destination.lng],
+        { icon: markerIcon("destination", "⌖") }
+      ).addTo(map);
+
+      destinationMarker.bindPopup(
+        "<strong>" + escapeHTML(destination.name) +
+        "</strong><br>Delivery destination"
+      );
+
+      routeLayer = L.polyline(routeCoordinates, {
+        color: "#702b3b",
+        weight: 4,
+        opacity: 0.85,
+        dashArray: "8 9",
+        lineCap: "round"
+      }).addTo(map);
+
+      const statusIndex = getStatusIndex(order);
+
+      const markerPosition = statusIndex >= 4
+        ? destination
+        : statusIndex >= 3
+          ? destination
+          : statusIndex >= 2
+            ? {
+                lat: (warehouse.lat * 0.35) + (destination.lat * 0.65),
+                lng: (warehouse.lng * 0.35) + (destination.lng * 0.65)
+              }
+            : warehouse;
+
+      vehicleMarker = L.marker(
+        [markerPosition.lat, markerPosition.lng],
+        { icon: markerIcon("vehicle", "🚚") }
+      ).addTo(map);
+
+      vehicleMarker.bindPopup(
+        "<strong>" +
+        escapeHTML(STATUS_INFO[statusIndex].short) +
+        "</strong><br>" +
+        (
+          statusIndex >= 2
+            ? "Illustrative shipment position"
+            : "Waiting for dispatch"
+        )
+      );
+
+      map.fitBounds(routeLayer.getBounds(), {
+        padding: [45, 45],
+        maxZoom: 12
+      });
+
+      document.getElementById("mapRouteTitle").textContent =
+        warehouse.name + " → " + destination.name;
+
+      document.getElementById("mapRouteNote").textContent =
+        coordinates.destinationIsReal
+          ? "Route preview between saved coordinates. No live courier GPS connected."
+          : "Demo route across Delhi NCR. Add actual destination coordinates for your order.";
+
+      setTimeout(() => map.invalidateSize(), 150);
+    }
+
+    function recenterMap() {
+      if (!map || !routeLayer) {
+        showToast("Map is not available yet.");
+        return;
+      }
+
+      map.fitBounds(routeLayer.getBounds(), {
+        padding: [45, 45],
+        maxZoom: 12
+      });
+    }
+
+    function renderOrder(order) {
+      activeOrder = order;
+
+      const statusIndex = getStatusIndex(order);
+
+      document.getElementById("cartCount").textContent =
+        readStorage(CART_KEY, []).reduce((sum, item) => {
+          return sum + getQuantity(item);
+        }, 0);
+
+      setStatusProgress(statusIndex);
+      renderEvents(order, statusIndex);
+      renderPackage(order);
+      renderDeliveryDate(order);
+    }
+
+    
+const API_BASE = "http://localhost:5000/api";
+
+function getAuthToken() {
+  return localStorage.getItem("mim_token");
+}
+
+async function fetchMyOrders() {
+  const token = getAuthToken();
+
+  if (!token) {
+    throw new Error("Please log in to track your order.");
+  }
+
+  const response = await fetch(`${API_BASE}/orders/my`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Unable to fetch your orders.");
+  }
+
+  return data.orders || [];
+}
+
+async function fetchTracking(orderId) {
+  const token = getAuthToken();
+
+  const response = await fetch(
+    `${API_BASE}/orders/${encodeURIComponent(orderId)}/tracking`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Unable to fetch tracking.");
+  }
+
+  return data.tracking;
+}
+
+
+    
+async function loadInitialOrder() {
+  const params = new URLSearchParams(window.location.search);
+  const requestedId = params.get("id");
+
+  try {
+    if (requestedId) {
+      const tracking = await fetchTracking(requestedId);
+      const orders = await fetchMyOrders();
+
+      const order = orders.find(item => item._id === requestedId);
+
+      if (!order) {
+        throw new Error("Order not found in your account.");
+      }
+
+      const combinedOrder = {
+        ...order,
+        ...tracking,
+        _id: order._id,
+        orderNumber: order.orderNumber,
+        total: order.totalAmount,
+        items: order.items,
+        shippingAddress: order.shippingAddress,
+        paymentMethod: order.paymentMethod,
+        createdAt: order.createdAt
+      };
+
+      renderOrder(combinedOrder);
+      createMap(combinedOrder);
+    } else {
+      renderOrder(null);
+      createMap(null);
+    }
+  } catch (error) {
+    console.error("Initial tracking error:", error);
+    renderOrder(null);
+    showToast(error.message || "Unable to load tracking details.");
+  }
+}
+
+
+
+document.getElementById("searchForm").addEventListener(
+  "submit",
+  async function (event) {
+    event.preventDefault();
+
+    const input = document.getElementById("orderSearch");
+    const feedback = document.getElementById("searchFeedback");
+
+    const searchValue = input.value.trim().replace(/^#/, "").toLowerCase();
+
+    if (!searchValue) {
+      feedback.textContent = "Please enter your order number.";
+      return;
+    }
+
+    feedback.textContent = "Searching for your order...";
+
+    try {
+      const orders = await fetchMyOrders();
+
+      const order = orders.find(item =>
+        String(item.orderNumber || "").toLowerCase() === searchValue ||
+        String(item._id || "").toLowerCase() === searchValue
+      );
+
+      if (!order) {
+        feedback.textContent =
+          "Order not found in your account. Check the order number.";
+        return;
+      }
+
+      const tracking = await fetchTracking(order._id);
+
+      const combinedOrder = {
+        ...order,
+        ...tracking,
+        _id: order._id,
+        orderNumber: order.orderNumber,
+        items: order.items,
+        total: order.totalAmount,
+        shippingAddress: order.shippingAddress,
+        paymentMethod: order.paymentMethod,
+        createdAt: order.createdAt
+      };
+
+      renderOrder(combinedOrder);
+
+    
+
+      feedback.textContent = "Order found successfully.";
+      showToast("Tracking details updated successfully.");
+    } catch (error) {
+      console.error("Order tracking error:", error);
+      feedback.textContent = error.message || "Unable to track this order.";
+    }
+  }
+);
+
+
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    loadInitialOrder();
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

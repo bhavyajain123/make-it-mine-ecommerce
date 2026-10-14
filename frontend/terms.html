@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Read the terms and conditions for shopping with MakeItMine.">
+  <title>Terms & Conditions | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #fffaf5;
+      --paper: #ffffff;
+      --wine: #702d3d;
+      --wine-dark: #4e1c29;
+      --gold: #c59b62;
+      --text: #342823;
+      --muted: #84756c;
+      --border: #eaded4;
+      --soft: #f7eee6;
+      --shadow: 0 12px 35px rgba(78, 28, 41, 0.07);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 110px;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .announcement {
+      background: var(--wine-dark);
+      color: #fffaf5;
+      text-align: center;
+      padding: 8px 15px;
+      font-size: 11px;
+      letter-spacing: 1.1px;
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      padding: 16px 7%;
+      background: rgba(255, 250, 245, 0.97);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 25px;
+      font-weight: 700;
+      color: var(--wine);
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--wine);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .nav-actions a {
+      font-size: 20px;
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 8px;
+      padding: 7px 11px;
+      cursor: pointer;
+      color: var(--wine);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 75px 20px 65px;
+      background:
+        radial-gradient(ellipse at 50% 0%, #f1dfd1 0%, transparent 65%),
+        var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      color: var(--wine);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.2;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .hero h1 span {
+      color: var(--wine);
+      font-style: italic;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .updated {
+      display: inline-flex;
+      margin-top: 22px;
+      padding: 7px 14px;
+      border: 1px solid #dfc8ae;
+      background: rgba(255, 255, 255, 0.6);
+      color: var(--wine);
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .layout {
+      width: min(1120px, 90%);
+      margin: 55px auto 80px;
+      display: grid;
+      grid-template-columns: 265px minmax(0, 1fr);
+      gap: 35px;
+      align-items: start;
+    }
+
+    .sidebar {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 24px 18px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 105px;
+    }
+
+    .sidebar h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 21px;
+      margin: 0 10px 15px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 10px 12px;
+      margin: 3px 0;
+      border-radius: 7px;
+      font-size: 12px;
+      color: var(--muted);
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: var(--soft);
+      color: var(--wine);
+    }
+
+    .sidebar .help-box {
+      margin-top: 20px;
+      padding: 16px;
+      background: #fbf4ec;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    .help-box strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--wine);
+    }
+
+    .help-box a {
+      display: inline-block;
+      padding: 4px 0 0;
+      margin: 0;
+      color: var(--wine);
+      font-weight: 700;
+    }
+
+    .content {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: clamp(22px, 4vw, 42px);
+      box-shadow: var(--shadow);
+    }
+
+    .intro-note {
+      padding: 18px 20px;
+      background: #fbf4ec;
+      border-left: 3px solid var(--gold);
+      border-radius: 0 9px 9px 0;
+      color: #66554b;
+      font-size: 13px;
+      margin-bottom: 32px;
+    }
+
+    .terms-section {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 110px;
+    }
+
+    .terms-section:first-of-type {
+      padding-top: 0;
+    }
+
+    .terms-section:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .section-number {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .terms-section h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(21px, 3vw, 27px);
+      line-height: 1.4;
+      margin-bottom: 13px;
+      font-weight: 500;
+    }
+
+    .terms-section p {
+      font-size: 13px;
+      color: #6f6259;
+      margin: 10px 0;
+    }
+
+    .terms-section ul {
+      padding-left: 22px;
+      margin: 12px 0;
+    }
+
+    .terms-section li {
+      padding-left: 4px;
+      margin: 8px 0;
+      font-size: 13px;
+      color: #6f6259;
+    }
+
+    .terms-section li::marker {
+      color: var(--gold);
+    }
+
+    .inline-link {
+      color: var(--wine);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer {
+      background: #351b22;
+      color: #f9eee7;
+      padding: 48px 7% 20px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 35px;
+      max-width: 1200px;
+      margin: 0 auto 35px;
+    }
+
+    .footer .logo {
+      color: #fffaf5;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .footer p {
+      color: #cbb8b2;
+      font-size: 12px;
+      max-width: 290px;
+    }
+
+    .footer h4 {
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: #e3c291;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .footer-links a {
+      color: #d8c8c2;
+      font-size: 12px;
+      width: fit-content;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid #65454b;
+      padding-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      color: #cbb8b2;
+      font-size: 11px;
+    }
+
+    .back-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 42px;
+      height: 42px;
+      background: var(--wine);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 5px 20px #702d3d40;
+      cursor: pointer;
+      display: none;
+      z-index: 10;
+      font-size: 18px;
+    }
+
+    .back-top.visible {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .navbar {
+        padding: 14px 5%;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--cream);
+        padding: 18px 6%;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        margin-top: 30px;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .sidebar nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2px 8px;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero {
+        padding: 55px 20px 45px;
+      }
+
+      .layout {
+        width: 92%;
+        margin-bottom: 50px;
+      }
+
+      .sidebar nav {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px 18px;
+      }
+
+      .footer {
+        padding: 38px 6% 18px;
+      }
+
+      .footer-grid > div:first-child {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    A LITTLE SOMETHING SPECIAL — 10% OFF YOUR FIRST ORDER WITH CODE: WELCOME10
+  </div>
+
+  <header class="navbar">
+    <a class="logo" href="index.html">MakeIt<span>Mine.</span></a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop All</a>
+      <a href="categories.html">Categories</a>
+      <a href="about.html">Our Story</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="wishlist.html" aria-label="Wishlist" title="Wishlist">♡</a>
+      <a href="cart.html" aria-label="Shopping cart" title="Shopping cart">🛍</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">A little clarity, a better experience</div>
+    <h1>Terms & <span>Conditions</span></h1>
+    <p>
+      Please take a moment to understand the terms that apply when you browse,
+      personalize and shop with MakeItMine.
+    </p>
+    <div class="updated">Last reviewed: <span id="reviewDate" style="margin-left:5px">October 2026</span></div>
+  </section>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <h3>On this page</h3>
+
+      <nav id="sectionNav">
+        <a href="#acceptance">1. Acceptance of Terms</a>
+        <a href="#eligibility">2. Eligibility</a>
+        <a href="#account">3. Your Account</a>
+        <a href="#products">4. Products & Personalization</a>
+        <a href="#orders">5. Orders & Pricing</a>
+        <a href="#payments">6. Payments</a>
+        <a href="#shipping">7. Shipping & Delivery</a>
+        <a href="#returns">8. Returns & Refunds</a>
+        <a href="#intellectual">9. Intellectual Property</a>
+        <a href="#conduct">10. Acceptable Use</a>
+        <a href="#liability">11. Liability</a>
+        <a href="#privacy">12. Privacy</a>
+        <a href="#changes">13. Changes to Terms</a>
+        <a href="#contact-terms">14. Contact Us</a>
+      </nav>
+
+      <div class="help-box">
+        <strong>Need clarification?</strong>
+        Have a question about these terms?
+        <a href="contact.html">Talk to our team →</a>
+      </div>
+    </aside>
+
+    <article class="content">
+      <div class="intro-note">
+        <strong>Please note:</strong> This page is a general starter template for
+        MakeItMine. The final terms should accurately reflect your business,
+        actual policies, payment providers and applicable laws before the website
+        is launched publicly.
+      </div>
+
+      <section class="terms-section" id="acceptance">
+        <div class="section-number">SECTION 01</div>
+        <h2>Acceptance of Terms</h2>
+        <p>
+          Welcome to MakeItMine. By accessing or using our website, browsing our
+          products, creating an account or placing an order, you agree to follow
+          these Terms & Conditions.
+        </p>
+        <p>
+          If you do not agree with these terms, please discontinue using the
+          website. Additional terms may apply to particular services or promotions
+          and will be presented where relevant.
+        </p>
+      </section>
+
+      <section class="terms-section" id="eligibility">
+        <div class="section-number">SECTION 02</div>
+        <h2>Eligibility</h2>
+        <p>
+          You must be legally capable of entering into a binding agreement to
+          place an order. If you are under the age required to enter into such
+          agreements in your jurisdiction, you should use the website with
+          appropriate parent or guardian involvement.
+        </p>
+        <p>
+          By using the website, you confirm that the information you provide is
+          accurate to the best of your knowledge.
+        </p>
+      </section>
+
+      <section class="terms-section" id="account">
+        <div class="section-number">SECTION 03</div>
+        <h2>Your Account</h2>
+        <p>
+          Some features may require an account. You are responsible for keeping
+          your sign-in credentials confidential and for activities carried out
+          through your account, subject to applicable law.
+        </p>
+        <ul>
+          <li>Provide accurate and up-to-date account information.</li>
+          <li>Do not impersonate another person or create an account using misleading details.</li>
+          <li>Contact us promptly if you suspect unauthorized access to your account.</li>
+          <li>Do not misuse the website or attempt to access another customer's information.</li>
+        </ul>
+      </section>
+
+      <section class="terms-section" id="products">
+        <div class="section-number">SECTION 04</div>
+        <h2>Products & Personalization</h2>
+        <p>
+          MakeItMine offers gifts and may offer personalized products. Product
+          photographs, colors and previews are intended as a guide. Minor
+          variations may occur because of screens, materials, printing methods
+          or handmade production.
+        </p>
+        <p>When submitting personalization details, you agree that:</p>
+        <ul>
+          <li>Names, messages, photographs and other details submitted by you are accurate and authorized for use.</li>
+          <li>You have permission to use any image, design or content you upload.</li>
+          <li>Your submitted content does not unlawfully infringe another person's rights.</li>
+          <li>You will review spelling, dates, names and other details carefully before confirming an order.</li>
+        </ul>
+        <p>
+          Personalized items may have different cancellation and return
+          conditions from standard products. Please review our
+          <a class="inline-link" href="refund-return.html">Refund & Return Policy</a>
+          before ordering.
+        </p>
+      </section>
+
+      <section class="terms-section" id="orders">
+        <div class="section-number">SECTION 05</div>
+        <h2>Orders & Pricing</h2>
+        <p>
+          Placing an order is a request to purchase the selected products.
+          An order confirmation does not necessarily mean that an order has been
+          accepted for fulfilment.
+        </p>
+        <p>
+          Prices, discounts, product availability and delivery charges may change.
+          The price and applicable charges shown during checkout should be reviewed
+          before you confirm your order.
+        </p>
+        <ul>
+          <li>Promotional codes may have eligibility conditions and expiry dates.</li>
+          <li>Promotions generally cannot be combined unless explicitly stated.</li>
+          <li>If a material pricing or availability error occurs, we will contact you about the available options.</li>
+          <li>We may decline or cancel an order where reasonably necessary, subject to applicable law and any required refund.</li>
+        </ul>
+      </section>
+
+      <section class="terms-section" id="payments">
+        <div class="section-number">SECTION 06</div>
+        <h2>Payments</h2>
+        <p>
+          Available payment methods will be displayed at checkout. Orders are
+          subject to the payment method selected and any applicable verification
+          or authorization process.
+        </p>
+        <p>
+          Online payments, refunds and payment confirmations depend on the
+          payment service actually integrated into the website. Do not assume
+          a payment has been processed unless the payment provider or order
+          confirmation verifies it.
+        </p>
+        <p>
+          Cash on Delivery, if offered for your order, may be subject to
+          location, order-value or other eligibility restrictions.
+        </p>
+      </section>
+
+      <section class="terms-section" id="shipping">
+        <div class="section-number">SECTION 07</div>
+        <h2>Shipping & Delivery</h2>
+        <p>
+          Estimated delivery dates are provided as a guide and are not guaranteed
+          unless explicitly stated. Delivery can be affected by courier delays,
+          weather, public holidays, incorrect addresses or other circumstances
+          outside our reasonable control.
+        </p>
+        <ul>
+          <li>Check your shipping details carefully before confirming your order.</li>
+          <li>Keep your order number available when contacting support.</li>
+          <li>Report damaged, missing or incorrectly delivered products promptly.</li>
+        </ul>
+        <p>
+          Any shipping charges, delivery estimates and tracking options applicable
+          to your order will be communicated through the website or order updates.
+        </p>
+      </section>
+
+      <section class="terms-section" id="returns">
+        <div class="section-number">SECTION 08</div>
+        <h2>Returns, Cancellations & Refunds</h2>
+        <p>
+          Return eligibility, cancellation windows, replacement conditions and
+          refund timelines depend on the published policy applicable to your
+          order and the requirements of applicable law.
+        </p>
+        <p>
+          Personalized products may be subject to special conditions, especially
+          where an item has been made according to your specific instructions.
+          This does not remove any rights that cannot legally be excluded.
+        </p>
+        <p>
+          Read our <a class="inline-link" href="refund-return.html">Refund & Return Policy</a>
+          for the detailed procedure. If that page is not yet available, contact
+          our team before placing an order.
+        </p>
+      </section>
+
+      <section class="terms-section" id="intellectual">
+        <div class="section-number">SECTION 09</div>
+        <h2>Intellectual Property</h2>
+        <p>
+          Website elements such as branding, logos, written content, layouts,
+          graphics and original designs may be protected by intellectual
+          property laws.
+        </p>
+        <p>
+          You may not copy, reproduce, distribute or commercially exploit
+          protected website content without appropriate permission, except where
+          permitted by law.
+        </p>
+        <p>
+          You retain any rights you hold in content you submit. You authorize
+          us to use that content only as reasonably necessary to provide the
+          requested service, fulfil your order and handle related support,
+          subject to our Privacy Policy and applicable law.
+        </p>
+      </section>
+
+      <section class="terms-section" id="conduct">
+        <div class="section-number">SECTION 10</div>
+        <h2>Acceptable Use</h2>
+        <p>You agree not to:</p>
+        <ul>
+          <li>Use the website for unlawful, fraudulent or deceptive purposes.</li>
+          <li>Upload content that violates the rights of others or applicable law.</li>
+          <li>Introduce malicious code or interfere with website security or operation.</li>
+          <li>Attempt to access restricted systems, customer records or accounts without authorization.</li>
+          <li>Use automated methods to disrupt or abuse the website.</li>
+        </ul>
+        <p>
+          We may restrict access where reasonably necessary to protect customers,
+          the website or our business, subject to applicable law.
+        </p>
+      </section>
+
+      <section class="terms-section" id="liability">
+        <div class="section-number">SECTION 11</div>
+        <h2>Liability & Service Availability</h2>
+        <p>
+          We aim to provide a reliable shopping experience, but uninterrupted
+          access to the website cannot be guaranteed. Features may occasionally
+          be unavailable for maintenance, updates or technical reasons.
+        </p>
+        <p>
+          To the extent permitted by applicable law, these terms do not exclude
+          liability that cannot legally be excluded, including any mandatory
+          consumer rights. Nothing in these terms limits rights you have under
+          applicable law.
+        </p>
+        <p>
+          If a website feature, price or product description appears incorrect,
+          please contact us so the issue can be reviewed.
+        </p>
+      </section>
+
+      <section class="terms-section" id="privacy">
+        <div class="section-number">SECTION 12</div>
+        <h2>Privacy & Personal Information</h2>
+        <p>
+          We should handle personal information in accordance with the Privacy
+          Policy published on the website and applicable data-protection laws.
+          Information supplied during checkout may be needed to process orders,
+          arrange delivery and provide customer support.
+        </p>
+        <p>
+          Please review our <a class="inline-link" href="privacy.html">Privacy Policy</a>
+          for details about the information actually collected, how it is used,
+          and the choices available to you.
+        </p>
+      </section>
+
+      <section class="terms-section" id="changes">
+        <div class="section-number">SECTION 13</div>
+        <h2>Changes to These Terms</h2>
+        <p>
+          We may update these terms when our services, business practices or
+          legal obligations change. The updated version will be published on
+          this page with an appropriate revision date.
+        </p>
+        <p>
+          Changes will apply as permitted by applicable law. Where notice or
+          consent is legally required, we will follow the applicable process.
+        </p>
+      </section>
+
+      <section class="terms-section" id="contact-terms">
+        <div class="section-number">SECTION 14</div>
+        <h2>Contact Us</h2>
+        <p>
+          If you have questions about these Terms & Conditions, an order or a
+          product, please get in touch through our contact page.
+        </p>
+        <p>
+          <a class="inline-link" href="contact.html">Contact MakeItMine →</a>
+        </p>
+        <p>
+          Any governing-law, jurisdiction or formal business details should be
+          added here after they have been confirmed for your actual business.
+        </p>
+      </section>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html">MakeIt<span>Mine.</span></a>
+        <p>
+          Thoughtful gifts, made personal. Celebrate your favourite people
+          with something that feels uniquely theirs.
+        </p>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <div class="footer-links">
+          <a href="shop.html">Shop All</a>
+          <a href="categories.html">Categories</a>
+          <a href="customize.html">Create Your Gift</a>
+          <a href="about.html">Our Story</a>
+          <a href="terms.html">Terms & Conditions</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Customer Care</h4>
+        <div class="footer-links">
+          <a href="contact.html">Contact Us</a>
+          <a href="faq.html">FAQs</a>
+          <a href="order-tracking.html">Track Order</a>
+          <a href="refund-return.html">Returns & Refunds</a>
+          <a href="terms.html">Terms & Conditions</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html" aria-current="page">Terms & Conditions</a>
+          <a href="profile.html">My Account</a>
+          <a href="cart.html">Shopping Cart</a>
+          <a href="terms.html">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> MakeItMine. All rights reserved.</span>
+      <span>Made with care, for the people you love ♡</span>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop" aria-label="Back to top" title="Back to top">↑</button>
+
+  <script>
+    // Mobile navigation
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Back-to-top button
+    const backTop = document.getElementById("backTop");
+
+    window.addEventListener("scroll", () => {
+      backTop.classList.toggle("visible", window.scrollY > 450);
+    });
+
+    backTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Highlight the currently visible section in the table of contents
+    const sections = document.querySelectorAll(".terms-section");
+    const tocLinks = document.querySelectorAll("#sectionNav a");
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(link => {
+              link.classList.toggle(
+                "active",
+                link.getAttribute("href") === "#" + entry.target.id
+              );
+            });
+          }
+        });
+      }, {
+        rootMargin: "-18% 0px -68% 0px"
+      });
+
+      sections.forEach(section => observer.observe(section));
+    }
+  </script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

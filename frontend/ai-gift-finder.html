@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Gift Finder | MakeItMine</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #fff9f4;
+      color: #382820;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #eaded5;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: #382820;
+      font-family: Georgia, serif;
+      font-size: 25px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .logo span { color: #90374e; }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #382820;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover { color: #90374e; }
+
+    .hero {
+      text-align: center;
+      padding: 55px 20px 25px;
+    }
+
+    .eyebrow {
+      color: #90374e;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font: 48px/1.1 Georgia, serif;
+      margin: 18px 0;
+    }
+
+    h1 span { color: #90374e; }
+
+    .hero p {
+      color: #806b60;
+      line-height: 1.7;
+      max-width: 550px;
+      margin: auto;
+    }
+
+    .container {
+      max-width: 850px;
+      padding: 0 20px;
+      margin: 20px auto 60px;
+    }
+
+    .form-card {
+      background: white;
+      padding: 30px;
+      border: 1px solid #eaded5;
+      border-radius: 12px;
+      box-shadow: 0 12px 35px #59351b08;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin: 0 0 9px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 20px;
+      border: 1px solid #e5d4c9;
+      border-radius: 6px;
+      background: #fffdfb;
+      color: #382820;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 95px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border-radius: 6px;
+      background: #90374e;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    .note {
+      text-align: center;
+      font-size: 11px;
+      color: #806b60;
+      margin-top: 18px;
+    }
+
+    #status {
+      margin: 20px 0;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    #results { margin-top: 45px; }
+
+    #results h2 {
+      font: 32px Georgia, serif;
+    }
+
+    .gift-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .gift-card {
+      background: white;
+      padding: 20px;
+      border: 1px solid #eaded5;
+      border-radius: 9px;
+      overflow-wrap: anywhere;
+    }
+
+    .gift-card h3 {
+      font: 21px/1.3 Georgia, serif;
+      margin: 10px 0;
+    }
+
+    .gift-card .price {
+      color: #90374e;
+      font-weight: bold;
+    }
+
+    .gift-card p {
+      color: #806b60;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      border-top: 1px solid #eaded5;
+      color: #806b60;
+      font-size: 12px;
+    }
+
+    @media (max-width: 650px) {
+      h1 { font-size: 38px; }
+      .form-card { padding: 20px; }
+      .gift-grid { grid-template-columns: 1fr; }
+      header { justify-content: center; }
+      nav { justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="home.html">MakeIt<span>Mine.</span></a>
+
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="categories.html">Shop All</a>
+      <a href="ai-gift-finder.html">AI Gift Finder ✨</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Your personal gift finder</div>
+    <h1>Find a gift that<br><span>feels personal.</span></h1>
+    <p>
+      Tell us who you're shopping for. Let AI help you find
+      a thoughtful gift idea within your budget.
+    </p>
+  </section>
+
+  <main class="container">
+    <form id="giftForm" class="form-card">
+      <label for="occasion">What's the occasion?</label>
+      <select id="occasion" required>
+        <option value="Birthday">Birthday</option>
+        <option value="Anniversary">Anniversary</option>
+        <option value="Wedding">Wedding</option>
+        <option value="Graduation">Graduation</option>
+        <option value="Festival">Festival</option>
+        <option value="Just Because">Just Because</option>
+      </select>
+
+      <label for="recipient">Who is the gift for?</label>
+      <input
+        id="recipient"
+        type="text"
+        maxlength="100"
+        placeholder="Friend, sister, partner..."
+        required
+      >
+
+      <label for="budget">Your budget (₹)</label>
+      <input
+        id="budget"
+        type="number"
+        min="1"
+        max="1000000"
+        value="2000"
+        required
+      >
+
+      <label for="interests">Their interests and personality</label>
+      <textarea
+        id="interests"
+        maxlength="300"
+        placeholder="Books, coffee, art, music..."
+        required
+      ></textarea>
+
+      <button id="submitBtn" type="submit">
+        Find my gift ideas →
+      </button>
+
+      <p class="note">
+        AI-generated price estimates only; store inventory is not confirmed.
+      </p>
+    </form>
+
+    <p id="status" role="status" aria-live="polite"></p>
+
+    <section id="results" hidden>
+      <div class="eyebrow">Made for your person</div>
+      <h2>Your gift shortlist</h2>
+      <p id="intro"></p>
+      <div id="giftGrid" class="gift-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    Thoughtful gifting starts here. <strong>MakeItMine.</strong>
+  </footer>
+
+  <script>
+    const form = document.getElementById("giftForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusBox = document.getElementById("status");
+    const results = document.getElementById("results");
+    const giftGrid = document.getElementById("giftGrid");
+    const intro = document.getElementById("intro");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const request = {
+        occasion: document.getElementById("occasion").value,
+        recipient: document.getElementById("recipient").value.trim(),
+        budget: Number(document.getElementById("budget").value),
+        interests: document.getElementById("interests").value.trim()
+      };
+
+      if (!request.recipient || !request.interests ||
+          !Number.isFinite(request.budget) ||
+          request.budget < 1 || request.budget > 1000000) {
+        statusBox.textContent = "Please enter valid gift preferences.";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Finding thoughtful gifts...";
+      statusBox.textContent = "Generating personalized gift ideas...";
+      results.hidden = true;
+      giftGrid.replaceChildren();
+
+      try {
+        const response = await fetch("/api/gifts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(request),
+          signal: AbortSignal.timeout(30000)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Could not generate gift ideas.");
+        }
+
+        if (!Array.isArray(data.gifts) || data.gifts.length !== 3) {
+          throw new Error("The AI returned an unexpected response. Try again.");
+        }
+
+        intro.textContent = data.intro || "Here are your personalized ideas.";
+
+        data.gifts.forEach((gift, index) => {
+          const card = document.createElement("article");
+          card.className = "gift-card";
+
+          const number = document.createElement("div");
+          number.className = "eyebrow";
+          number.textContent = `Gift idea 0${index + 1}`;
+
+          const title = document.createElement("h3");
+          title.textContent = gift.name || "Gift idea";
+
+          const price = document.createElement("div");
+          price.className = "price";
+          const amount = Number(gift.estimatedPrice);
+          price.textContent = `Approx. ₹${
+            Number.isFinite(amount) ? amount.toLocaleString("en-IN") : "—"
+          }`;
+
+          const reason = document.createElement("p");
+          reason.textContent = gift.reason || "";
+
+          const personalHeading = document.createElement("strong");
+          personalHeading.textContent = "Make it personal";
+
+          const personalTouch = document.createElement("p");
+          personalTouch.textContent = gift.personalTouch || "";
+
+          card.append(number, title, price, reason, personalHeading, personalTouch);
+          giftGrid.appendChild(card);
+        });
+
+        results.hidden = false;
+        statusBox.textContent = "Your gift ideas are ready!";
+        results.scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch (error) {
+        console.error("Gift finder error:", error);
+
+        statusBox.textContent =
+          error.name === "TimeoutError"
+            ? "AI response is taking too long. Please try again."
+            : error.message || "AI is busy right now. Please try again shortly.";
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Find my gift ideas →";
+      }
+    });
+  </script>
+</body>
+</html>

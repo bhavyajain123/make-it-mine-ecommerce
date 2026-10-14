@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Sign in to your MakeItMine account and discover personalized gifts made just for you.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #fffaf5;
+      --paper: #f6ece3;
+      --wine: #742d3c;
+      --wine-dark: #51202b;
+      --gold: #c49a62;
+      --ink: #302522;
+      --muted: #82736d;
+      --border: #eaded3;
+      --white: #fff;
+      --shadow: 0 20px 60px rgba(72, 39, 32, .12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .announcement {
+      background: var(--wine-dark);
+      color: #fff4e9;
+      text-align: center;
+      padding: 10px 15px;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    .announcement strong {
+      color: #e9c79b;
+    }
+
+    .navbar {
+      height: 78px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 250, 245, .95);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -.8px;
+      color: var(--wine);
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .back-home {
+      color: var(--wine);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .back-home:hover {
+      text-decoration: underline;
+    }
+
+    .main {
+      min-height: calc(100vh - 78px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 48px 7%;
+      gap: 65px;
+      align-items: center;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .visual-panel {
+      min-height: 650px;
+      position: relative;
+      overflow: hidden;
+      background: #ead8ca;
+      box-shadow: var(--shadow);
+    }
+
+    .visual-panel img {
+      width: 100%;
+      height: 100%;
+      min-height: 650px;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
+    .visual-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 42px;
+      color: white;
+      background: linear-gradient(
+        0deg,
+        rgba(41, 19, 22, .86),
+        rgba(41, 19, 22, .10) 75%
+      );
+    }
+
+    .visual-label {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #f0d4b1;
+      margin-bottom: 15px;
+    }
+
+    .visual-label::before {
+      content: "";
+      width: 27px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .visual-overlay h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(35px, 4vw, 53px);
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 15px;
+    }
+
+    .visual-overlay p {
+      max-width: 390px;
+      color: #f0e4de;
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .form-panel {
+      width: 100%;
+      max-width: 450px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+
+    .welcome-icon {
+      width: 55px;
+      height: 55px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--wine);
+      font-size: 25px;
+      margin-bottom: 25px;
+    }
+
+    .eyebrow {
+      color: var(--wine);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .form-panel h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 4vw, 45px);
+      line-height: 1.2;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+      margin-bottom: 29px;
+    }
+
+    .form-group {
+      margin-bottom: 19px;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 9px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .form-label a {
+      color: var(--wine);
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      height: 49px;
+      padding: 0 14px;
+      outline: none;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--ink);
+      font-size: 12px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .input-wrap input::placeholder {
+      color: #b0a29a;
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--wine);
+      box-shadow: 0 0 0 3px rgba(116, 45, 60, .07);
+    }
+
+    .password-input {
+      padding-right: 75px !important;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: var(--wine);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 5px 0 23px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .remember input {
+      accent-color: var(--wine);
+      width: 14px;
+      height: 14px;
+    }
+
+    .forgot {
+      color: var(--wine);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .primary-button {
+      width: 100%;
+      height: 49px;
+      background: var(--wine);
+      color: white;
+      border: 1px solid var(--wine);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      transition: .25s;
+    }
+
+    .primary-button:hover {
+      background: var(--wine-dark);
+      transform: translateY(-1px);
+    }
+
+    .primary-button:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #a3948c;
+      font-size: 10px;
+      margin: 24px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .google-button {
+      width: 100%;
+      height: 47px;
+      border: 1px solid var(--border);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink);
+      transition: background .2s;
+    }
+
+    .google-button:hover {
+      background: var(--paper);
+    }
+
+    .google-icon {
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #4285f4;
+    }
+
+    .signup-line {
+      text-align: center;
+      margin-top: 27px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .signup-line a {
+      color: var(--wine);
+      font-weight: 700;
+    }
+
+    .signup-line a:hover,
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    .secure-note {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      color: #93857d;
+      font-size: 10px;
+      margin-top: 23px;
+    }
+
+    .message {
+      display: none;
+      padding: 12px 13px;
+      margin-bottom: 18px;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: #fff0ef;
+      color: #a22f32;
+      border: 1px solid #f1d0ce;
+    }
+
+    .message.success {
+      background: #edf8ee;
+      color: #276738;
+      border: 1px solid #cde7d1;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 19px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .main {
+        grid-template-columns: 1fr;
+        padding: 35px 6%;
+        gap: 35px;
+      }
+
+      .visual-panel {
+        min-height: 350px;
+      }
+
+      .visual-panel img {
+        min-height: 350px;
+      }
+
+      .visual-overlay {
+        padding: 30px;
+      }
+
+      .visual-overlay h1 {
+        font-size: 38px;
+      }
+
+      .form-panel {
+        max-width: 500px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .announcement {
+        font-size: 9px;
+      }
+
+      .navbar {
+        height: 68px;
+        padding: 0 5%;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+
+      .main {
+        padding: 25px 6%;
+      }
+
+      .visual-panel {
+        min-height: 300px;
+      }
+
+      .visual-panel img {
+        min-height: 300px;
+      }
+
+      .visual-overlay {
+        padding: 23px;
+      }
+
+      .visual-overlay h1 {
+        font-size: 32px;
+      }
+
+      .form-panel h2 {
+        font-size: 36px;
+      }
+
+      .form-options {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    A LITTLE SOMETHING SPECIAL — <strong>10% OFF</strong> YOUR FIRST ORDER WITH CODE WELCOME10
+  </div>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">MakeIt<span>Mine.</span></a>
+    <a href="home.html" class="back-home">← Back to shopping</a>
+  </header>
+
+  <main class="main">
+    <section class="visual-panel">
+      <img
+        src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=1100&q=85"
+        alt="Thoughtfully wrapped gifts"
+      >
+
+      <div class="visual-overlay">
+        <div class="visual-label">Welcome to MakeItMine</div>
+        <h1>Every gift tells<br>a beautiful story.</h1>
+        <p>
+          Sign in to discover your saved favourites, keep track of your
+          orders and make every celebration a little more personal.
+        </p>
+      </div>
+    </section>
+
+    <section class="form-panel">
+      <div class="welcome-icon">♡</div>
+
+      <div class="eyebrow">Your personal gifting space</div>
+      <h2>Welcome back.</h2>
+      <p class="intro">
+        Sign in to your account and pick up right where your gifting journey left off.
+      </p>
+
+      <div class="message" id="formMessage" role="status" aria-live="polite"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="email">Email address</label>
+          <div class="input-wrap">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <label for="password">Password</label>
+            <a href="forgot-password.html">Forgot password?</a>
+          </div>
+
+          <div class="input-wrap">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="password-input"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              minlength="6"
+              required
+            >
+            <button type="button" class="show-password" id="togglePassword">
+              SHOW
+            </button>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="remember">
+            <input type="checkbox" id="rememberMe" name="remember">
+            Remember me
+          </label>
+
+          <a class="forgot" href="forgot-password.html">Need help?</a>
+        </div>
+
+        <button type="submit" class="primary-button" id="loginButton">
+          SIGN IN TO YOUR ACCOUNT →
+        </button>
+      </form>
+
+      <div class="divider">OR CONTINUE WITH</div>
+
+      <button type="button" class="google-button" id="googleLogin">
+        <span class="google-icon">G</span>
+        Continue with Google
+      </button>
+
+      <p class="signup-line">
+        New to MakeItMine?
+        <a href="signup.html">Create an account</a>
+      </p>
+
+      <div class="secure-note">
+        <span>♙</span>
+        Your account security matters to us.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> MakeItMine. Made with love ♡
+  </footer>
+
+  <script type="module">
+
+    import { auth } from "./js/firebase-config.js";
+
+  import {
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider
+  } from "firebase/auth";
+
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginButton = document.getElementById('loginButton');
+    const formMessage = document.getElementById('formMessage');
+
+    function showMessage(message, type) {
+      formMessage.textContent = message;
+      formMessage.className = 'message show ' + type;
+    }
+
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const isPassword = passwordInput.type === 'password';
+
+      passwordInput.type = isPassword ? 'text' : 'password';
+      this.textContent = isPassword ? 'HIDE' : 'SHOW';
+    });
+
+
+    
+async function finishBackendLogin(firebaseUser) {
+  const idToken = await firebaseUser.getIdToken();
+
+  const response = await fetch(
+    "http://localhost:5000/api/auth/firebase",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${idToken}`
+      }
+    }
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || "Backend login failed.");
+  }
+
+  if (!result.token || !result.user) {
+    throw new Error("Backend did not return the app token and user.");
+  }
+
+  localStorage.setItem("mim_token", result.token);
+  localStorage.setItem(
+    "makeitmine_user",
+    JSON.stringify(result.user)
+  );
+
+  showMessage("Login successful! Redirecting...", "success");
+
+  window.location.href = "home.html";
+}
+
+
+    
+
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !password || !emailInput.validity.valid) {
+    showMessage("Please enter a valid email and password.", "error");
+    return;
+  }
+
+  loginButton.disabled = true;
+  loginButton.textContent = "SIGNING IN...";
+
+  try {
+    const credential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    await finishBackendLogin(credential.user);
+  } catch (error) {
+    console.error("Login error:", error);
+
+    const messages = {
+      "auth/invalid-credential": "Incorrect email or password.",
+      "auth/user-not-found": "No account found. Please sign up first.",
+      "auth/too-many-requests": "Too many attempts. Try again later."
+    };
+
+    showMessage(
+      messages[error.code] || error.message || "Login failed.",
+      "error"
+    );
+  } finally {
+    loginButton.disabled = false;
+    loginButton.textContent = "SIGN IN TO YOUR ACCOUNT →";
+  }
+});
+
+
+
+document.getElementById("googleLogin").addEventListener("click", async () => {
+  const googleButton = document.getElementById("googleLogin");
+  googleButton.disabled = true;
+
+  try {
+    const provider = new GoogleAuthProvider();
+    const credential = await signInWithPopup(auth, provider);
+
+    await finishBackendLogin(credential.user);
+  } catch (error) {
+    console.error("Google login error:", error);
+
+    showMessage(
+      error.message || "Google sign-in failed.",
+      "error"
+    );
+  } finally {
+    googleButton.disabled = false;
+  }
+});
+
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  
+  <script type="module" src="../js/app.js">
+
+  </script>
+</body>
+</html>

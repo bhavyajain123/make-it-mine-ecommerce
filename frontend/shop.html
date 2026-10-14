@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All Gifts | MakeItMine</title>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="Discover personalised gifts, customised hampers, photo frames, mugs and thoughtful keepsakes at MakeItMine.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --wine:#6d2338;
+  --wine-dark:#481525;
+  --wine-light:#f8edf0;
+  --cream:#fffaf4;
+  --gold:#bd9857;
+  --ink:#292321;
+  --muted:#817570;
+  --line:#eee3dc;
+  --white:#fff;
+  --shadow:0 12px 35px rgba(72,21,37,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  color:var(--ink);
+  background:var(--cream);
+  line-height:1.6;
+}
+button,input,select{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer}
+img{display:block;width:100%;object-fit:cover}
+.container{width:min(1240px,92%);margin:auto}
+
+/* Announcement */
+.announcement{
+  background:var(--wine-dark);
+  color:#fff4e6;
+  text-align:center;
+  padding:9px 15px;
+  font-size:11px;
+  letter-spacing:1.4px;
+}
+.announcement span{color:#e6c994;font-weight:700}
+
+/* Header */
+.header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,250,244,.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  min-height:82px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:25px;
+}
+.logo{
+  font-family:'Playfair Display',serif;
+  font-size:29px;font-weight:700;letter-spacing:-1px;
+  color:var(--wine-dark);white-space:nowrap;
+}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:27px}
+.nav-links a{
+  font-size:12px;font-weight:600;color:#514540;
+  transition:color .2s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--wine)}
+.nav-actions{display:flex;align-items:center;gap:17px}
+.icon-link{
+  position:relative;border:0;background:none;color:var(--wine-dark);
+  display:flex;align-items:center;justify-content:center;
+  font-size:21px;
+}
+.count{
+  position:absolute;top:-8px;right:-9px;
+  background:var(--wine);color:white;
+  border-radius:50%;min-width:17px;height:17px;
+  display:grid;place-items:center;font-size:9px;
+}
+.mobile-menu{display:none}
+
+/* Page heading */
+.breadcrumb{padding:24px 0 0;font-size:11px;color:var(--muted)}
+.breadcrumb a:hover{color:var(--wine)}
+.page-intro{
+  padding:30px 0 35px;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:25px;
+}
+.eyebrow{
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:9px;
+}
+h1,h2,h3{font-family:'Playfair Display',serif;font-weight:500}
+h1{font-size:clamp(37px,5vw,60px);line-height:1.12;letter-spacing:-1.5px}
+h1 em{color:var(--wine);font-weight:400}
+.intro-text{color:var(--muted);font-size:13px;margin-top:12px;max-width:540px}
+.results-count{font-size:12px;color:var(--muted);white-space:nowrap;padding-bottom:6px}
+
+/* Hero banner */
+.shop-banner{
+  min-height:230px;border-radius:5px;overflow:hidden;
+  background:linear-gradient(105deg,rgba(48,15,28,.91),rgba(73,25,42,.76)),
+  url('https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=1800&q=85') center/cover;
+  color:white;display:flex;align-items:center;
+  padding:45px 7%;margin-bottom:48px;
+}
+.banner-content{max-width:540px}
+.banner-content .eyebrow{color:#e8c98e}
+.banner-content h2{font-size:clamp(27px,4vw,42px);line-height:1.2}
+.banner-content p{font-size:12px;color:#f3e3e3;margin:12px 0 21px}
+.banner-button{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#fffaf4;color:var(--wine-dark);
+  padding:12px 21px;font-size:11px;font-weight:700;
+  transition:.2s;
+}
+.banner-button:hover{background:#ead5b0;transform:translateY(-2px)}
+
+/* Category chips */
+.category-section{margin-bottom:42px}
+.section-heading{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;gap:15px;
+}
+.section-heading h2{font-size:25px}
+.text-link{font-size:11px;color:var(--wine);font-weight:700}
+.category-grid{
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;
+}
+.category-card{
+  background:#fff;border:1px solid var(--line);padding:20px 8px 17px;
+  text-align:center;transition:.25s;cursor:pointer;
+}
+.category-card:hover,.category-card.selected{
+  border-color:var(--wine);background:#fff7f8;transform:translateY(-3px);
+}
+.category-emoji{font-size:28px;display:block;margin-bottom:8px}
+.category-card strong{display:block;font-size:11px;color:var(--ink)}
+.category-card small{font-size:10px;color:var(--muted)}
+
+/* Main shop layout */
+.shop-layout{
+  display:grid;grid-template-columns:225px minmax(0,1fr);
+  gap:34px;align-items:start;margin-bottom:90px;
+}
+.sidebar{
+  background:#fff;border:1px solid var(--line);
+  padding:23px 20px;position:sticky;top:108px;
+}
+.sidebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:23px}
+.sidebar-top h3{font-size:23px}
+.clear-btn{border:0;background:none;color:var(--wine);font-size:10px;text-decoration:underline}
+.filter-block{padding:20px 0;border-top:1px solid var(--line)}
+.filter-title{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:12px;font-weight:700;margin-bottom:15px;
+}
+.filter-title span{color:var(--wine)}
+.filter-option{
+  display:flex;align-items:center;gap:9px;margin:11px 0;
+  color:#655a55;font-size:11px;cursor:pointer;
+}
+.filter-option input{accent-color:var(--wine);width:14px;height:14px;cursor:pointer}
+.price-values{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:8px}
+input[type=range]{width:100%;accent-color:var(--wine);cursor:pointer}
+.price-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+.price-inputs input{
+  min-width:0;width:100%;padding:9px;border:1px solid var(--line);
+  background:var(--cream);font-size:11px;outline:none;
+}
+.price-inputs input:focus{border-color:var(--wine)}
+.filter-note{font-size:10px;color:var(--muted);margin-top:10px}
+
+/* Toolbar */
+.shop-toolbar{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:15px;margin-bottom:23px;flex-wrap:wrap;
+}
+.mobile-filter-btn{
+  display:none;border:1px solid var(--line);background:white;
+  padding:10px 13px;font-size:11px;color:var(--wine);
+}
+.toolbar-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.search-wrap{position:relative}
+.search-wrap input{
+  width:235px;max-width:100%;border:1px solid var(--line);
+  background:#fff;padding:11px 14px 11px 37px;font-size:11px;outline:none;
+}
+.search-wrap input:focus{border-color:var(--wine)}
+.search-symbol{position:absolute;left:13px;top:8px;font-size:17px;color:var(--muted)}
+.sort-select{
+  border:1px solid var(--line);background:#fff;padding:11px 13px;
+  font-size:11px;color:#554944;outline:none;max-width:100%;
+}
+.active-filters{display:flex;gap:8px;flex-wrap:wrap;margin:-7px 0 20px}
+.filter-tag{
+  display:flex;align-items:center;gap:8px;background:var(--wine-light);
+  padding:5px 9px;color:var(--wine);font-size:10px;
+}
+.filter-tag button{border:0;background:none;color:var(--wine);font-size:14px}
+
+/* Product cards */
+.product-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:27px 18px;
+}
+.product-card{min-width:0;position:relative}
+.product-image{
+  position:relative;overflow:hidden;background:#f2e9e2;
+  aspect-ratio:4/4.55;
+}
+.product-image img{
+  height:100%;transition:transform .55s cubic-bezier(.2,.7,.2,1);
+}
+.product-card:hover .product-image img{transform:scale(1.055)}
+.product-badge{
+  position:absolute;left:10px;top:10px;
+  background:var(--wine);color:white;padding:5px 8px;
+  font-size:9px;letter-spacing:.6px;text-transform:uppercase;
+}
+.product-badge.gold{background:#b59150}
+.wishlist-btn{
+  position:absolute;right:10px;top:10px;
+  width:34px;height:34px;border:0;border-radius:50%;
+  background:rgba(255,250,244,.95);font-size:18px;color:var(--wine);
+  display:grid;place-items:center;transition:.2s;
+}
+.wishlist-btn:hover,.wishlist-btn.is-saved{background:var(--wine);color:white}
+.quick-view{
+  position:absolute;left:10px;right:10px;bottom:10px;
+  background:rgba(255,250,244,.97);border:0;padding:12px;
+  font-size:10px;font-weight:700;color:var(--wine-dark);
+  transform:translateY(60px);opacity:0;transition:.25s;
+}
+.product-card:hover .quick-view{transform:translateY(0);opacity:1}
+.product-info{padding:13px 2px 0}
+.product-category{
+  font-size:9px;color:var(--gold);letter-spacing:1.5px;
+  text-transform:uppercase;font-weight:700;
+}
+.product-title{
+  display:block;font-family:'Playfair Display',serif;
+  font-size:17px;line-height:1.35;margin:5px 0 7px;
+}
+.product-title:hover{color:var(--wine)}
+.product-rating{font-size:10px;color:var(--muted);margin-bottom:8px}
+.stars{color:#c09a53;letter-spacing:1px}
+.product-price{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.current-price{font-size:14px;font-weight:700;color:var(--wine-dark)}
+.old-price{font-size:11px;text-decoration:line-through;color:#a69a94}
+.discount{font-size:10px;color:#477653;font-weight:700}
+.add-cart-btn{
+  width:100%;border:1px solid var(--wine);background:transparent;
+  color:var(--wine);padding:11px 8px;margin-top:13px;
+  font-size:10px;font-weight:700;letter-spacing:.6px;transition:.2s;
+}
+.add-cart-btn:hover{background:var(--wine);color:white}
+.add-cart-btn.added{background:#edf4ed;border-color:#d3e4d3;color:#38613b}
+
+/* Empty state and pagination */
+.empty-state{
+  grid-column:1/-1;text-align:center;padding:65px 20px;
+  background:#fff;border:1px solid var(--line);
+}
+.empty-state .emoji{font-size:43px;margin-bottom:12px}
+.empty-state h3{font-size:25px;margin-bottom:8px}
+.empty-state p{font-size:12px;color:var(--muted);margin-bottom:20px}
+.primary-btn{
+  border:0;background:var(--wine);color:white;padding:12px 22px;
+  font-size:11px;font-weight:700;
+}
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:40px}
+.page-btn{
+  min-width:36px;height:36px;border:1px solid var(--line);
+  background:#fff;color:var(--wine);font-size:11px;
+}
+.page-btn.active,.page-btn:hover{background:var(--wine);color:white;border-color:var(--wine)}
+.pagination-label{font-size:10px;color:var(--muted);margin-left:10px}
+
+/* Trust strip */
+.trust-strip{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:#fff;padding:29px 0;margin-bottom:65px;
+}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.trust-item{display:flex;align-items:center;justify-content:center;gap:12px}
+.trust-icon{font-size:24px}
+.trust-item strong{display:block;font-size:11px}
+.trust-item small{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+
+/* Newsletter and footer */
+.newsletter{
+  background:#f2e5df;padding:48px 20px;text-align:center;
+}
+.newsletter h2{font-size:31px}
+.newsletter p{font-size:12px;color:var(--muted);margin:9px 0 22px}
+.newsletter-form{display:flex;max-width:440px;margin:auto}
+.newsletter-form input{
+  min-width:0;flex:1;border:1px solid #e2d1c9;background:#fff;
+  padding:13px;font-size:11px;outline:none;
+}
+.newsletter-form button{
+  border:0;background:var(--wine);color:white;padding:0 18px;
+  font-size:10px;font-weight:700;
+}
+.footer{background:var(--wine-dark);color:#f7eae5;padding:55px 0 20px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px;padding-bottom:40px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:28px;font-weight:700}
+.footer-logo span{color:#d3ad70}
+.footer-desc{font-size:11px;color:#d7bfc0;max-width:270px;margin-top:12px}
+.footer h4{font-size:11px;letter-spacing:1px;margin:6px 0 17px}
+.footer-links{display:grid;gap:10px}
+.footer-links a{font-size:11px;color:#d7bfc0}
+.footer-links a:hover{color:white}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.15);padding-top:20px;
+  display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;
+  font-size:10px;color:#d7bfc0;
+}
+
+/* Toast */
+.toast{
+  position:fixed;right:22px;bottom:22px;z-index:500;
+  max-width:min(350px,calc(100% - 30px));
+  background:var(--wine-dark);color:white;padding:15px 19px;
+  box-shadow:var(--shadow);font-size:12px;
+  opacity:0;transform:translateY(15px);pointer-events:none;transition:.25s;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast strong{color:#e5c38a}
+
+/* Quick view modal */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(28,12,17,.63);
+  z-index:300;display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-backdrop.open{display:flex}
+.quick-modal{
+  background:var(--cream);width:min(750px,100%);max-height:90vh;
+  overflow:auto;position:relative;display:grid;
+  grid-template-columns:1fr 1fr;
+}
+.modal-image{min-height:340px}
+.modal-image img{height:100%;min-height:340px}
+.modal-details{padding:35px 28px;align-self:center}
+.modal-close{
+  position:absolute;right:12px;top:12px;width:34px;height:34px;
+  background:white;border:1px solid var(--line);border-radius:50%;
+  font-size:19px;z-index:2;
+}
+.modal-details h2{font-size:29px;line-height:1.2;margin:7px 0 13px}
+.modal-details p{font-size:12px;color:var(--muted);margin:14px 0}
+.modal-price{font-size:19px;font-weight:700;color:var(--wine)}
+.modal-details .primary-btn{width:100%;margin-top:20px;padding:14px}
+.modal-small{font-size:10px;color:var(--muted);margin-top:12px}
+
+@media(max-width:1000px){
+  .nav-links{gap:15px}
+  .nav-links a{font-size:11px}
+  .shop-layout{grid-template-columns:200px minmax(0,1fr);gap:22px}
+  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 16px}
+  .category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:720px){
+  .nav{min-height:70px;gap:12px}
+  .logo{font-size:25px}
+  .nav-links{
+    display:none;position:absolute;top:69px;left:0;right:0;
+    background:var(--cream);border-bottom:1px solid var(--line);
+    padding:22px 5%;flex-direction:column;align-items:flex-start;gap:18px;
+  }
+  .nav-links.open{display:flex}
+  .mobile-menu{display:flex}
+  .nav-actions{gap:14px}
+  .nav-actions .account-link{display:none}
+  .page-intro{align-items:flex-start;flex-direction:column;padding-top:25px;gap:12px}
+  .results-count{padding:0}
+  .shop-banner{min-height:245px;padding:30px 24px;margin-bottom:35px}
+  .category-section{margin-bottom:32px}
+  .category-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  .category-card{padding:15px 5px}
+  .category-emoji{font-size:25px}
+  .shop-layout{display:block}
+  .sidebar{
+    display:none;position:fixed;z-index:250;top:0;bottom:0;left:0;
+    width:min(320px,88vw);overflow:auto;box-shadow:var(--shadow);
+  }
+  .sidebar.mobile-open{display:block}
+  .mobile-filter-btn{display:block}
+  .shop-toolbar{align-items:stretch}
+  .toolbar-left{flex:1}
+  .search-wrap{flex:1;min-width:0}
+  .search-wrap input{width:100%}
+  .sort-select{width:100%}
+  .shop-toolbar{display:grid;grid-template-columns:auto 1fr;gap:10px}
+  .toolbar-left{grid-column:1/-1;grid-row:2}
+  .sort-select{grid-column:1/-1;grid-row:3}
+  .product-grid{gap:24px 12px}
+  .product-title{font-size:15px}
+  .product-image{aspect-ratio:4/4.7}
+  .quick-view{display:none}
+  .product-info{padding-top:10px}
+  .product-badge{font-size:8px;left:6px;top:6px}
+  .wishlist-btn{width:30px;height:30px;right:6px;top:6px;font-size:16px}
+  .add-cart-btn{padding:10px 4px;font-size:9px}
+  .trust-grid{grid-template-columns:repeat(2,1fr);gap:24px 10px}
+  .trust-item{justify-content:flex-start}
+  .trust-item strong{font-size:10px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .footer-grid>div:first-child{grid-column:1/-1}
+  .newsletter h2{font-size:27px}
+  .modal-backdrop{padding:12px}
+  .quick-modal{grid-template-columns:1fr;max-height:92vh}
+  .modal-image,.modal-image img{min-height:0;height:240px}
+  .modal-details{padding:23px}
+  .modal-details h2{font-size:25px}
+}
+@media(max-width:380px){
+  .container{width:94%}
+  .logo{font-size:22px}
+  .nav-actions{gap:10px}
+  .category-grid{gap:6px}
+  .category-card strong{font-size:10px}
+  .product-grid{gap:22px 9px}
+  .current-price{font-size:12px}
+  .old-price{font-size:10px}
+}
+</style>
+</head>
+
+<body>
+<div class="announcement">
+  A LITTLE SOMETHING SPECIAL FOR SOMEONE SPECIAL &nbsp;·&nbsp;
+  <span>FREE SHIPPING ABOVE ₹999</span>
+</div>
+
+<header class="header">
+  <div class="container nav">
+    <a href="home.html" class="logo">MakeIt<span>Mine.</span></a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="home.html">Home</a>
+      <a href="shop.html" class="active">Shop All</a>
+      <a href="categories.html">Categories</a>
+      <a href="customize.html">Customise</a>
+      <a href="about.html">Our Story</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-link mobile-menu" id="menuBtn" aria-label="Open menu">☰</button>
+      <a class="icon-link" href="shop.html" aria-label="Search">⌕</a>
+      <a class="icon-link account-link" href="profile.html" aria-label="My account">♙</a>
+      <a class="icon-link" href="cart.html" aria-label="Shopping cart">
+        ♧ <span class="count" id="cartCount">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb">
+    <a href="home.html">Home</a> &nbsp; / &nbsp; <span>Shop All Gifts</span>
+  </div>
+
+  <section class="page-intro">
+    <div>
+      <div class="eyebrow">Thoughtfully picked, lovingly made</div>
+      <h1>Find a gift that feels <em>like you.</em></h1>
+      <p class="intro-text">
+        From little surprises to lifelong keepsakes, discover personalised gifts
+        made to turn ordinary moments into beautiful memories.
+      </p>
+    </div>
+    <div class="results-count" id="topResultsCount">Explore our collection</div>
+  </section>
+
+  <section class="shop-banner">
+    <div class="banner-content">
+      <div class="eyebrow">Made personal. Made memorable.</div>
+      <h2>Because the best gifts tell your story.</h2>
+      <p>Names, photographs, favourite memories — make every little detail yours.</p>
+      <a href="customize.html" class="banner-button">CREATE YOUR OWN GIFT &nbsp; ↗</a>
+    </div>
+  </section>
+
+  <section class="category-section">
+    <div class="section-heading">
+      <h2>Shop by category</h2>
+      <a href="categories.html" class="text-link">VIEW ALL CATEGORIES ↗</a>
+    </div>
+
+    <div class="category-grid" id="categoryGrid">
+      <button class="category-card selected" data-category="All">
+        <span class="category-emoji">✦</span>
+        <strong>All Gifts</strong><small>Everything lovely</small>
+      </button>
+      <button class="category-card" data-category="Photo Gifts">
+        <span class="category-emoji">▧</span>
+        <strong>Photo Gifts</strong><small>Keep the memories</small>
+      </button>
+      <button class="category-card" data-category="Mugs">
+        <span class="category-emoji">☕</span>
+        <strong>Mugs</strong><small>Daily little joys</small>
+      </button>
+      <button class="category-card" data-category="Hampers">
+        <span class="category-emoji">🎁</span>
+        <strong>Gift Hampers</strong><small>A box of happiness</small>
+      </button>
+      <button class="category-card" data-category="Accessories">
+        <span class="category-emoji">♡</span>
+        <strong>Accessories</strong><small>Little keepsakes</small>
+      </button>
+      <button class="category-card" data-category="Stationery">
+        <span class="category-emoji">✎</span>
+        <strong>Stationery</strong><small>Made just for you</small>
+      </button>
+    </div>
+  </section>
+
+  <section class="shop-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <h3>Filters</h3>
+        <button class="clear-btn" id="clearFilters">Clear all</button>
+      </div>
+
+      <div class="filter-block">
+        <div class="filter-title">Categories <span>−</span></div>
+        <label class="filter-option"><input type="checkbox" name="category" value="Photo Gifts"> Photo Gifts</label>
+        <label class="filter-option"><input type="checkbox" name="category" value="Mugs"> Mugs</label>
+        <label class="filter-option"><input type="checkbox" name="category" value="Hampers"> Gift Hampers</label>
+        <label class="filter-option"><input type="checkbox" name="category" value="Accessories"> Accessories</label>
+        <label class="filter-option"><input type="checkbox" name="category" value="Stationery"> Stationery</label>
+      </div>
+
+      <div class="filter-block">
+        <div class="filter-title">Price range <span>−</span></div>
+        <input type="range" id="priceRange" min="100" max="3000" step="50" value="3000">
+        <div class="price-values">
+          <span>₹100</span><strong id="rangeValue">₹3,000</strong>
+        </div>
+        <div class="price-inputs">
+          <input type="number" id="minPrice" min="0" value="100" aria-label="Minimum price">
+          <input type="number" id="maxPrice" min="0" value="3000" aria-label="Maximum price">
+        </div>
+        <p class="filter-note">Prices shown in Indian Rupees (₹).</p>
+      </div>
+
+      <div class="filter-block">
+        <div class="filter-title">Special picks <span>−</span></div>
+        <label class="filter-option"><input type="checkbox" id="discountOnly"> On sale</label>
+        <label class="filter-option"><input type="checkbox" id="personalisedOnly"> Personalised gifts</label>
+      </div>
+    </aside>
+
+    <div class="products-area">
+      <div class="shop-toolbar">
+        <button class="mobile-filter-btn" id="mobileFilterBtn">☷ &nbsp; Filters</button>
+
+        <div class="toolbar-left">
+          <div class="search-wrap">
+            <span class="search-symbol">⌕</span>
+            <input type="search" id="searchInput" placeholder="Search gifts..." aria-label="Search products">
+          </div>
+        </div>
+
+        <select class="sort-select" id="sortSelect" aria-label="Sort products">
+          <option value="featured">Sort: Featured</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Top Rated</option>
+          <option value="name">Name: A to Z</option>
+        </select>
+      </div>
+
+      <div class="active-filters" id="activeFilters"></div>
+
+      <div class="product-grid" id="productGrid"></div>
+
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </section>
+</main>
+
+<section class="trust-strip">
+  <div class="container trust-grid">
+    <div class="trust-item">
+      <span class="trust-icon">♡</span>
+      <div><strong>Made With Love</strong><small>Thoughtful, personal details</small></div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">♧</span>
+      <div><strong>Carefully Packed</strong><small>Ready to make someone smile</small></div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">↗</span>
+      <div><strong>Easy Ordering</strong><small>A simple gifting experience</small></div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">✧</span>
+      <div><strong>Made For You</strong><small>Little things, big feelings</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter">
+  <div class="container">
+    <div class="eyebrow">A little love in your inbox</div>
+    <h2>Good things are worth sharing.</h2>
+    <p>Get gifting inspiration, new arrivals and special offers from us.</p>
+    <form class="newsletter-form" id="newsletterForm">
+      <input type="email" id="newsletterEmail" placeholder="Your email address" required aria-label="Email address">
+      <button type="submit">COUNT ME IN ↗</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="home.html" class="footer-logo">MakeIt<span>Mine.</span></a>
+        <p class="footer-desc">
+          Gifts that feel a little more personal. We believe the smallest
+          thoughtful details can create the biggest memories.
+        </p>
+      </div>
+      <div>
+        <h4>EXPLORE</h4>
+        <div class="footer-links">
+          <a href="shop.html">Shop All</a>
+          <a href="categories.html">Categories</a>
+          <a href="customize.html">Customise a Gift</a>
+          <a href="about.html">Our Story</a>
+          <a href="terms.html">Terms & Conditions</a>
+        </div>
+      </div>
+      <div>
+        <h4>YOUR ACCOUNT</h4>
+        <div class="footer-links">
+          <a href="profile.html">My Profile</a>
+          <a href="cart.html">Shopping Cart</a>
+          <a href="order-tracking.html">Track Order</a>
+          <a href="login.html">Sign In</a>
+          <a href="terms.html">Terms & Conditions</a>
+        </div>
+      </div>
+      <div>
+        <h4>WE'RE HERE</h4>
+        <div class="footer-links">
+          <a href="contact.html">Contact Us</a>
+          <a href="contact.html">FAQs & Support</a>
+          <a href="contact.html">Shipping Information</a>
+          <a href="contact.html">Returns & Exchanges</a>
+          <a href="terms.html">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> MakeItMine. All rights reserved.</span>
+      <span>Made with ♡ for your special someone.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="modal-backdrop" id="quickModal" role="dialog" aria-modal="true" aria-label="Product details">
+  <div class="quick-modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    <div class="modal-image"><img id="modalImage" src="" alt="Selected gift"></div>
+    <div class="modal-details">
+      <div class="eyebrow" id="modalCategory">PERSONALISED GIFT</div>
+      <h2 id="modalTitle">Gift name</h2>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="product-rating"><span class="stars">★★★★★</span> &nbsp; <span id="modalRating"></span></div>
+      <p id="modalDescription"></p>
+      <p>Thoughtfully designed for gifting. Please check the product details before placing your order.</p>
+      <button class="primary-btn" id="modalAdd">ADD TO BAG</button>
+      <div class="modal-small">Secure your favourite finds in your shopping bag.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+const PRODUCTS = [
+    {
+      id:"gift-101",name:"Personalised Photo Frame",category:"Photo Gifts",
+      price:599,oldPrice:799,rating:4.8,reviews:124,badge:"Bestseller",
+      personalised:true,featured:1,
+      image:"https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=85",
+      description:"Give your favourite memory a beautiful home with a personalised photo frame. A thoughtful keepsake for birthdays, anniversaries and everyday moments."
+    },
+    {
+      id:"gift-102",name:"The Little Love Hamper",category:"Hampers",
+      price:1299,oldPrice:1599,rating:4.9,reviews:86,badge:"Popular",
+      personalised:true,featured:2,
+      image:"https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=800&q=85",
+      description:"A curated gift hamper for someone who deserves a little extra love. A lovely choice for celebrations, thank-yous and just-because surprises."
+    },
+    {
+      id:"gift-103",name:"Custom Name Coffee Mug",category:"Mugs",
+      price:349,oldPrice:449,rating:4.7,reviews:203,badge:"Bestseller",
+      personalised:true,featured:3,
+      image:"https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=800&q=85",
+      description:"Make their morning coffee a little more special with a mug featuring a name or personal touch. A sweet, practical gift for everyday use."
+    },
+    {
+      id:"gift-104",name:"Memory Lane Scrapbook",category:"Stationery",
+      price:749,oldPrice:899,rating:4.8,reviews:68,badge:"New",
+      personalised:true,featured:4,
+      image:"https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=85",
+      description:"Collect photographs, handwritten notes and little memories in a scrapbook made for life's most meaningful moments."
+    },
+    {
+      id:"gift-105",name:"Initials Keychain",category:"Accessories",
+      price:249,oldPrice:299,rating:4.6,reviews:152,badge:"Under ₹299",
+      personalised:true,featured:5,
+      image:"https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=85",
+      description:"A small, thoughtful accessory personalised with initials. An easy everyday keepsake and a lovely little surprise for someone special."
+    },
+    {
+      id:"gift-106",name:"Cosy Celebration Box",category:"Hampers",
+      price:1599,oldPrice:1999,rating:4.9,reviews:47,badge:"Save 20%",
+      personalised:true,featured:6,
+      image:"https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=85",
+      description:"A celebration-ready gift box for birthdays, milestones and thoughtful surprises. Add your own message to make the moment feel even more personal."
+    },
+    {
+      id:"gift-107",name:"Minimalist Memory Album",category:"Photo Gifts",
+      price:899,oldPrice:1099,rating:4.7,reviews:93,badge:"Loved",
+      personalised:true,featured:7,
+      image:"https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=800&q=85",
+      description:"A timeless album for photographs and handwritten memories. Create a keepsake that can be revisited for years to come."
+    },
+    {
+      id:"gift-108",name:"Everyday Joy Mug Set",category:"Mugs",
+      price:699,oldPrice:849,rating:4.5,reviews:59,badge:"",
+      personalised:false,featured:8,
+      image:"https://images.unsplash.com/photo-1493857671505-72967e2e2760?auto=format&fit=crop&w=800&q=85",
+      description:"A charming mug set for slow mornings, shared conversations and little everyday rituals. A thoughtful gift for couples and friends."
+    },
+    {
+      id:"gift-109",name:"Personalised Journal",category:"Stationery",
+      price:499,oldPrice:599,rating:4.8,reviews:114,badge:"Gift pick",
+      personalised:true,featured:9,
+      image:"https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=85",
+      description:"A journal for plans, dreams, notes and new beginnings. Add a personal touch to make it a meaningful gift for students, friends or colleagues."
+    },
+    {
+      id:"gift-110",name:"Everyday Charm Bracelet",category:"Accessories",
+      price:549,oldPrice:699,rating:4.6,reviews:72,badge:"",
+      personalised:false,featured:10,
+      image:"https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=85",
+      description:"A delicate accessory for everyday styling and special occasions. An elegant little gift for birthdays and thoughtful celebrations."
+    },
+    {
+      id:"gift-111",name:"Birthday Surprise Hamper",category:"Hampers",
+      price:999,oldPrice:1199,rating:4.8,reviews:105,badge:"Popular",
+      personalised:true,featured:11,
+      image:"https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=800&q=85",
+      description:"Make their birthday feel extra special with a beautifully presented surprise hamper. Include a heartfelt note to finish the gift."
+    },
+    {
+      id:"gift-112",name:"Photo Collage Keepsake",category:"Photo Gifts",
+      price:449,oldPrice:599,rating:4.7,reviews:91,badge:"Save 25%",
+      personalised:true,featured:12,
+      image:"https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=85",
+      description:"Bring favourite moments together in a photo collage keepsake. A personal way to celebrate friendships, family and meaningful milestones."
+    }
+  ];
+ 
+async function loadBackendProducts() {
+  const grid = document.getElementById("productGrid");
+
+  try {
+    const response = await fetch("http://localhost:5000/api/products");
+
+    if (!response.ok) {
+      throw new Error(`Products API failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    const backendProducts = (data.products || []).map(product => ({
+      id: product._id,
+      name: product.name,
+      category: product.category,
+      price: Number(product.price),
+      oldPrice: Number(product.price),
+      rating: 0,
+      reviews: 0,
+      badge: product.featured ? "Featured" : "",
+      personalised: Boolean(product.customizable),
+      featured: product.featured ? 1 : 0,
+      image: product.images?.[0] || "",
+      description: product.description || ""
+    }));
+console.log("BACKEND PRODUCT MAPPING:", backendProducts);
+console.log("RAW BACKEND PRODUCTS:", data.products);
+console.log("FIRST PRODUCT:", data.products?.[0]);
+console.log("MAPPED PRODUCTS:", backendProducts);
+    PRODUCTS.splice(0, PRODUCTS.length, ...backendProducts);
+
+    currentPage = 1;
+    renderProducts();
+
+    console.log("Backend products loaded:", PRODUCTS);
+  } catch (error) {
+    console.error("Backend products loading failed:", error);
+
+    if (grid) {
+      grid.innerHTML =
+        '<p class="empty-state">Unable to load products. Please try again.</p>';
+    }
+  }
+}
+
+
+  const $ = id => document.getElementById(id);
+  const money = value => "₹" + Number(value).toLocaleString("en-IN");
+  const safeParse = (value,fallback) => {
+    try{
+      const result=JSON.parse(value);
+      return result ?? fallback;
+    }catch(error){return fallback}
+  };
+
+  let selectedCategory="All";
+  let currentPage=1;
+  const pageSize=9;
+  let currentModalProduct=null;
+  let toastTimer=null;
+
+  const getCart=()=> {
+    const cart=safeParse(localStorage.getItem("mim_cart"),[]);
+    return Array.isArray(cart)?cart:[];
+  };
+  const getWishlist=()=> {
+    const list=safeParse(localStorage.getItem("mim_wishlist"),[]);
+    return Array.isArray(list)?list:[];
+  };
+  const getWishlistIds=()=>getWishlist().map(item=>{
+    return typeof item==="string"?item:item.id;
+  });
+
+  function updateCartCount(){
+    const count=getCart().reduce((sum,item)=>sum+Math.max(0,Number(item.quantity)||1),0);
+    $("cartCount").textContent=count;
+  }
+
+  function showToast(message){
+    const toast=$("toast");
+    toast.innerHTML=message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>toast.classList.remove("show"),2700);
+  }
+
+  function addToCart(product){
+    const cart=getCart();
+    const existing=cart.find(item=>String(item.id)===String(product.id));
+    if(existing){
+      existing.quantity=(Number(existing.quantity)||1)+1;
+    }else{
+      cart.push({
+        id:product.id,
+        name:product.name,
+        type:product.category,
+        category:product.category,
+        price:product.price,
+        basePrice:product.price,
+        quantity:1,
+        emoji:"🎁",
+        image:product.image,
+        personalised:product.personalised
+      });
+    }
+    localStorage.setItem("mim_cart",JSON.stringify(cart));
+    updateCartCount();
+    showToast("<strong>Added to your bag!</strong> &nbsp; "+product.name);
+  }
+
+  function toggleWishlist(product){
+    let list=getWishlist();
+    const ids=getWishlistIds();
+    const saved=ids.includes(product.id);
+
+    if(saved){
+      list=list.filter(item=>(typeof item==="string"?item:item.id)!==product.id);
+      showToast("Removed from your wishlist.");
+    }else{
+      list.push({
+        id:product.id,name:product.name,price:product.price,
+        category:product.category,image:product.image
+      });
+      showToast("<strong>Saved with love!</strong> Added to your wishlist.");
+    }
+    localStorage.setItem("mim_wishlist",JSON.stringify(list));
+    renderProducts();
+  }
+
+  function getFilters(){
+    const categories=[...document.querySelectorAll('input[name="category"]:checked')]
+      .map(input=>input.value);
+    return {
+      categories,
+      min:Math.max(0,Number($("minPrice").value)||0),
+      max:Math.max(0,Number($("maxPrice").value)||0),
+      sale:$("discountOnly").checked,
+      personalised:$("personalisedOnly").checked,
+      query:$("searchInput").value.trim().toLowerCase(),
+      sort:$("sortSelect").value
+    };
+  }
+
+  
+async function loadBackendProducts() {
+  try {
+    const response = await fetch("http://localhost:5000/api/products");
+
+    if (!response.ok) {
+      throw new Error(`Products API failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("RAW API DATA:", JSON.stringify(data, null, 2));
+
+   const backendProducts = (data.products || []).map(product => ({
+      id: product._id,
+      name: product.name,
+      category: product.category,
+      price: Number(product.price),
+      oldPrice: Number(product.price),
+      rating: 0,
+      reviews: 0,
+      badge: product.featured ? "Featured" : "",
+      personalised: Boolean(product.customizable),
+      featured : product.featured ? 1 : 0,
+      image: product.images?.[0] || "",
+      description: product.description || ""
+    }));
+
+    PRODUCTS.splice(0, PRODUCTS.length, ...backendProducts);
+
+    currentPage = 1;
+    renderProducts();
+
+    console.log("Backend products loaded:", PRODUCTS);
+  } catch (error) {
+    console.error("Backend product loading failed:", error);
+    showToast("Unable to load products from the server.", "error");
+  }
+}
+
+
+  function getFilteredProducts(){
+    const filters=getFilters();
+    let products=PRODUCTS.filter(product=>{
+      const categoryMatch=selectedCategory==="All"||
+        product.category===selectedCategory;
+      const checkboxMatch=filters.categories.length===0||
+        filters.categories.includes(product.category);
+      const priceMatch=product.price>=filters.min&&product.price<=filters.max;
+      const saleMatch=!filters.sale||product.oldPrice>product.price;
+      const personalisedMatch=!filters.personalised||product.personalised;
+      const searchMatch=!filters.query||
+        (product.name+" "+product.category+" "+product.description)
+          .toLowerCase().includes(filters.query);
+
+      return categoryMatch&&checkboxMatch&&priceMatch&&saleMatch&&personalisedMatch&&searchMatch;
+    });
+
+    switch(filters.sort){
+      case "price-low": products.sort((a,b)=>a.price-b.price);break;
+      case "price-high": products.sort((a,b)=>b.price-a.price);break;
+      case "rating": products.sort((a,b)=>b.rating-a.rating);break;
+      case "name": products.sort((a,b)=>a.name.localeCompare(b.name));break;
+      default: products.sort((a,b)=>a.featured-b.featured);
+    }
+    return products;
+  }
+
+  function renderProducts(){
+    const products=getFilteredProducts();
+    const grid=$("productGrid");
+    const totalPages=Math.max(1,Math.ceil(products.length/pageSize));
+
+    if(currentPage>totalPages)currentPage=totalPages;
+    const start=(currentPage-1)*pageSize;
+    const visible=products.slice(start,start+pageSize);
+    const wishlistIds=getWishlistIds();
+
+    $("topResultsCount").textContent=products.length+
+      (products.length===1?" lovely find":" lovely finds");
+
+    if(products.length===0){
+      grid.innerHTML=`
+        <div class="empty-state">
+          <div class="emoji">♡</div>
+          <h3>No gifts found just yet.</h3>
+          <p>Try another search or clear some filters to discover more lovely finds.</p>
+          <button class="primary-btn" id="emptyReset">CLEAR FILTERS</button>
+        </div>`;
+      $("pagination").innerHTML="";
+      $("emptyReset").addEventListener("click",clearAllFilters);
+      renderActiveFilters();
+      return;
+    }
+
+    grid.innerHTML=visible.map(product=>{
+      const saved=wishlistIds.includes(product.id);
+      const discount=Math.round((1-product.price/product.oldPrice)*100);
+      const badge=product.badge
+        ?`<span class="product-badge ${product.badge==="New"?"gold":""}">${product.badge}</span>`:"";
+
+      return `
+       <article class="product-card"
+  data-product-id="${product.id}"
+  data-product-name="${product.name}"
+  data-product-price="${product.price}"
+  data-category="${product.category}">
+          <div class="product-image">
+            <a href="product-detail.html?id=${encodeURIComponent(product.id)}"
+               aria-label="View ${product.name}">
+              <img src="${product.image}" alt="${product.name}" loading="lazy"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x700/F3E8E0/6D2338?text=MakeItMine+Gift'">
+            </a>
+            ${badge}
+            <button class="wishlist-btn ${saved?"is-saved":""}"
+              data-wishlist="${product.id}"
+              aria-label="${saved?"Remove from":"Add to"} wishlist"
+              title="${saved?"Remove from wishlist":"Add to wishlist"}">${saved?"♥":"♡"}</button>
+            <button class="quick-view" data-quick="${product.id}">QUICK VIEW &nbsp; ↗</button>
+          </div>
+          <div class="product-info">
+            <div class="product-category">${product.category}</div>
+            <a class="product-title" href="product-detail.html?id=${encodeURIComponent(product.id)}">${product.name}</a>
+            <div class="product-rating"><span class="stars">★★★★★</span> &nbsp; ${product.rating} (${product.reviews})</div>
+            <div class="product-price">
+              <span class="current-price">${money(product.price)}</span>
+              <span class="old-price">${money(product.oldPrice)}</span>
+              <span class="discount">${discount}% OFF</span>
+            </div>
+            <button type="button" class="add-cart-btn"
+  data-add-to-cart
+  data-product-id="${product.id}">
+  ＋ &nbsp; ADD TO BAG
+</button>
+          </div>
+        </article>`;
+    }).join("");
+
+    renderPagination(products.length,totalPages);
+    renderActiveFilters();
+  }
+
+  function renderPagination(total,totalPages){
+    const pagination=$("pagination");
+    if(total<=pageSize){pagination.innerHTML="";return;}
+
+    let html="";
+    if(currentPage>1){
+      html+=`<button class="page-btn" data-page="${currentPage-1}" aria-label="Previous page">←</button>`;
+    }
+    for(let i=1;i<=totalPages;i++){
+      html+=`<button class="page-btn ${i===currentPage?"active":""}" data-page="${i}" aria-label="Page ${i}">${i}</button>`;
+    }
+    if(currentPage<totalPages){
+      html+=`<button class="page-btn" data-page="${currentPage+1}" aria-label="Next page">→</button>`;
+    }
+    html+=`<span class="pagination-label">${total} items</span>`;
+    pagination.innerHTML=html;
+  }
+
+  function renderActiveFilters(){
+    const filters=getFilters();
+    const tags=[];
+    if(selectedCategory!=="All")tags.push({label:selectedCategory,clear:()=>setCategory("All")});
+    filters.categories.forEach(category=>tags.push({
+      label:category,
+      clear:()=>{
+        const input=[...document.querySelectorAll('input[name="category"]')]
+          .find(item=>item.value===category);
+        if(input)input.checked=false;
+        currentPage=1;renderProducts();
+      }
+    }));
+    if(filters.sale)tags.push({label:"On sale",clear:()=>{$("discountOnly").checked=false;currentPage=1;renderProducts()}});
+    if(filters.personalised)tags.push({label:"Personalised",clear:()=>{$("personalisedOnly").checked=false;currentPage=1;renderProducts()}});
+    if(filters.query)tags.push({label:'Search: '+filters.query,clear:()=>{$("searchInput").value="";currentPage=1;renderProducts()}});
+    if(filters.min>100||filters.max<3000)tags.push({
+      label:money(filters.min)+"–"+money(filters.max),
+      clear:()=>{$("minPrice").value=100;$("maxPrice").value=3000;$("priceRange").value=3000;$("rangeValue").textContent=money(3000);currentPage=1;renderProducts()}
+    });
+
+    $("activeFilters").innerHTML=tags.map((tag,index)=>
+      `<span class="filter-tag">${tag.label}<button data-clear-tag="${index}" aria-label="Remove ${tag.label}">×</button></span>`
+    ).join("");
+
+    $("activeFilters").querySelectorAll("[data-clear-tag]").forEach(button=>{
+      button.addEventListener("click",()=>tags[Number(button.dataset.clearTag)].clear());
+    });
+  }
+
+  function setCategory(category){
+    selectedCategory=category;
+    currentPage=1;
+    document.querySelectorAll(".category-card").forEach(card=>{
+      card.classList.toggle("selected",card.dataset.category===category);
+    });
+    document.querySelectorAll('input[name="category"]').forEach(input=>{
+      input.checked=false;
+    });
+    renderProducts();
+  }
+
+  function clearAllFilters(){
+    selectedCategory="All";
+    currentPage=1;
+    $("searchInput").value="";
+    $("minPrice").value=100;
+    $("maxPrice").value=3000;
+    $("priceRange").value=3000;
+    $("rangeValue").textContent=money(3000);
+    $("discountOnly").checked=false;
+    $("personalisedOnly").checked=false;
+    $("sortSelect").value="featured";
+    document.querySelectorAll('input[name="category"]').forEach(input=>input.checked=false);
+    document.querySelectorAll(".category-card").forEach(card=>{
+      card.classList.toggle("selected",card.dataset.category==="All");
+    });
+    renderProducts();
+  }
+
+  function openQuickView(product){
+    currentModalProduct=product;
+    $("modalImage").src=product.image;
+    $("modalImage").alt=product.name;
+    $("modalCategory").textContent=product.category.toUpperCase();
+    $("modalTitle").textContent=product.name;
+    $("modalPrice").textContent=money(product.price);
+    $("modalRating").textContent=product.rating+" · "+product.reviews+" reviews";
+    $("modalDescription").textContent=product.description;
+    $("quickModal").classList.add("open");
+    document.body.style.overflow="hidden";
+  }
+
+  function closeQuickView(){
+    $("quickModal").classList.remove("open");
+    document.body.style.overflow="";
+    currentModalProduct=null;
+  }
+
+  $("categoryGrid").addEventListener("click",event=>{
+    const card=event.target.closest("[data-category]");
+    if(card)setCategory(card.dataset.category);
+  });
+
+  $("productGrid").addEventListener("click", async event => {
+    const addButton=event.target.closest("[data-add]");
+    if(addButton){
+      const product = PRODUCTS.find(
+  p => String(p.id) === String(addButton.dataset.add)
+);
+      if(product){
+        await window.MakeItMine.Cart.add(product);
+        addButton.classList.add("added");
+        addButton.textContent="✓ ADDED TO BAG";
+        setTimeout(()=>{
+          if(addButton.isConnected){
+            addButton.classList.remove("added");
+            addButton.innerHTML="＋ &nbsp; ADD TO BAG";
+          }
+        },1200);
+      }
+      return;
+    }
+
+    const wishlistButton=event.target.closest("[data-wishlist]");
+    if(wishlistButton){
+      const product=PRODUCTS.find(p=>p.id===wishlistButton.dataset.wishlist);
+      if(product)toggleWishlist(product);
+      return;
+    }
+
+    const quickButton=event.target.closest("[data-quick]");
+    if(quickButton){
+      const product=PRODUCTS.find(p=>p.id===quickButton.dataset.quick);
+      if(product)openQuickView(product);
+    }
+  });
+
+  $("pagination").addEventListener("click",event=>{
+    const button=event.target.closest("[data-page]");
+    if(!button)return;
+    currentPage=Number(button.dataset.page);
+    renderProducts();
+    document.querySelector(".shop-toolbar").scrollIntoView({behavior:"smooth",block:"start"});
+  });
+
+  $("searchInput").addEventListener("input",()=>{
+    currentPage=1;renderProducts();
+  });
+
+  $("sortSelect").addEventListener("change",()=>{
+    currentPage=1;renderProducts();
+  });
+
+  document.querySelectorAll('input[name="category"],#discountOnly,#personalisedOnly')
+    .forEach(input=>input.addEventListener("change",()=>{
+      currentPage=1;renderProducts();
+    }));
+
+  $("priceRange").addEventListener("input",()=>{
+    $("maxPrice").value=$("priceRange").value;
+    $("rangeValue").textContent=money($("priceRange").value);
+    currentPage=1;renderProducts();
+  });
+
+  $("minPrice").addEventListener("change",()=>{
+    if(Number($("minPrice").value)>Number($("maxPrice").value)){
+      $("maxPrice").value=$("minPrice").value;
+    }
+    currentPage=1;renderProducts();
+  });
+
+  $("maxPrice").addEventListener("change",()=>{
+    const max=Math.max(0,Number($("maxPrice").value)||0);
+    $("priceRange").value=Math.min(3000,max);
+    $("rangeValue").textContent=money(max);
+    currentPage=1;renderProducts();
+  });
+
+  $("clearFilters").addEventListener("click",clearAllFilters);
+  $("mobileFilterBtn").addEventListener("click",()=>$("sidebar").classList.toggle("mobile-open"));
+
+  $("menuBtn").addEventListener("click",()=>{
+    $("navLinks").classList.toggle("open");
+  });
+
+  $("modalClose").addEventListener("click",closeQuickView);
+  $("quickModal").addEventListener("click",event=>{
+    if(event.target===$("quickModal"))closeQuickView();
+  });
+
+  document.addEventListener("keydown",event=>{
+    if(event.key==="Escape")closeQuickView();
+  });
+
+  $("modalAdd").addEventListener("click",()=>{
+    if(currentModalProduct){
+      addToCart(currentModalProduct);
+      closeQuickView();
+    }
+  });
+
+  $("newsletterForm").addEventListener("submit",event=>{
+    event.preventDefault();
+    const email=$("newsletterEmail").value.trim();
+    if(!email)return;
+    showToast("<strong>Thank you!</strong> Newsletter signup UI is ready. Connect an email service to save subscriptions.");
+    $("newsletterForm").reset();
+  });
+
+  // Optional deep link: shop.html?category=Mugs
+  const params=new URLSearchParams(window.location.search);
+  const requestedCategory=params.get("category");
+  if(requestedCategory&&["Photo Gifts","Mugs","Hampers","Accessories","Stationery"].includes(requestedCategory)){
+    selectedCategory=requestedCategory;
+    document.querySelectorAll(".category-card").forEach(card=>{
+      card.classList.toggle("selected",card.dataset.category===requestedCategory);
+    });
+  }
+
+  $("year").textContent=new Date().getFullYear();
+  updateCartCount();
+renderProducts();
+loadBackendProducts();
+})();
+</script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

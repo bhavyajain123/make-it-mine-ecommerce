@@ -1,0 +1,739 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | MakeItMine</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #faf6f0;
+            color: #352522;
+        }
+
+        header {
+            background: #642839;
+            color: white;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: Georgia, serif;
+            font-size: 25px;
+        }
+
+        header button, .action-btn {
+            border: 1px solid #642839;
+            background: #642839;
+            color: white;
+            padding: 10px 14px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        main {
+            max-width: 1250px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .intro {
+            margin-bottom: 25px;
+        }
+
+        .intro h2 {
+            font-family: Georgia, serif;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .muted {
+            color: #806f68;
+            font-size: 13px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card, .panel {
+            background: white;
+            border: 1px solid #e8d8cb;
+            padding: 20px;
+        }
+
+        .stat-card span {
+            display: block;
+            color: #806f68;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card strong {
+            font-family: Georgia, serif;
+            font-size: 26px;
+            overflow-wrap: anywhere;
+        }
+
+        .panel {
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .panel h3 {
+            margin: 0;
+            font-family: Georgia, serif;
+            font-size: 22px;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 13px 10px;
+            border-bottom: 1px solid #eee4dc;
+            font-size: 13px;
+        }
+
+        th {
+            color: #642839;
+            background: #fcf8f4;
+        }
+
+        input, select {
+            padding: 9px;
+            border: 1px solid #dfcfc3;
+            background: white;
+            color: #352522;
+            max-width: 100%;
+        }
+
+        .stock-input {
+            width: 90px;
+        }
+
+        .status {
+            text-transform: capitalize;
+        }
+
+        .message {
+            margin: 12px 0;
+            font-size: 13px;
+        }
+
+        .error {
+            color: #b42318;
+        }
+
+        .success {
+            color: #267343;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar select {
+            min-width: 130px;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .pagination button:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 500px) {
+            header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 0 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>MakeItMine <span style="font-size:14px">Admin</span></h1>
+        <button id="logoutBtn" type="button">Logout</button>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Dashboard Overview</h2>
+            <p class="muted">Manage your store, orders, customers and inventory.</p>
+            <p id="pageMessage" class="message" aria-live="polite"></p>
+            <button class="action-btn" id="refreshBtn" type="button">
+                Refresh Dashboard
+            </button>
+        </section>
+
+        <section class="stats">
+            <div class="stat-card">
+                <span>Total Users</span>
+                <strong id="totalUsers">—</strong>
+            </div>
+            <div class="stat-card">
+                <span>Active Products</span>
+                <strong id="totalProducts">—</strong>
+            </div>
+            <div class="stat-card">
+                <span>Total Orders</span>
+                <strong id="totalOrders">—</strong>
+            </div>
+            <div class="stat-card">
+                <span>Pending Orders</span>
+                <strong id="pendingOrders">—</strong>
+            </div>
+            <div class="stat-card">
+                <span>Paid Sales</span>
+                <strong id="totalSales">—</strong>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-heading">
+                <h3>Recent Orders</h3>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Payment</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentOrdersBody">
+                        <tr><td colspan="6">Loading orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-heading">
+                <h3>Manage Products & Stock</h3>
+                <div class="toolbar">
+                    <select id="productFilter">
+                        <option value="">All products</option>
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                    <button class="action-btn" id="loadProductsBtn" type="button">
+                        Load Products
+                    </button>
+                </div>
+            </div>
+            <p id="productMessage" class="message" aria-live="polite"></p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Current Stock</th>
+                            <th>Active</th>
+                            <th>Update Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsBody">
+                        <tr><td colspan="5">Click Load Products.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button class="action-btn" id="productsPrev" type="button">Previous</button>
+                <span id="productsPage">Page 1</span>
+                <button class="action-btn" id="productsNext" type="button">Next</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-heading">
+                <h3>All Orders</h3>
+                <div class="toolbar">
+                    <select id="orderStatusFilter">
+                        <option value="">All statuses</option>
+                        <option value="placed">Placed</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <button class="action-btn" id="loadOrdersBtn" type="button">
+                        Load Orders
+                    </button>
+                </div>
+            </div>
+            <p id="ordersMessage" class="message" aria-live="polite"></p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Payment</th>
+                            <th>Current Status</th>
+                            <th>Change Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersBody">
+                        <tr><td colspan="6">Click Load Orders.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button class="action-btn" id="ordersPrev" type="button">Previous</button>
+                <span id="ordersPage">Page 1</span>
+                <button class="action-btn" id="ordersNext" type="button">Next</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-heading">
+                <h3>Registered Users</h3>
+                <button class="action-btn" id="loadUsersBtn" type="button">
+                    Load Users
+                </button>
+            </div>
+            <p id="usersMessage" class="message" aria-live="polite"></p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Joined</th>
+                </tr>
+                    </thead>
+                    <tbody id="usersBody">
+                        <tr><td colspan="4">Click Load Users.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button class="action-btn" id="usersPrev" type="button">Previous</button>
+                <span id="usersPage">Page 1</span>
+                <button class="action-btn" id="usersNext" type="button">Next</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const API_BASE = "http://localhost:5000/api/admin";
+
+        const token = localStorage.getItem("mim_token");
+
+        let productPage = 1;
+        let productTotalPages = 1;
+        let orderPage = 1;
+        let orderTotalPages = 1;
+        let userPage = 1;
+        let userTotalPages = 1;
+
+        const $ = (id) => document.getElementById(id);
+
+        function escapeHTML(value) {
+            return String(value ?? "").replace(/[&<>"']/g, function (char) {
+                return {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;"
+                }[char];
+            });
+        }
+
+        function money(value) {
+            return new Intl.NumberFormat("en-IN", {
+                style: "currency",
+                currency: "INR",
+                maximumFractionDigits: 2
+            }).format(Number(value) || 0);
+        }
+
+        function showMessage(id, message, type = "") {
+            const element = $(id);
+            element.textContent = message;
+            element.className = "message " + type;
+        }
+
+        async function apiRequest(path, options = {}) {
+            if (!token) {
+                throw new Error("Please log in with an admin account.");
+            }
+
+            const response = await fetch(API_BASE + path, {
+                ...options,
+                headers: {
+                    ...(options.body ? { "Content-Type": "application/json" } : {}),
+                    Authorization: `Bearer ${token}`,
+                    ...options.headers
+                }
+            });
+
+            const result = await response.json().catch(() => ({}));
+
+            if (response.status === 401) {
+                throw new Error("Session expired. Please log in again.");
+            }
+
+            if (response.status === 403) {
+                throw new Error("Admin access required. Use an admin account.");
+            }
+
+            if (!response.ok) {
+                throw new Error(result.message || "API request failed.");
+            }
+
+            return result;
+        }
+
+        function formatDate(value) {
+            if (!value) return "—";
+            const date = new Date(value);
+            return Number.isNaN(date.getTime()) ? "—" : date.toLocaleDateString("en-IN");
+        }
+
+        async function loadDashboard() {
+            showMessage("pageMessage", "Loading dashboard...");
+            try {
+                const result = await apiRequest("/dashboard");
+                const summary = result.summary || {};
+
+                $("totalUsers").textContent = summary.totalUsers ?? 0;
+                $("totalProducts").textContent = summary.totalProducts ?? 0;
+                $("totalOrders").textContent = summary.totalOrders ?? 0;
+                $("pendingOrders").textContent = summary.pendingOrders ?? 0;
+                $("totalSales").textContent = money(summary.totalPaidSales);
+
+                const body = $("recentOrdersBody");
+                const orders = result.recentOrders || [];
+
+                body.innerHTML = orders.length ? orders.map(order => `
+                    <tr>
+                        <td>${escapeHTML(order.orderNumber || order._id)}</td>
+                        <td>${escapeHTML(order.user?.name || "Customer")}</td>
+                        <td>${money(order.totalAmount)}</td>
+                        <td>${escapeHTML(order.status || "—")}</td>
+                        <td>${escapeHTML(order.paymentStatus || "—")}</td>
+                        <td>${formatDate(order.createdAt)}</td>
+                    </tr>
+                `).join("") : '<tr><td colspan="6">No orders found.</td></tr>';
+
+                showMessage("pageMessage", "Dashboard loaded successfully.", "success");
+            } catch (error) {
+                showMessage("pageMessage", error.message, "error");
+            }
+        }
+
+        async function loadProducts() {
+            showMessage("productMessage", "Loading products...");
+            try {
+                const filter = $("productFilter").value;
+                const query = new URLSearchParams({
+                    page: String(productPage),
+                    limit: "20"
+                });
+
+                if (filter) query.set("active", filter);
+
+                const result = await apiRequest("/products?" + query.toString());
+                const products = result.products || [];
+                productTotalPages = result.pagination?.totalPages || 1;
+
+                $("productsPage").textContent = `Page ${productPage} of ${productTotalPages}`;
+                $("productsPrev").disabled = productPage <= 1;
+                $("productsNext").disabled = productPage >= productTotalPages;
+
+                $("productsBody").innerHTML = products.length ? products.map(product => `
+                    <tr>
+                        <td>${escapeHTML(product.name || "Unnamed product")}</td>
+                        <td>${money(product.price)}</td>
+                        <td>${Number(product.stock) || 0}</td>
+                        <td>${product.isActive ? "Yes" : "No"}</td>
+                        <td>
+                            <form class="stock-form" data-id="${escapeHTML(product._id)}">
+                                <input class="stock-input" name="stock" type="number"
+                                    min="0" max="1000000" step="1"
+                                    value="${Number(product.stock) || 0}" required>
+                                <button class="action-btn" type="submit">Save</button>
+                            </form>
+                        </td>
+                    </tr>
+                `).join("") : '<tr><td colspan="5">No products found.</td></tr>';
+
+                showMessage("productMessage", `${products.length} products loaded.`, "success");
+            } catch (error) {
+                showMessage("productMessage", error.message, "error");
+            }
+        }
+
+        async function loadOrders() {
+            showMessage("ordersMessage", "Loading orders...");
+            try {
+                const query = new URLSearchParams({
+                    page: String(orderPage),
+                    limit: "20"
+                });
+
+                const status = $("orderStatusFilter").value;
+                if (status) query.set("status", status);
+
+                const result = await apiRequest("/orders?" + query.toString());
+                const orders = result.orders || [];
+                orderTotalPages = result.pagination?.totalPages || 1;
+
+                $("ordersPage").textContent = `Page ${orderPage} of ${orderTotalPages}`;
+                $("ordersPrev").disabled = orderPage <= 1;
+                $("ordersNext").disabled = orderPage >= orderTotalPages;
+
+                $("ordersBody").innerHTML = orders.length ? orders.map(order => `
+                    <tr>
+                        <td>${escapeHTML(order.orderNumber || order._id)}</td>
+                        <td>${escapeHTML(order.user?.name || order.user?.email || "Customer")}</td>
+                        <td>${money(order.totalAmount)}</td>
+                        <td>${escapeHTML(order.paymentStatus || "—")}</td>
+                        <td class="status">${escapeHTML(order.status || "—")}</td>
+                        <td>
+                            <form class="order-status-form" data-id="${escapeHTML(order._id)}">
+                                <select name="status" aria-label="New order status">
+                                    ${["placed", "confirmed", "processing", "shipped", "delivered", "cancelled"].map(status => `
+                                        <option value="${status}" ${order.status === status ? "selected" : ""}>
+                                            ${status}
+                                        </option>
+                                    `).join("")}
+                                </select>
+                                <button class="action-btn" type="submit">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                `).join("") : '<tr><td colspan="6">No orders found.</td></tr>';
+
+                showMessage("ordersMessage", `${orders.length} orders loaded.`, "success");
+            } catch (error) {
+                showMessage("ordersMessage", error.message, "error");
+            }
+        }
+
+        async function loadUsers() {
+            showMessage("usersMessage", "Loading users...");
+            try {
+                const result = await apiRequest(
+                    "/users?page=" + userPage + "&limit=20"
+                );
+                const users = result.users || [];
+                userTotalPages = result.pagination?.totalPages || 1;
+
+                $("usersPage").textContent = `Page ${userPage} of ${userTotalPages}`;
+                $("usersPrev").disabled = userPage <= 1;
+                $("usersNext").disabled = userPage >= userTotalPages;
+
+                $("usersBody").innerHTML = users.length ? users.map(user => `
+                    <tr>
+                        <td>${escapeHTML(user.name || "—")}</td>
+                        <td>${escapeHTML(user.email || "—")}</td>
+                        <td>${escapeHTML(user.role || "user")}</td>
+                        <td>${formatDate(user.createdAt)}</td>
+                    </tr>
+                `).join("") : '<tr><td colspan="4">No users found.</td></tr>';
+
+                showMessage("usersMessage", `${users.length} users loaded.`, "success");
+            } catch (error) {
+                showMessage("usersMessage", error.message, "error");
+            }
+        }
+
+        $("productsBody").addEventListener("submit", async function (event) {
+            const form = event.target.closest(".stock-form");
+            if (!form) return;
+            event.preventDefault();
+
+            const stock = Number(form.elements.stock.value);
+            if (!Number.isInteger(stock) || stock < 0 || stock > 1000000) {
+                showMessage("productMessage", "Enter a valid stock number.", "error");
+                return;
+            }
+
+            try {
+                const id = encodeURIComponent(form.dataset.id);
+                await apiRequest(`/products/${id}/stock`, {
+                    method: "PATCH",
+                    body: JSON.stringify({ stock })
+                });
+
+                showMessage("productMessage", "Stock updated successfully.", "success");
+                await loadProducts();
+                await loadDashboard();
+            } catch (error) {
+                showMessage("productMessage", error.message, "error");
+            }
+        });
+
+        $("ordersBody").addEventListener("submit", async function (event) {
+            const form = event.target.closest(".order-status-form");
+            if (!form) return;
+            event.preventDefault();
+
+            const id = encodeURIComponent(form.dataset.id);
+            const status = form.elements.status.value;
+
+            try {
+                await apiRequest(`/${id}/status`, {
+                    method: "PATCH",
+                    body: JSON.stringify({ status })
+                });
+
+                showMessage("ordersMessage", "Order status updated.", "success");
+                await loadOrders();
+                await loadDashboard();
+            } catch (error) {
+                showMessage("ordersMessage", error.message, "error");
+            }
+        });
+
+        $("loadProductsBtn").addEventListener("click", () => {
+            productPage = 1;
+            loadProducts();
+        });
+
+        $("loadOrdersBtn").addEventListener("click", () => {
+            orderPage = 1;
+            loadOrders();
+        });
+
+        $("loadUsersBtn").addEventListener("click", () => {
+            userPage = 1;
+            loadUsers();
+        });
+
+        $("productFilter").addEventListener("change", () => {
+            productPage = 1;
+            loadProducts();
+        });
+
+        $("orderStatusFilter").addEventListener("change", () => {
+            orderPage = 1;
+            loadOrders();
+        });
+
+        $("productsPrev").addEventListener("click", () => {
+            if (productPage > 1) {
+                productPage--;
+                loadProducts();
+            }
+        });
+
+        $("productsNext").addEventListener("click", () => {
+            if (productPage < productTotalPages) {
+                productPage++;
+                loadProducts();
+            }
+        });
+
+        $("ordersPrev").addEventListener("click", () => {
+            if (orderPage > 1) {
+                orderPage--;
+                loadOrders();
+            }
+        });
+
+        $("ordersNext").addEventListener("click", () => {
+            if (orderPage < orderTotalPages) {
+                orderPage++;
+                loadOrders();
+            }
+        });
+
+        $("usersPrev").addEventListener("click", () => {
+            if (userPage > 1) {
+                userPage--;
+                loadUsers();
+            }
+        });
+
+        $("usersNext").addEventListener("click", () => {
+            if (userPage < userTotalPages) {
+                userPage++;
+                loadUsers();
+            }
+        });
+
+        $("refreshBtn").addEventListener("click", async () => {
+            await loadDashboard();
+            await Promise.all([loadProducts(), loadOrders(), loadUsers()]);
+        });
+
+        $("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("mim_token");
+            window.location.href = "login.html";
+        });
+
+        loadDashboard();
+    </script>
+</body>
+</html>

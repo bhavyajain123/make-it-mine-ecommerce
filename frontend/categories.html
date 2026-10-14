@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift Categories | MakeItMine</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+    --wine: #702b3b;
+    --wine-dark: #51202d;
+    --cream: #fbf7f2;
+    --cream-dark: #f0e6da;
+    --gold: #bd8b4d;
+    --text: #30251f;
+    --muted: #81746b;
+    --border: #e5d7ca;
+    --white: #ffffff;
+    --green: #53765d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.announcement {
+    background: #51202d;
+    color: white;
+    text-align: center;
+    padding: 8px 15px;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.announcement span {
+    color: #e6c28a;
+}
+
+.navbar {
+    background: rgba(251,247,242,.97);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-inner {
+    max-width: 1180px;
+    margin: auto;
+    padding: 13px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.logo {
+    color: var(--wine);
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.logo small {
+    display: block;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 7px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    font-size: 13px;
+    font-weight: 600;
+    color: #55463e;
+    transition: color .2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--wine);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.nav-icon {
+    border: none;
+    background: transparent;
+    color: var(--wine-dark);
+    font-size: 21px;
+    position: relative;
+    line-height: 1;
+}
+
+.count {
+    position: absolute;
+    top: -7px;
+    right: -8px;
+    background: var(--wine);
+    color: white;
+    font-size: 10px;
+    border-radius: 50%;
+    min-width: 16px;
+    height: 16px;
+    display: grid;
+    place-items: center;
+}
+
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--wine);
+    font-size: 25px;
+}
+
+.container {
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+}
+
+/* BREADCRUMB */
+
+.breadcrumb {
+    padding: 25px 0 18px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.breadcrumb span {
+    margin: 0 9px;
+}
+
+.breadcrumb strong {
+    color: var(--wine);
+}
+
+/* HERO */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 350px;
+    background: #efe2d4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 38px;
+}
+
+.hero-content {
+    padding: 48px 30px 45px 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.eyebrow {
+    color: var(--wine);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 13px;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 4vw, 49px);
+    font-weight: 600;
+    line-height: 1.16;
+    letter-spacing: -1px;
+    margin-bottom: 17px;
+}
+
+.hero h1 em {
+    color: var(--wine);
+    font-weight: 500;
+}
+
+.hero p {
+    color: #716056;
+    font-size: 14px;
+    max-width: 420px;
+    margin-bottom: 25px;
+}
+
+.primary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 13px 21px;
+    background: var(--wine);
+    color: white;
+    border: 1px solid var(--wine);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    transition: .25s;
+}
+
+.primary-btn:hover {
+    background: var(--wine-dark);
+    transform: translateY(-2px);
+}
+
+.hero-image {
+    min-height: 350px;
+    position: relative;
+}
+
+.hero-image img {
+    height: 100%;
+    min-height: 350px;
+    position: absolute;
+    inset: 0;
+}
+
+.hero-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #efe2d4 0%, rgba(239,226,212,.1) 30%, transparent 70%);
+}
+
+/* SECTION HEADINGS */
+
+.section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 23px;
+}
+
+.section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    line-height: 1.25;
+    font-weight: 600;
+}
+
+.section-heading p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+.text-link {
+    color: var(--wine);
+    font-size: 12px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--wine);
+    padding-bottom: 3px;
+    white-space: nowrap;
+}
+
+/* SEARCH */
+
+.category-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 0 0 24px;
+}
+
+.filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: #68574d;
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 12px;
+    transition: .2s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--wine);
+    color: white;
+    border-color: var(--wine);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    background: white;
+    padding: 0 13px;
+    width: 245px;
+    min-height: 40px;
+}
+
+.search-box span {
+    font-size: 17px;
+    color: var(--muted);
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    min-width: 0;
+    width: 100%;
+    font-size: 12px;
+    color: var(--text);
+}
+
+/* CATEGORY GRID */
+
+.categories-section {
+    padding-bottom: 70px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 23px;
+}
+
+.category-card {
+    background: white;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+    display: block;
+}
+
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(75, 43, 31, .1);
+}
+
+.category-image {
+    position: relative;
+    height: 230px;
+    overflow: hidden;
+    background: var(--cream-dark);
+}
+
+.category-image img {
+    height: 100%;
+    transition: transform .6s;
+}
+
+.category-card:hover .category-image img {
+    transform: scale(1.07);
+}
+
+.category-tag {
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    background: rgba(255,255,255,.94);
+    color: var(--wine);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    padding: 6px 10px;
+    text-transform: uppercase;
+}
+
+.category-info {
+    padding: 17px 17px 19px;
+}
+
+.category-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.category-info p {
+    font-size: 12px;
+    color: var(--muted);
+    min-height: 39px;
+    line-height: 1.6;
+}
+
+.category-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #f0e7df;
+}
+
+.item-count {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.explore-arrow {
+    color: var(--wine);
+    font-size: 20px;
+    transition: transform .2s;
+}
+
+.category-card:hover .explore-arrow {
+    transform: translateX(5px);
+}
+
+.no-results {
+    display: none;
+    padding: 45px 15px;
+    text-align: center;
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    grid-column: 1 / -1;
+}
+
+/* OCCASION BANNER */
+
+.occasion-section {
+    padding: 0 0 75px;
+}
+
+.occasion-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #eadbcc;
+    min-height: 270px;
+    overflow: hidden;
+}
+
+.occasion-image {
+    min-height: 270px;
+    overflow: hidden;
+}
+
+.occasion-image img {
+    height: 100%;
+    min-height: 270px;
+    transition: transform .5s;
+}
+
+.occasion-banner:hover .occasion-image img {
+    transform: scale(1.04);
+}
+
+.occasion-content {
+    padding: 38px 42px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.occasion-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    line-height: 1.25;
+    margin-bottom: 12px;
+}
+
+.occasion-content p {
+    font-size: 13px;
+    color: #716056;
+    margin-bottom: 22px;
+    max-width: 400px;
+}
+
+/* BENEFITS */
+
+.benefits {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 0;
+    margin-bottom: 65px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.benefit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 5px 15px;
+}
+
+.benefit-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--cream-dark);
+    color: var(--wine);
+    font-size: 21px;
+    flex-shrink: 0;
+}
+
+.benefit h4 {
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.benefit p {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+/* NEWSLETTER */
+
+.newsletter {
+    background: #f0e6da;
+    padding: 42px 24px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.newsletter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 29px;
+    margin-bottom: 8px;
+}
+
+.newsletter p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 22px;
+}
+
+.newsletter-form {
+    display: flex;
+    max-width: 440px;
+    margin: auto;
+}
+
+.newsletter-form input {
+    flex: 1;
+    min-width: 0;
+    background: white;
+    border: 1px solid var(--border);
+    padding: 13px 14px;
+    outline: none;
+    font-size: 12px;
+}
+
+.newsletter-form button {
+    border: 1px solid var(--wine);
+    background: var(--wine);
+    color: white;
+    padding: 0 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.newsletter-form button:hover {
+    background: var(--wine-dark);
+}
+
+#newsletterMessage {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--green);
+    min-height: 18px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #321e1f;
+    color: #f8eee5;
+}
+
+.footer-main {
+    max-width: 1180px;
+    margin: auto;
+    padding: 52px 24px 38px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.footer-brand .logo {
+    color: #f3d7b1;
+    display: inline-block;
+    margin-bottom: 17px;
+}
+
+.footer-brand .logo small {
+    color: #cbb7a9;
+}
+
+.footer-brand p {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #cdbbb0;
+    max-width: 270px;
+}
+
+.footer-col h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    margin-bottom: 17px;
+    color: #f4ddc3;
+}
+
+.footer-col a {
+    display: block;
+    color: #cdbbb0;
+    font-size: 12px;
+    margin-bottom: 11px;
+    transition: color .2s;
+}
+
+.footer-col a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    max-width: 1180px;
+    margin: auto;
+    padding: 17px 24px;
+    border-top: 1px solid rgba(255,255,255,.14);
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    color: #cdbbb0;
+    font-size: 11px;
+}
+
+.footer-bottom span {
+    color: #e3c39b;
+}
+
+/* TOAST */
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 500;
+    background: #342421;
+    color: white;
+    padding: 14px 20px;
+    font-size: 13px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.15);
+    opacity: 0;
+    transform: translateY(15px);
+    pointer-events: none;
+    transition: .3s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .category-image {
+        height: 215px;
+    }
+
+    .footer-main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-content {
+        padding-left: 30px;
+    }
+}
+
+@media (max-width: 720px) {
+    .nav-inner {
+        padding: 13px 18px;
+    }
+
+    .menu-toggle {
+        display: block;
+        order: -1;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--cream);
+        border-bottom: 1px solid var(--border);
+        padding: 20px 24px;
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-actions {
+        gap: 12px;
+    }
+
+    .nav-icon {
+        font-size: 19px;
+    }
+
+    .container {
+        width: calc(100% - 32px);
+    }
+
+    .breadcrumb {
+        padding-top: 20px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        margin-bottom: 34px;
+    }
+
+    .hero-content {
+        padding: 34px 25px 28px;
+    }
+
+    .hero-image {
+        min-height: 230px;
+    }
+
+    .hero-image img {
+        min-height: 230px;
+    }
+
+    .hero-image::after {
+        background: linear-gradient(180deg, #efe2d4 0%, rgba(239,226,212,.1) 30%, transparent 65%);
+    }
+
+    .section-heading h2 {
+        font-size: 25px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+    }
+
+    .category-image {
+        height: 185px;
+    }
+
+    .category-info {
+        padding: 13px;
+    }
+
+    .category-info h3 {
+        font-size: 17px;
+    }
+
+    .category-info p {
+        font-size: 11px;
+    }
+
+    .category-tools {
+        align-items: stretch;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .occasion-banner {
+        grid-template-columns: 1fr;
+    }
+
+    .occasion-image {
+        min-height: 220px;
+        max-height: 260px;
+    }
+
+    .occasion-image img {
+        min-height: 220px;
+    }
+
+    .occasion-content {
+        padding: 30px 25px;
+    }
+
+    .occasion-content h2 {
+        font-size: 28px;
+    }
+
+    .benefits {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 25px 0;
+        margin-bottom: 45px;
+    }
+
+    .benefit {
+        justify-content: flex-start;
+    }
+
+    .footer-main {
+        padding: 38px 20px;
+        gap: 30px 20px;
+    }
+
+    .newsletter h2 {
+        font-size: 25px;
+    }
+}
+
+@media (max-width: 390px) {
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .category-image {
+        height: 235px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-main {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="announcement">
+    A LITTLE SOMETHING SPECIAL <span>✦</span> MADE JUST FOR YOU
+</div>
+
+<header class="navbar">
+    <div class="nav-inner">
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+            ☰
+        </button>
+
+        <a href="index.html" class="logo">
+            MakeItMine
+            <small>MADE JUST FOR YOU</small>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="categories.html" class="active">Categories</a>
+            <a href="about.html">Our Story</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">
+                ♡ <span class="count" id="wishlistCount">0</span>
+            </a>
+            <a href="cart.html" class="nav-icon" aria-label="Shopping cart">
+                ♧ <span class="count" id="cartCount">0</span>
+            </a>
+        </div>
+
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <strong>Categories</strong>
+    </div>
+
+    <section class="hero">
+
+        <div class="hero-content">
+            <div class="eyebrow">Find something meaningful</div>
+
+            <h1>
+                Gifts for every<br>
+                <em>kind of love.</em>
+            </h1>
+
+            <p>
+                From little everyday surprises to unforgettable celebrations,
+                discover thoughtful gifts made to feel personal.
+            </p>
+
+            <a href="#allCategories" class="primary-btn">
+                EXPLORE CATEGORIES <span>→</span>
+            </a>
+        </div>
+
+        <div class="hero-image">
+            <img
+                src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1100&q=85"
+                alt="Beautifully wrapped gift boxes">
+        </div>
+
+    </section>
+
+    <section class="categories-section" id="allCategories">
+
+        <div class="section-heading">
+            <div>
+                <div class="eyebrow">A little something for everyone</div>
+                <h2>Shop by Category</h2>
+                <p>Find the perfect gift for every person, moment and memory.</p>
+            </div>
+
+            <a href="shop.html" class="text-link">VIEW ALL PRODUCTS →</a>
+        </div>
+
+        <div class="category-tools">
+
+            <div class="filter-pills">
+                <button class="filter-btn active" data-filter="all">All Gifts</button>
+                <button class="filter-btn" data-filter="personalized">Personalized</button>
+                <button class="filter-btn" data-filter="occasion">By Occasion</button>
+                <button class="filter-btn" data-filter="everyday">Everyday Gifts</button>
+            </div>
+
+            <label class="search-box">
+                <span>⌕</span>
+                <input
+                    type="search"
+                    id="categorySearch"
+                    placeholder="Search categories..."
+                    aria-label="Search categories">
+            </label>
+
+        </div>
+
+        <div class="category-grid" id="categoryGrid">
+
+            <a href="shop.html?category=personalized" class="category-card"
+               data-name="personalized gifts" data-type="personalized">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=700&q=80"
+                        alt="Personalized gift items" loading="lazy">
+                    <span class="category-tag">Bestseller</span>
+                </div>
+                <div class="category-info">
+                    <h3>Personalized Gifts</h3>
+                    <p>Add names, photos and little details that make it truly theirs.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Made just for you</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=mugs" class="category-card"
+               data-name="mugs drinkware coffee" data-type="personalized">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=700&q=80"
+                        alt="Coffee mug gift" loading="lazy">
+                    <span class="category-tag">Everyday favourite</span>
+                </div>
+                <div class="category-info">
+                    <h3>Mugs & Drinkware</h3>
+                    <p>Make every coffee break a little more personal.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Thoughtful essentials</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=photo-gifts" class="category-card"
+               data-name="photo frames photo gifts memories" data-type="personalized">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=700&q=80"
+                        alt="Creative keepsakes and photo gifts" loading="lazy">
+                </div>
+                <div class="category-info">
+                    <h3>Photo Keepsakes</h3>
+                    <p>Turn your favourite memories into something you can hold.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Memories to keep</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=birthday" class="category-card"
+               data-name="birthday gifts celebration" data-type="occasion">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=700&q=80"
+                        alt="Birthday cake and celebration" loading="lazy">
+                    <span class="category-tag">Celebrate</span>
+                </div>
+                <div class="category-info">
+                    <h3>Birthday Gifts</h3>
+                    <p>Make their special day feel even more unforgettable.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">For their big day</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=anniversary" class="category-card"
+               data-name="anniversary romantic couple love" data-type="occasion">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=700&q=80"
+                        alt="Romantic flowers for an anniversary" loading="lazy">
+                </div>
+                <div class="category-info">
+                    <h3>Anniversary Gifts</h3>
+                    <p>Celebrate your story with gifts that say more than words.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Made for two</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=him" class="category-card"
+               data-name="gifts for him men boyfriend dad" data-type="occasion">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&w=700&q=80"
+                        alt="Elegant gift box" loading="lazy">
+                </div>
+                <div class="category-info">
+                    <h3>Gifts for Him</h3>
+                    <p>Little surprises for the men who make life special.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Picked for him</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=her" class="category-card"
+               data-name="gifts for her women girlfriend mom" data-type="occasion">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=700&q=80"
+                        alt="Thoughtful lifestyle gifts" loading="lazy">
+                    <span class="category-tag">Made with love</span>
+                </div>
+                <div class="category-info">
+                    <h3>Gifts for Her</h3>
+                    <p>Beautiful little things for the wonderful women in your life.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Picked for her</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=home" class="category-card"
+               data-name="home decor lifestyle everyday" data-type="everyday">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=700&q=80"
+                        alt="Warm home decor inspiration" loading="lazy">
+                </div>
+                <div class="category-info">
+                    <h3>Home & Lifestyle</h3>
+                    <p>Thoughtful details that make a house feel more like home.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Everyday happiness</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=friendship" class="category-card"
+               data-name="friendship gifts best friends" data-type="occasion">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=700&q=80"
+                        alt="Friends celebrating together" loading="lazy">
+                </div>
+                <div class="category-info">
+                    <h3>Friendship Gifts</h3>
+                    <p>For the people who turn ordinary days into great memories.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Bestie approved</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=corporate" class="category-card"
+               data-name="corporate office employee business gifts" data-type="everyday">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&w=700&q=80"
+                        alt="Gift packaging for corporate presents" loading="lazy">
+                </div>
+                <div class="category-info">
+                    <h3>Corporate Gifts</h3>
+                    <p>Meaningful gifts for teams, clients and work celebrations.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">For teams & clients</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=under-499" class="category-card"
+               data-name="budget gifts affordable under 499" data-type="everyday">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=700&q=80"
+                        alt="Affordable wrapped gifts" loading="lazy">
+                    <span class="category-tag">Budget friendly</span>
+                </div>
+                <div class="category-info">
+                    <h3>Gifts Under ₹499</h3>
+                    <p>Lovely surprises that prove thoughtful gifting needn't cost more.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Little price, big love</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="shop.html?category=just-because" class="category-card"
+               data-name="just because spontaneous everyday gifts" data-type="everyday">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=700&q=80"
+                        alt="Flowers for a spontaneous surprise" loading="lazy">
+                </div>
+                <div class="category-info">
+                    <h3>Just Because</h3>
+                    <p>No occasion needed. Sometimes a small surprise says it all.</p>
+                    <div class="category-bottom">
+                        <span class="item-count">Surprise someone</span>
+                        <span class="explore-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+
+            <div class="no-results" id="noResults">
+                <h3 style="font-family:'Playfair Display',serif;color:#702b3b;margin-bottom:8px;">
+                    No categories found
+                </h3>
+                <p>Try another search or choose a different filter.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="occasion-section">
+        <div class="occasion-banner">
+
+            <div class="occasion-image">
+                <img
+                    src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1000&q=85"
+                    alt="Friends sharing a special moment"
+                    loading="lazy">
+            </div>
+
+            <div class="occasion-content">
+                <div class="eyebrow">Because every moment matters</div>
+
+                <h2>Not sure what to gift?</h2>
+
+                <p>
+                    Start with the person, the occasion or the memory you want
+                    to celebrate. We'll help you find something that feels just right.
+                </p>
+
+                <a href="shop.html" class="primary-btn">
+                    FIND YOUR PERFECT GIFT <span>→</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="benefits">
+
+        <div class="benefit">
+            <div class="benefit-icon">♡</div>
+            <div>
+                <h4>Made More Personal</h4>
+                <p>Gifts that feel like they were chosen just for them.</p>
+            </div>
+        </div>
+
+        <div class="benefit">
+            <div class="benefit-icon">✧</div>
+            <div>
+                <h4>Thoughtful by Design</h4>
+                <p>Little details make even simple gifts memorable.</p>
+            </div>
+        </div>
+
+        <div class="benefit">
+            <div class="benefit-icon">♧</div>
+            <div>
+                <h4>Here to Help</h4>
+                <p>Need a hand choosing? We're happy to help.</p>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<section class="newsletter">
+    <div class="eyebrow">A little love in your inbox</div>
+    <h2>Good things are worth sharing.</h2>
+    <p>Discover thoughtful gifting ideas, special collections and little surprises.</p>
+
+    <form class="newsletter-form" id="newsletterForm">
+        <input
+            type="email"
+            id="newsletterEmail"
+            placeholder="Enter your email address"
+            aria-label="Email address"
+            required>
+        <button type="submit">SUBSCRIBE →</button>
+    </form>
+
+    <div id="newsletterMessage" aria-live="polite"></div>
+</section>
+
+<footer>
+
+    <div class="footer-main">
+
+        <div class="footer-brand">
+            <a href="index.html" class="logo">
+                MakeItMine
+                <small>MADE JUST FOR YOU</small>
+            </a>
+
+            <p>
+                Thoughtful gifts, personal touches and little things that
+                turn ordinary moments into meaningful memories.
+            </p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop All Gifts</a>
+            <a href="categories.html">Categories</a>
+            <a href="about.html">Our Story</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Customer Care</h4>
+            <a href="contact.html">Contact Us</a>
+            <a href="shipping.html">Shipping Information</a>
+            <a href="returns.html">Returns & Exchanges</a>
+            <a href="faq.html">Frequently Asked Questions</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Get in Touch</h4>
+            <a href="contact.html">Talk to Our Team</a>
+            <a href="mailto:hello@makeitmine.com">hello@makeitmine.com</a>
+            <a href="wishlist.html">Your Wishlist</a>
+            <a href="cart.html">Your Shopping Bag</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <div>© <span id="currentYear"></span> MakeItMine. All rights reserved.</div>
+        <div>Made with <span>♥</span> for your special moments.</div>
+    </div>
+
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // MOBILE NAVIGATION
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", function () {
+        navLinks.classList.toggle("open");
+        menuToggle.textContent = navLinks.classList.contains("open") ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+            navLinks.classList.remove("open");
+            menuToggle.textContent = "☰";
+        });
+    });
+
+    // SAFE LOCAL STORAGE READER
+    function readStorage(key) {
+        try {
+            const value = JSON.parse(localStorage.getItem(key) || "[]");
+            return Array.isArray(value) ? value : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    // UPDATE HEADER COUNTERS
+    function updateHeaderCounts() {
+        const cart = readStorage("mim_cart");
+        const wishlist = readStorage("mim_wishlist");
+
+        const cartCount = cart.reduce(function (total, item) {
+            return total + Math.max(0, Number(item.quantity) || 1);
+        }, 0);
+
+        document.getElementById("cartCount").textContent = cartCount;
+        document.getElementById("wishlistCount").textContent = wishlist.length;
+    }
+
+    updateHeaderCounts();
+
+    // CATEGORY SEARCH + FILTER
+    const searchInput = document.getElementById("categorySearch");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".category-card");
+    const noResults = document.getElementById("noResults");
+
+    let activeFilter = "all";
+
+    function filterCategories() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach(function (card) {
+            const name = (card.dataset.name || "").toLowerCase();
+            const heading = card.querySelector("h3").textContent.toLowerCase();
+            const type = card.dataset.type;
+
+            const matchesSearch =
+                name.includes(searchTerm) || heading.includes(searchTerm);
+
+            const matchesFilter =
+                activeFilter === "all" || type === activeFilter;
+
+            const shouldShow = matchesSearch && matchesFilter;
+
+            card.style.display = shouldShow ? "block" : "none";
+
+            if (shouldShow) {
+                visibleCount++;
+            }
+        });
+
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", filterCategories);
+
+    filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            filterButtons.forEach(function (btn) {
+                btn.classList.remove("active");
+            });
+
+            button.classList.add("active");
+            activeFilter = button.dataset.filter;
+            filterCategories();
+        });
+    });
+
+    // NEWSLETTER DEMO
+    document.getElementById("newsletterForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const emailInput = document.getElementById("newsletterEmail");
+        const message = document.getElementById("newsletterMessage");
+
+        if (!emailInput.checkValidity()) {
+            emailInput.reportValidity();
+            return;
+        }
+
+        message.textContent = "Thank you! Your email has been entered successfully.";
+
+        // Frontend demo only. Connect a backend/email service to save subscriptions.
+        emailInput.value = "";
+    });
+
+    // FOOTER YEAR
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    // TOAST HELPER FOR FUTURE INTERACTIONS
+    window.showMakeItMineToast = function (message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        window.clearTimeout(window.makeItMineToastTimer);
+
+        window.makeItMineToastTimer = window.setTimeout(function () {
+            toast.classList.remove("show");
+        }, 2600);
+    };
+
+});
+</script>
+<script type="module" src="js/app.js"></script>
+
+</body>
+</html>

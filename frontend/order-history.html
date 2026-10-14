@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View your MakeItMine order history and order details.">
+  <title>My Orders | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #fffaf5;
+      --white: #ffffff;
+      --wine: #702d3d;
+      --wine-dark: #4e1c29;
+      --gold: #c59b62;
+      --text: #342823;
+      --muted: #84756c;
+      --border: #eaded4;
+      --soft: #f7eee6;
+      --green: #2d7855;
+      --green-bg: #e8f5ed;
+      --orange: #a86c24;
+      --orange-bg: #fff1dc;
+      --red: #a33e42;
+      --red-bg: #fbe9e8;
+      --shadow: 0 10px 30px rgba(78, 28, 41, 0.06);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .announcement {
+      background: var(--wine-dark);
+      color: white;
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 7%;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 25px;
+      font-weight: 700;
+      color: var(--wine);
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--wine);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 20px;
+    }
+
+    .menu-toggle {
+      display: none;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 7px;
+      color: var(--wine);
+    }
+
+    .page-hero {
+      padding: 48px 7% 38px;
+      background:
+        radial-gradient(ellipse at 85% 10%, #efdbca 0%, transparent 48%),
+        var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .breadcrumb {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    .breadcrumb a {
+      color: var(--wine);
+    }
+
+    .hero-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--wine);
+      margin-bottom: 8px;
+    }
+
+    h1, h2, h3 {
+      font-family: "Playfair Display", serif;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: clamp(35px, 5vw, 49px);
+      line-height: 1.2;
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    .shop-btn, .primary-btn, .outline-btn, .small-btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .shop-btn, .primary-btn {
+      padding: 12px 19px;
+      color: white;
+      background: var(--wine);
+      border: 1px solid var(--wine);
+    }
+
+    .shop-btn:hover, .primary-btn:hover {
+      background: var(--wine-dark);
+    }
+
+    .outline-btn {
+      padding: 10px 15px;
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--wine);
+    }
+
+    .outline-btn:hover {
+      border-color: var(--wine);
+    }
+
+    .small-btn {
+      padding: 8px 11px;
+      background: var(--soft);
+      border: 1px solid var(--border);
+      color: var(--wine);
+    }
+
+    .page-wrap {
+      width: min(1180px, 90%);
+      margin: 35px auto 75px;
+    }
+
+    .account-layout {
+      display: grid;
+      grid-template-columns: 235px minmax(0, 1fr);
+      align-items: start;
+      gap: 28px;
+    }
+
+    .account-sidebar {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 15px;
+      box-shadow: var(--shadow);
+    }
+
+    .profile-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 7px 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 15px;
+    }
+
+    .avatar {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      background: var(--soft);
+      color: var(--wine);
+      border-radius: 50%;
+      font-family: "Playfair Display", serif;
+      font-size: 20px;
+    }
+
+    .profile-mini h3 {
+      font-size: 17px;
+    }
+
+    .profile-mini p {
+      font-size: 11px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .account-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .account-nav a, .logout-btn {
+      width: 100%;
+      text-align: left;
+      padding: 11px 12px;
+      display: flex;
+      gap: 11px;
+      align-items: center;
+      border-radius: 7px;
+      color: #77675e;
+      font-size: 12px;
+      border: none;
+      background: transparent;
+    }
+
+    .account-nav a:hover,
+    .account-nav a.active {
+      background: var(--soft);
+      color: var(--wine);
+      font-weight: 700;
+    }
+
+    .logout-btn {
+      margin-top: 8px;
+      border-top: 1px solid var(--border);
+      border-radius: 0;
+      padding-top: 17px;
+    }
+
+    .logout-btn:hover {
+      color: var(--red);
+    }
+
+    .main-content {
+      min-width: 0;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      font-size: 27px;
+    }
+
+    .section-heading p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 27px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 19px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .stat-icon {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      background: var(--soft);
+      color: var(--wine);
+      border-radius: 8px;
+      font-size: 17px;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-family: "Playfair Display", serif;
+      font-size: 27px;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .stat-card small {
+      display: block;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .orders-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .filter-tab {
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 20px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .filter-tab:hover {
+      background: var(--soft);
+    }
+
+    .filter-tab.active {
+      background: var(--wine);
+      color: white;
+    }
+
+    .filter-tools {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .search-box, .sort-select {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 9px 11px;
+      background: white;
+      color: var(--text);
+      font-size: 11px;
+      min-width: 0;
+    }
+
+    .search-box {
+      width: 185px;
+    }
+
+    .search-box:focus, .sort-select:focus {
+      outline: 2px solid #c59b6240;
+      border-color: var(--gold);
+    }
+
+    .orders-list {
+      padding: 0 20px;
+    }
+
+    .order-card {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .order-card:last-child {
+      border-bottom: none;
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 17px;
+    }
+
+    .order-number {
+      color: var(--wine);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .order-meta {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 20px;
+      padding: 6px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status::before {
+      content: "";
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status.delivered {
+      color: var(--green);
+      background: var(--green-bg);
+    }
+
+    .status.transit, .status.placed, .status.processing {
+      color: var(--orange);
+      background: var(--orange-bg);
+    }
+
+    .status.cancelled, .status.failed {
+      color: var(--red);
+      background: var(--red-bg);
+    }
+
+    .order-body {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+    }
+
+    .product-thumbs {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .product-thumb {
+      width: 60px;
+      height: 65px;
+      display: grid;
+      place-items: center;
+      background: #f6eee5;
+      border: 2px solid white;
+      border-radius: 8px;
+      font-size: 27px;
+      margin-right: -9px;
+    }
+
+    .more-count {
+      width: 47px;
+      height: 55px;
+      display: grid;
+      place-items: center;
+      background: var(--soft);
+      border: 2px solid white;
+      border-radius: 8px;
+      margin-left: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--wine);
+    }
+
+    .order-product-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .order-product-info h3 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .order-product-info p {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .order-product-info .delivery-info {
+      margin-top: 8px;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .order-total {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .order-total small {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .order-total strong {
+      font-family: "Playfair Display", serif;
+      font-size: 23px;
+      font-weight: 500;
+    }
+
+    .order-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 19px;
+      padding-top: 15px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .payment-label {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 55px 20px;
+    }
+
+    .empty-icon {
+      width: 78px;
+      height: 78px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--soft);
+      font-size: 35px;
+      margin: 0 auto 17px;
+    }
+
+    .empty-state h3 {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 350px;
+      margin: 0 auto 20px;
+    }
+
+    .no-results {
+      padding: 35px 15px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .order-details {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      background: #fffcf8;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+    }
+
+    .order-details.open {
+      display: block;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .details-grid h4 {
+      color: var(--wine);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .details-grid p {
+      font-size: 11px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .detail-items {
+      margin-top: 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 13px;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 0;
+      font-size: 11px;
+    }
+
+    .detail-item span:last-child {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .trust-strip {
+      margin-top: 25px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fbf4ec;
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+    }
+
+    .trust-strip > span {
+      font-size: 24px;
+    }
+
+    .trust-strip h3 {
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .trust-strip p {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .footer {
+      background: #351b22;
+      color: #f9eee7;
+      padding: 45px 7% 20px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto 32px;
+    }
+
+    .footer .logo {
+      display: inline-block;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer p {
+      color: #cbb8b2;
+      font-size: 12px;
+      max-width: 280px;
+    }
+
+    .footer h4 {
+      font-size: 13px;
+      color: #e3c291;
+      margin-bottom: 13px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+      color: #d8c8c2;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid #65454b;
+      padding-top: 17px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 11px;
+      color: #cbb8b2;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+      padding: 13px 19px;
+      border-radius: 8px;
+      background: var(--wine-dark);
+      color: white;
+      font-size: 12px;
+      box-shadow: 0 8px 30px #0002;
+      transition: 0.25s;
+      width: max-content;
+      max-width: 90%;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 950px) {
+      .navbar {
+        padding: 14px 5%;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 20px 6%;
+        background: var(--cream);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .account-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .account-nav {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .logout-btn {
+        border-top: none;
+        margin-top: 0;
+      }
+
+      .profile-mini {
+        padding-bottom: 14px;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page-wrap {
+        width: 94%;
+        margin-top: 23px;
+      }
+
+      .page-hero {
+        padding: 35px 5% 30px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 14px 17px;
+      }
+
+      .stat-card strong {
+        font-size: 24px;
+      }
+
+      .stat-top {
+        justify-content: flex-start;
+      }
+
+      .stat-icon {
+        margin-left: auto;
+      }
+
+      .account-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .filter-bar {
+        padding: 15px;
+      }
+
+      .orders-list {
+        padding: 0 14px;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .filter-tools {
+        width: 100%;
+      }
+
+      .filter-tools > * {
+        flex: 1;
+      }
+
+      .order-body {
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .order-product-info {
+        flex-basis: calc(100% - 85px);
+      }
+
+      .order-total {
+        margin-left: 76px;
+        text-align: left;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px 18px;
+      }
+
+      .footer-grid > div:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .footer {
+        padding: 38px 6% 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    MAKE EVERY MOMENT PERSONAL — FIND A GIFT THAT MEANS MORE
+  </div>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">MakeIt<span>Mine.</span></a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop All</a>
+      <a href="categories.html">Categories</a>
+      <a href="customize.html">Customize</a>
+      <a href="about.html">Our Story</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="wishlist.html" title="Wishlist" aria-label="Wishlist">♡</a>
+      <a href="cart.html" title="Cart" aria-label="Cart">🛍</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> &nbsp; / &nbsp;
+      <a href="profile.html">My Account</a> &nbsp; / &nbsp; My Orders
+    </div>
+
+    <div class="hero-row">
+      <div>
+        <div class="eyebrow">Every gift tells a story</div>
+        <h1>My Orders</h1>
+        <p class="hero-copy">All your special purchases, together in one place.</p>
+      </div>
+
+      <a class="shop-btn" href="shop.html">＋ Shop More Gifts</a>
+    </div>
+  </section>
+
+  <main class="page-wrap">
+    <div class="account-layout">
+      <aside class="account-sidebar">
+        <div class="profile-mini">
+          <div class="avatar" id="avatar">G</div>
+          <div>
+            <h3 id="customerName">Guest Shopper</h3>
+            <p id="customerEmail">Your order history</p>
+          </div>
+        </div>
+
+        <nav class="account-nav">
+          <a href="profile.html"><span>♙</span> My Profile</a>
+          <a href="order-history.html" class="active"><span>▤</span> My Orders</a>
+          <a href="order-tracking.html"><span>⌖</span> Track Order</a>
+          <a href="wishlist.html"><span>♡</span> My Wishlist</a>
+          <a href="cart.html"><span>🛍</span> My Cart</a>
+          <a href="contact.html"><span>✉</span> Help & Support</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn"><span>↪</span> Back to Home</button>
+      </aside>
+
+      <section class="main-content">
+        <div class="section-heading">
+          <div>
+            <h2>Your Purchase History</h2>
+            <p>Review your orders and find their latest saved status.</p>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-top">
+              Total Orders
+              <span class="stat-icon">▤</span>
+            </div>
+            <strong id="totalOrders">0</strong>
+            <small>Orders saved in this browser</small>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-top">
+              Delivered
+              <span class="stat-icon">✓</span>
+            </div>
+            <strong id="deliveredOrders">0</strong>
+            <small>Marked as delivered</small>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-top">
+              Total Order Value
+              <span class="stat-icon">₹</span>
+            </div>
+            <strong id="totalSpent">₹0</strong>
+            <small>Value of saved orders</small>
+          </div>
+        </div>
+
+        <div class="orders-panel">
+          <div class="filter-bar">
+            <div class="filter-tabs" id="filterTabs">
+              <button class="filter-tab active" data-filter="all">All Orders</button>
+              <button class="filter-tab" data-filter="active">In Progress</button>
+              <button class="filter-tab" data-filter="delivered">Delivered</button>
+              <button class="filter-tab" data-filter="cancelled">Cancelled</button>
+            </div>
+
+            <div class="filter-tools">
+              <input
+                type="search"
+                id="searchOrders"
+                class="search-box"
+                placeholder="Search order number..."
+                aria-label="Search orders"
+              >
+
+              <select id="sortOrders" class="sort-select" aria-label="Sort orders">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="highest">Highest amount</option>
+                <option value="lowest">Lowest amount</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="orders-list" id="ordersList">
+  <p style="padding:24px 0;text-align:center;">Loading your orders...</p>
+</div>
+        </div>
+
+        <div class="trust-strip">
+          <span>🎁</span>
+          <div>
+            <h3>Need help with an order?</h3>
+            <p>
+              If an order is missing or you need help with delivery, visit our
+              contact page and share your order number.
+            </p>
+            <a href="contact.html" class="inline-link">Contact Customer Care →</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="logo">MakeIt<span>Mine.</span></a>
+        <p>Thoughtful gifts, made personal. Celebrate your favourite people with something uniquely theirs.</p>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <div class="footer-links">
+          <a href="shop.html">Shop All</a>
+          <a href="categories.html">Categories</a>
+          <a href="customize.html">Create Your Gift</a>
+          <a href="about.html">Our Story</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Customer Care</h4>
+        <div class="footer-links">
+          <a href="contact.html">Contact Us</a>
+          <a href="faq.html">FAQs</a>
+          <a href="order-tracking.html">Track Order</a>
+          <a href="refund-return.html">Returns & Refunds</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms & Conditions</a>
+          <a href="profile.html">My Account</a>
+          <a href="cart.html">Shopping Cart</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> MakeItMine. All rights reserved.</span>
+      <span>Made with care, for the people you love ♡</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const ORDERS_KEY = "mim_order_history";
+    const LAST_ORDER_KEY = "mim_last_order";
+
+    let currentFilter = "all";
+    let expandedOrders = new Set();
+    let toastTimeout;
+
+    const ordersList = document.getElementById("ordersList");
+    const searchInput = document.getElementById("searchOrders");
+    const sortSelect = document.getElementById("sortOrders");
+
+    function readJSON(key, fallback) {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+      } catch (error) {
+        console.warn("Could not read saved data:", key, error);
+        return fallback;
+      }
+    }
+
+    function saveJSON(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch (error) {
+        console.warn("Could not save data:", key, error);
+        showToast("Unable to save changes in this browser.");
+        return false;
+      }
+    }
+
+    function normalizeOrder(order) {
+      if (!order || typeof order !== "object") return null;
+
+      const items = Array.isArray(order.items) ? order.items : [];
+      const total = Number(order.total ?? order.grandTotal ?? 0);
+
+      return {
+        ...order,
+       id: String(order._id || order.id || order.orderNumber || ""),
+orderNumber: String(order.orderNumber || order._id || order.id || "Order"),
+items: items.map(item => ({
+  ...item,
+  name: item.productName || item.name || item.product?.name || "Personalized Gift",
+  price: Number(item.unitPrice ?? item.price ?? 0),
+  quantity: Number(item.quantity || 1),
+  image: item.productImage || item.image || item.product?.images?.[0] || ""
+})),
+total: Number(order.totalAmount ?? order.total ?? order.grandTotal ?? 0),
+createdAt: order.createdAt || order.date || "",
+status: String(order.status || "placed"),
+paymentMethod: String(order.paymentMethod || "Not specified")
+      };
+    }
+
+    function getSavedOrders() {
+      const saved = readJSON(ORDERS_KEY, []);
+      const orders = Array.isArray(saved)
+        ? saved.map(normalizeOrder).filter(Boolean)
+        : [];
+
+      // Import the most recent order created by the existing checkout flow.
+      const lastOrder = normalizeOrder(readJSON(LAST_ORDER_KEY, null));
+
+      if (lastOrder && lastOrder.id) {
+        const exists = orders.some(order =>
+          order.id === lastOrder.id ||
+          order.orderNumber === lastOrder.orderNumber
+        );
+
+        if (!exists) orders.unshift(lastOrder);
+      }
+
+      return orders;
+    }
+
+    function persistOrders(orders) {
+      saveJSON(ORDERS_KEY, orders);
+    }
+
+    function statusCategory(status) {
+      const value = String(status || "").toLowerCase();
+
+      if (value.includes("cancel") || value.includes("refund")) return "cancelled";
+      if (value.includes("deliver")) return "delivered";
+      if (
+        value.includes("transit") ||
+        value.includes("shipped") ||
+        value.includes("out for delivery")
+      ) return "transit";
+      if (value.includes("process") || value.includes("confirmed")) return "processing";
+
+      return "placed";
+    }
+
+    function formatCurrency(value) {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0
+      }).format(Number(value) || 0);
+    }
+
+    function formatDate(value) {
+      if (!value) return "Date unavailable";
+
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value);
+
+      return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+    }
+
+    function getItemName(item) {
+      if (typeof item === "string") return item;
+      return item?.name || item?.title || item?.productName || "Personalized Gift";
+    }
+
+    function getItemPrice(item) {
+      return Number(item?.price ?? item?.basePrice ?? item?.unitPrice ?? 0) || 0;
+    }
+
+    function getItemQuantity(item) {
+      return Math.max(1, Number(item?.quantity) || 1);
+    }
+
+    function getItemEmoji(item) {
+      return item?.emoji || item?.imageEmoji || "🎁";
+    }
+
+    function getOrderTitle(order) {
+      const names = order.items.map(getItemName).filter(Boolean);
+
+      if (names.length === 0) return "Order details";
+      if (names.length === 1) return names[0];
+      return names[0] + " + " + (names.length - 1) + " more item(s)";
+    }
+
+    function getOrderAddress(order) {
+      const address = order.deliveryAddress || order.address;
+
+      if (typeof address === "string") return address;
+      if (!address || typeof address !== "object") return "No address saved";
+
+      return [
+        address.name,
+        address.addressLine1 || address.address,
+        address.landmark,
+        address.city,
+        address.state,
+        address.postalCode,
+        address.country
+      ].filter(Boolean).join(", ");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    function updateProfileHeader(orders) {
+      const lastOrder = orders[0] || {};
+      const savedProfile = readJSON("mim_user", null);
+      const savedCustomer = readJSON("mim_customer", null);
+      const customer = savedProfile || savedCustomer || {};
+
+      const name =
+        customer.name ||
+        customer.fullName ||
+        lastOrder.customerName ||
+        lastOrder.deliveryAddress?.name ||
+        "Guest Shopper";
+
+      const email =
+        customer.email ||
+        lastOrder.email ||
+        "Your order history";
+
+      document.getElementById("customerName").textContent = name;
+      document.getElementById("customerEmail").textContent = email;
+      document.getElementById("avatar").textContent =
+        String(name).trim().charAt(0).toUpperCase() || "G";
+    }
+
+    function updateStats(orders) {
+      const delivered = orders.filter(order =>
+        statusCategory(order.status) === "delivered"
+      ).length;
+
+      const total = orders.reduce((sum, order) => sum + order.total, 0);
+
+      document.getElementById("totalOrders").textContent = orders.length;
+      document.getElementById("deliveredOrders").textContent = delivered;
+      document.getElementById("totalSpent").textContent = formatCurrency(total);
+    }
+
+    function getFilteredOrders() {
+      const query = searchInput.value.trim().toLowerCase();
+      const orders = getSavedOrders();
+
+      const filtered = orders.filter(order => {
+        const category = statusCategory(order.status);
+
+        const matchesFilter =
+          currentFilter === "all" ||
+          (currentFilter === "active" &&
+            ["placed", "processing", "transit"].includes(category)) ||
+          category === currentFilter;
+
+        const matchesSearch = [
+          order.orderNumber,
+          order.id,
+          getOrderTitle(order),
+          order.status
+        ].join(" ").toLowerCase().includes(query);
+
+        return matchesFilter && matchesSearch;
+      });
+
+      switch (sortSelect.value) {
+        case "oldest":
+          filtered.sort((a, b) =>
+            new Date(a.createdAt || 0) - new Date(b.createdAt || 0)
+          );
+          break;
+
+        case "highest":
+          filtered.sort((a, b) => b.total - a.total);
+          break;
+
+        case "lowest":
+          filtered.sort((a, b) => a.total - b.total);
+          break;
+
+        default:
+          filtered.sort((a, b) =>
+            new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
+          );
+      }
+
+      return filtered;
+    }
+
+    function makeOrderCard(order, index) {
+      const category = statusCategory(order.status);
+      const expanded = expandedOrders.has(order.id);
+      const itemCount = order.items.reduce(
+        (sum, item) => sum + getItemQuantity(item), 0
+      );
+
+      const thumbs = order.items.slice(0, 3).map(item => `
+        <div class="product-thumb" title="${escapeHTML(getItemName(item))}">
+          ${escapeHTML(getItemEmoji(item))}
+        </div>
+      `).join("");
+
+      const moreCount = order.items.length > 3
+        ? `<div class="more-count">+${order.items.length - 3}</div>`
+        : "";
+
+      let deliveryMessage = "";
+      if (category === "delivered") {
+        deliveryMessage = `<p class="delivery-info">✓ Delivered</p>`;
+      } else if (category === "transit") {
+        deliveryMessage = `<p class="delivery-info">Your order is on its way</p>`;
+      } else if (category === "cancelled") {
+        deliveryMessage = `<p style="margin-top:8px;color:var(--red);font-size:11px;">Order cancelled or refunded</p>`;
+      }
+
+      const details = order.items.length
+        ? order.items.map(item => `
+            <div class="detail-item">
+              <span>
+                ${escapeHTML(getItemName(item))}
+                × ${getItemQuantity(item)}
+              </span>
+              <span>${formatCurrency(getItemPrice(item) * getItemQuantity(item))}</span>
+            </div>
+          `).join("")
+        : `<p style="font-size:11px;color:var(--muted);">No item breakdown saved for this order.</p>`;
+
+      const deliveryAddress = getOrderAddress(order);
+
+      return `
+        <article class="order-card">
+          <div class="order-header">
+            <div>
+              <div class="order-number">Order #${escapeHTML(order.orderNumber)}</div>
+              <div class="order-meta">
+                Placed on ${escapeHTML(formatDate(order.createdAt))}
+                &nbsp;·&nbsp; ${itemCount} item(s)
+              </div>
+            </div>
+
+            <span class="status ${category}">
+              ${escapeHTML(order.status)}
+            </span>
+          </div>
+
+          <div class="order-body">
+            <div class="product-thumbs">
+              ${thumbs || `<div class="product-thumb">🎁</div>`}
+              ${moreCount}
+            </div>
+
+            <div class="order-product-info">
+              <h3>${escapeHTML(getOrderTitle(order))}</h3>
+              <p>${itemCount} item(s) in this order</p>
+              ${deliveryMessage}
+            </div>
+
+            <div class="order-total">
+              <small>Order total</small>
+              <strong>${formatCurrency(order.total)}</strong>
+            </div>
+          </div>
+
+          <div class="order-footer">
+            <span class="payment-label">
+              Payment: ${escapeHTML(order.paymentMethod)}
+            </span>
+
+            <div class="order-actions">
+              <button
+                class="small-btn"
+                data-action="details"
+                data-id="${escapeHTML(order.id)}"
+                aria-expanded="${expanded}"
+              >
+                ${expanded ? "Hide Details −" : "View Details +"}
+              </button>
+
+              <button
+                class="small-btn"
+                data-action="track"
+                data-id="${escapeHTML(order.id)}"
+              >
+                Track Order ↗
+              </button>
+            </div>
+          </div>
+
+          <div class="order-details ${expanded ? "open" : ""}" id="details-${index}">
+            <div class="details-grid">
+              <div>
+                <h4>Delivery Address</h4>
+                <p>${escapeHTML(deliveryAddress)}</p>
+              </div>
+
+              <div>
+                <h4>Order Information</h4>
+                <p>Order number: ${escapeHTML(order.orderNumber)}</p>
+                <p>Payment method: ${escapeHTML(order.paymentMethod)}</p>
+                <p>Payment status: ${escapeHTML(order.paymentStatus || "Not specified")}</p>
+                <p>Estimated delivery: ${escapeHTML(formatDate(order.estimatedDelivery))}</p>
+              </div>
+            </div>
+
+            <div class="detail-items">
+              <h4 style="font-size:12px;color:var(--wine);margin-bottom:7px;">Items in this order</h4>
+              ${details}
+              <div class="detail-item" style="border-top:1px solid var(--border);margin-top:7px;padding-top:12px;">
+                <strong>Total</strong>
+                <strong>${formatCurrency(order.total)}</strong>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    
+async function loadMyOrders() {
+  const token = localStorage.getItem("mim_token");
+
+  if (!token) {
+    ordersList.innerHTML = `
+      <div class="empty-state">
+        <h3>Please log in</h3>
+        <p>Log in to view your order history.</p>
+        <a class="primary-btn" href="login.html">Login</a>
+      </div>
+    `;
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/orders/my",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Unable to load orders.");
+    }
+
+    const backendOrders = Array.isArray(result.orders)
+      ? result.orders
+      : [];
+
+  
+    const orders = backendOrders
+      .map(normalizeOrder)
+      .filter(Boolean);
+
+    saveJSON(ORDERS_KEY, orders);
+    renderOrders();
+
+  } catch (error) {
+    console.error("My Orders API error:", error);
+
+    ordersList.innerHTML = `
+      <div class="no-results">
+        Unable to load orders. Please refresh and try again.
+      </div>
+    `;
+  }
+}
+
+    function renderOrders() {
+      const orders = getSavedOrders();
+
+      persistOrders(orders);
+      updateProfileHeader(orders);
+      updateStats(orders);
+
+      const filtered = getFilteredOrders();
+
+      if (orders.length === 0) {
+        ordersList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🎁</div>
+            <h3>Your story starts here</h3>
+            <p>
+              You don't have any saved orders yet. Find something meaningful
+              for someone special and your recent checkout order can appear here.
+            </p>
+            <a class="primary-btn" href="shop.html">Explore Gifts →</a>
+          </div>
+        `;
+        return;
+      }
+
+      if (filtered.length === 0) {
+        ordersList.innerHTML = `
+          <div class="no-results">
+            No orders match these filters. Try a different search or status.
+          </div>
+        `;
+        return;
+      }
+
+      ordersList.innerHTML = filtered.map(makeOrderCard).join("");
+    }
+
+    document.getElementById("filterTabs").addEventListener("click", event => {
+      const button = event.target.closest("[data-filter]");
+      if (!button) return;
+
+      currentFilter = button.dataset.filter;
+
+      document.querySelectorAll(".filter-tab").forEach(tab => {
+        tab.classList.toggle("active", tab === button);
+      });
+
+      renderOrders();
+    });
+
+    searchInput.addEventListener("input", renderOrders);
+    sortSelect.addEventListener("change", renderOrders);
+
+    ordersList.addEventListener("click", event => {
+      const button = event.target.closest("[data-action]");
+      if (!button) return;
+
+      const orderId = button.dataset.id;
+
+      if (button.dataset.action === "details") {
+        if (expandedOrders.has(orderId)) {
+          expandedOrders.delete(orderId);
+        } else {
+          expandedOrders.add(orderId);
+        }
+        renderOrders();
+      }
+
+      if (button.dataset.action === "track") {
+        const order = getSavedOrders().find(item => item.id === orderId);
+
+        if (order) {
+          try {
+            sessionStorage.setItem("mim_tracking_order", JSON.stringify(order));
+          } catch (error) {
+            console.warn("Could not save selected tracking order.", error);
+          }
+        }
+
+        window.location.href = "order-tracking.html";
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Refresh the display when another page updates local order data.
+    window.addEventListener("storage", event => {
+      if ([ORDERS_KEY, LAST_ORDER_KEY].includes(event.key)) {
+        renderOrders();
+      }
+    });
+
+    loadMyOrders();
+  </script>
+ <script type="module" src="js/app.js"></script>
+</body>
+</html>

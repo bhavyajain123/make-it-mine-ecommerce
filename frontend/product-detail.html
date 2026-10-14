@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fbf7f0">
+  <title>Product Details | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #fbf7f0;
+      --white: #fffdf9;
+      --wine: #681d32;
+      --wine-dark: #481323;
+      --gold: #c69b55;
+      --text: #302521;
+      --muted: #84766f;
+      --border: #e9dfd4;
+      --green: #367b55;
+      --shadow: 0 15px 45px rgba(65, 34, 27, .07);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .announcement {
+      background: var(--wine-dark);
+      color: #fff8ed;
+      text-align: center;
+      padding: 9px 15px;
+      font-size: 11px;
+      letter-spacing: 1.3px;
+    }
+
+    .announcement span {
+      color: #e8c88d;
+      font-weight: 700;
+    }
+
+    .navbar {
+      height: 78px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      background: rgba(255, 253, 249, .96);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 29px;
+      font-weight: 700;
+      color: var(--wine);
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 13px;
+      color: #574740;
+    }
+
+    .nav-links a:hover,
+    .breadcrumb a:hover {
+      color: var(--wine);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+    }
+
+    .icon-link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      position: relative;
+    }
+
+    .icon-link .symbol {
+      font-size: 20px;
+    }
+
+    .count {
+      background: var(--wine);
+      color: white;
+      min-width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-menu {
+      display: none;
+      background: transparent;
+      border: 0;
+      color: var(--wine);
+      font-size: 24px;
+    }
+
+    .breadcrumb {
+      padding: 25px 7% 15px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .breadcrumb span {
+      margin: 0 9px;
+      color: #b4a79d;
+    }
+
+    .product-section {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 15px 30px 70px;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 65px;
+      align-items: start;
+    }
+
+    .gallery {
+      min-width: 0;
+    }
+
+    .main-image-wrap {
+      position: relative;
+      background: #f0e5d8;
+      border-radius: 5px;
+      overflow: hidden;
+      aspect-ratio: 4 / 4.35;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s ease;
+    }
+
+    .main-image-wrap:hover .main-image {
+      transform: scale(1.035);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: var(--wine);
+      color: white;
+      padding: 7px 12px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .gallery-heart {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--border);
+      font-size: 21px;
+      color: var(--wine);
+    }
+
+    .thumbnails {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 13px;
+    }
+
+    .thumbnail {
+      padding: 0;
+      border: 1px solid transparent;
+      background: #eee2d5;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+    }
+
+    .thumbnail.active {
+      border: 2px solid var(--wine);
+      padding: 3px;
+    }
+
+    .thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-info {
+      padding-top: 12px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .product-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(31px, 3.5vw, 43px);
+      line-height: 1.2;
+      font-weight: 500;
+      margin-bottom: 14px;
+      color: var(--wine-dark);
+    }
+
+    .rating-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stars {
+      color: #c39142;
+      letter-spacing: 2px;
+    }
+
+    .rating-muted {
+      color: var(--muted);
+    }
+
+    .price-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 7px;
+    }
+
+    .current-price {
+      font-size: 29px;
+      font-weight: 700;
+      color: var(--wine);
+    }
+
+    .old-price {
+      color: #9c8e85;
+      font-size: 16px;
+      text-decoration: line-through;
+    }
+
+    .discount {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tax-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .description {
+      font-size: 13px;
+      line-height: 1.9;
+      color: #6c5b53;
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 23px;
+    }
+
+    .detail-label {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .personalize-box {
+      background: #f5eee5;
+      border: 1px solid #e9dac8;
+      padding: 20px;
+      margin-bottom: 23px;
+    }
+
+    .personalize-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 17px;
+    }
+
+    .personalize-heading strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      color: var(--wine);
+      font-weight: 500;
+    }
+
+    .personalize-heading span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid #dfd1c2;
+      background: var(--white);
+      border-radius: 2px;
+      padding: 12px 13px;
+      outline: none;
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    .field textarea {
+      min-height: 75px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--wine);
+    }
+
+    .character-count {
+      text-align: right;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .quantity-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      gap: 15px;
+    }
+
+    .quantity-control {
+      display: flex;
+      border: 1px solid var(--border);
+      height: 43px;
+      background: var(--white);
+    }
+
+    .quantity-control button {
+      width: 42px;
+      background: transparent;
+      border: 0;
+      font-size: 19px;
+      color: var(--wine);
+    }
+
+    .quantity-control input {
+      width: 39px;
+      text-align: center;
+      border: 0;
+      outline: none;
+      background: transparent;
+      font-size: 13px;
+    }
+
+    .stock {
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn {
+      min-height: 51px;
+      border: 1px solid var(--wine);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      font-weight: 700;
+      transition: .25s ease;
+    }
+
+    .btn-primary {
+      background: var(--wine);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--wine-dark);
+    }
+
+    .btn-outline {
+      color: var(--wine);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      color: white;
+      background: var(--wine);
+    }
+
+    .service-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      border-top: 1px solid var(--border);
+      margin-top: 25px;
+      padding-top: 22px;
+    }
+
+    .service-point {
+      text-align: center;
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .service-point .service-icon {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .service-point strong {
+      display: block;
+      color: var(--text);
+      font-size: 10px;
+      margin-bottom: 3px;
+    }
+
+    .details-area {
+      max-width: 1150px;
+      padding: 0 30px 70px;
+      margin: 0 auto;
+    }
+
+    .details-tabs {
+      display: flex;
+      gap: 35px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+
+    .tab-button {
+      background: none;
+      border: 0;
+      padding: 0 0 15px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .tab-button.active {
+      color: var(--wine);
+    }
+
+    .tab-button.active::after {
+      content: '';
+      height: 2px;
+      background: var(--wine);
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+    }
+
+    .tab-content {
+      display: none;
+      color: #6c5b53;
+      font-size: 13px;
+      line-height: 2;
+      max-width: 800px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .tab-content ul {
+      padding-left: 20px;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      color: var(--wine-dark);
+      font-size: 34px;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 9px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 35px;
+    }
+
+    .related-section {
+      padding: 65px 7%;
+      background: #f4ece2;
+    }
+
+    .related-grid {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .related-card {
+      background: var(--white);
+      border: 1px solid #eee2d6;
+      transition: transform .25s, box-shadow .25s;
+      overflow: hidden;
+    }
+
+    .related-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .related-image {
+      display: block;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #eee2d5;
+    }
+
+    .related-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .4s;
+    }
+
+    .related-card:hover .related-image img {
+      transform: scale(1.05);
+    }
+
+    .related-info {
+      padding: 15px;
+    }
+
+    .related-category {
+      color: var(--gold);
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      margin-bottom: 5px;
+    }
+
+    .related-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      line-height: 1.4;
+      margin-bottom: 7px;
+      color: var(--wine-dark);
+    }
+
+    .related-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--wine);
+    }
+
+    .related-price del {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+      margin-left: 6px;
+    }
+
+    .related-add {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--wine);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .related-add:hover {
+      background: var(--wine);
+      color: white;
+      border-color: var(--wine);
+    }
+
+    footer {
+      background: var(--wine-dark);
+      color: #f9eee3;
+      padding: 45px 7% 22px;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 40px;
+      padding-bottom: 35px;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand span {
+      color: var(--gold);
+    }
+
+    .footer-description {
+      color: #d4c0b7;
+      font-size: 12px;
+      max-width: 280px;
+      line-height: 1.9;
+    }
+
+    .footer-column h4 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      margin-bottom: 15px;
+      color: #e4c48d;
+    }
+
+    .footer-column a {
+      display: block;
+      color: #d4c0b7;
+      font-size: 12px;
+      margin-bottom: 9px;
+    }
+
+    .footer-column a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.15);
+      padding-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      color: #cbb7ae;
+      font-size: 10px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 100;
+      background: var(--wine-dark);
+      color: white;
+      padding: 15px 21px;
+      font-size: 12px;
+      box-shadow: var(--shadow);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: .3s;
+      max-width: calc(100% - 44px);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 950px) {
+      .navbar {
+        padding: 0 4%;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+
+      .product-section {
+        gap: 35px;
+      }
+
+      .footer-main {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .announcement {
+        font-size: 9px;
+      }
+
+      .navbar {
+        height: 66px;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        padding: 20px 6%;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-actions {
+        gap: 11px;
+      }
+
+      .icon-link .text-label {
+        display: none;
+      }
+
+      .breadcrumb {
+        padding: 20px 5% 10px;
+        font-size: 10px;
+      }
+
+      .product-section {
+        display: block;
+        padding: 10px 5% 45px;
+      }
+
+      .product-info {
+        padding-top: 30px;
+      }
+
+      .product-title {
+        font-size: 34px;
+      }
+
+      .main-image-wrap {
+        aspect-ratio: 1 / 1.05;
+      }
+
+      .details-area {
+        padding: 0 5% 45px;
+      }
+
+      .details-tabs {
+        gap: 20px;
+        overflow-x: auto;
+      }
+
+      .tab-button {
+        white-space: nowrap;
+      }
+
+      .section-heading {
+        font-size: 28px;
+      }
+
+      .related-section {
+        padding: 45px 5%;
+      }
+
+      .related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+      }
+
+      .related-info {
+        padding: 11px;
+      }
+
+      .related-name {
+        font-size: 14px;
+      }
+
+      .footer-main {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px 20px;
+      }
+
+      footer {
+        padding: 35px 5% 20px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .brand {
+        font-size: 21px;
+      }
+
+      .nav-actions {
+        gap: 8px;
+      }
+
+      .button-row {
+        grid-template-columns: 1fr;
+      }
+
+      .service-points {
+        gap: 5px;
+      }
+
+      .service-point {
+        font-size: 9px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="announcement">
+    A LITTLE LOVE, BEAUTIFULLY WRAPPED — <span>FREE SHIPPING ON ORDERS ABOVE ₹999</span>
+  </div>
+
+  <header class="navbar">
+    <button class="mobile-menu" id="menuButton" aria-label="Toggle menu">☰</button>
+
+    <a href="home.html" class="brand">MakeIt<span>Mine</span>.</a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="home.html">Home</a>
+      <a href="categories.html">Shop All</a>
+      <a href="categories.html?category=personalized">Personalized Gifts</a>
+      <a href="about.html">Our Story</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="login.html" class="icon-link" aria-label="Account">
+        <span class="symbol">♙</span>
+        <span class="text-label">Account</span>
+      </a>
+
+      <a href="cart.html" class="icon-link" aria-label="Shopping cart">
+        <span class="symbol">♡</span>
+        <span class="count" id="wishlistCount">0</span>
+      </a>
+
+      <a href="cart.html" class="icon-link" aria-label="Cart">
+        <span class="symbol">♧</span>
+        <span class="count" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="breadcrumb">
+    <a href="home.html">Home</a>
+    <span>/</span>
+    <a href="categories.html">Shop</a>
+    <span>/</span>
+    <span id="breadcrumbProduct">Product Details</span>
+  </div>
+
+  <main>
+    <section class="product-section">
+
+      <div class="gallery">
+        <div class="main-image-wrap">
+          <img
+            id="mainImage"
+            class="main-image"
+            src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1000&q=85"
+            alt="Personalized gift product"
+          >
+          <span class="product-badge" id="productBadge">Bestseller</span>
+          <button class="gallery-heart" id="wishlistButton" aria-label="Add to wishlist">♡</button>
+        </div>
+
+        <div class="thumbnails" id="thumbnails">
+          <button class="thumbnail active" data-index="0" aria-label="Product image 1">
+            <img src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=300&q=80" alt="Product view 1">
+          </button>
+          <button class="thumbnail" data-index="1" aria-label="Product image 2">
+            <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=300&q=80" alt="Product view 2">
+          </button>
+          <button class="thumbnail" data-index="2" aria-label="Product image 3">
+            <img src="https://images.unsplash.com/photo-1513883049090-d0b7439799bf?auto=format&fit=crop&w=300&q=80" alt="Product view 3">
+          </button>
+          <button class="thumbnail" data-index="3" aria-label="Product image 4">
+            <img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=300&q=80" alt="Product view 4">
+          </button>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <div class="eyebrow" id="productCategory">Thoughtfully Personalized</div>
+
+        <h1 class="product-title" id="productTitle">The Personalised Gift Box</h1>
+
+        <div class="rating-line">
+          <span class="stars">★★★★★</span>
+          <strong id="ratingValue">4.9</strong>
+          <span class="rating-muted" id="reviewCount">(128 reviews)</span>
+          <span class="rating-muted">|</span>
+          <span class="stock">● In stock</span>
+        </div>
+
+        <div class="price-line">
+          <span class="current-price" id="currentPrice">₹799</span>
+          <span class="old-price" id="oldPrice">₹999</span>
+          <span class="discount" id="discountPercent">20% OFF</span>
+        </div>
+
+        <p class="tax-note">Inclusive of applicable taxes. Shipping calculated at checkout.</p>
+
+        <p class="description" id="productDescription">
+          Turn an ordinary moment into a beautiful memory. This thoughtfully curated gift
+          is made special with your personal touch, premium finishing and elegant packaging.
+          Perfect for birthdays, anniversaries and every little reason to celebrate.
+        </p>
+
+        <div class="personalize-box">
+          <div class="personalize-heading">
+            <strong>Make it yours</strong>
+            <span>OPTIONAL PERSONALISATION</span>
+          </div>
+
+          <div class="field">
+            <label for="personalName">Name or initials</label>
+            <input type="text" id="personalName" maxlength="30" placeholder="e.g. Aditi">
+          </div>
+
+          <div class="field">
+            <label for="personalMessage">Your personal message</label>
+            <textarea id="personalMessage" maxlength="180" placeholder="Write a little note to make their day..."></textarea>
+            <div class="character-count"><span id="messageCount">0</span>/180 characters</div>
+          </div>
+
+          <div class="field">
+            <label for="giftOccasion">Gift occasion</label>
+            <select id="giftOccasion">
+              <option value="">Select an occasion</option>
+              <option>Birthday</option>
+              <option>Anniversary</option>
+              <option>Wedding</option>
+              <option>Graduation</option>
+              <option>Thank You</option>
+              <option>Just Because</option>
+              <option>Festival</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="giftWrap">Gift wrapping</label>
+            <select id="giftWrap">
+              <option value="No">Standard packaging — included</option>
+              <option value="Yes">Premium gift wrapping — ₹49 extra</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="quantity-row">
+          <div>
+            <span class="detail-label">Quantity</span>
+            <div class="quantity-control">
+              <button type="button" id="decreaseQty" aria-label="Decrease quantity">−</button>
+              <input id="quantity" type="number" value="1" min="1" max="20" readonly aria-label="Quantity">
+              <button type="button" id="increaseQty" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+          <span class="stock">✓ Ready to gift</span>
+        </div>
+
+        <div class="button-row">
+          <button class="btn btn-primary" id="addToCart">Add to Cart ♡</button>
+          <button class="btn btn-outline" id="buyNow">Buy Now →</button>
+        </div>
+
+        <div class="service-points">
+          <div class="service-point">
+            <span class="service-icon">🎁</span>
+            <strong>Gift Ready</strong>
+            Thoughtful packaging
+          </div>
+          <div class="service-point">
+            <span class="service-icon">🚚</span>
+            <strong>Pan-India Delivery</strong>
+            Delivery at your door
+          </div>
+          <div class="service-point">
+            <span class="service-icon">♡</span>
+            <strong>Made With Love</strong>
+            Personal touches
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="details-area">
+      <div class="details-tabs">
+        <button class="tab-button active" data-tab="descriptionTab">Product Details</button>
+        <button class="tab-button" data-tab="shippingTab">Shipping & Returns</button>
+        <button class="tab-button" data-tab="careTab">Care Instructions</button>
+      </div>
+
+      <div class="tab-content active" id="descriptionTab">
+        <p id="longDescription">
+          Every MakeItMine gift is designed to make someone feel special.
+          Choose your personalisation, add a heartfelt message and let us help
+          you create a memory worth keeping.
+        </p>
+        <br>
+        <ul>
+          <li>Thoughtfully selected gifting product.</li>
+          <li>Optional name and message personalisation.</li>
+          <li>Gift wrapping available at an additional charge.</li>
+          <li>Designed for birthdays, anniversaries and special occasions.</li>
+        </ul>
+      </div>
+
+      <div class="tab-content" id="shippingTab">
+        <p>
+          Shipping availability and delivery estimates depend on your PIN code.
+          The final delivery details will be shown during checkout. Please verify
+          the delivery address and contact number before placing your order.
+        </p>
+        <br>
+        <p>
+          For damaged, incorrect or missing items, contact our support team through
+          the Contact page. Personalised products may have different return eligibility;
+          confirm the applicable policy before ordering.
+        </p>
+      </div>
+
+      <div class="tab-content" id="careTab">
+        <p>
+          Keep your gift in a clean, dry place. Avoid moisture, direct sunlight
+          and harsh cleaning products unless the specific product instructions say
+          otherwise. Follow any care instructions included with the delivered item.
+        </p>
+      </div>
+    </section>
+
+    <section class="details-area" id="reviewsSection">
+  <h2 class="section-heading">Customer Reviews</h2>
+  <p class="section-subtitle">Real feedback from our customers.</p>
+
+  <div class="rating-line" style="justify-content:center;">
+    <span class="stars" id="reviewsStars">☆☆☆☆☆</span>
+    <strong id="reviewsAverage">0.0</strong>
+    <span class="rating-muted" id="reviewsTotal">(0 reviews)</span>
+  </div>
+
+  <div id="reviewsMessage" role="status"
+       style="text-align:center; margin:15px 0;"></div>
+
+  <div id="reviewsList"></div>
+
+  <div class="personalize-box" style="max-width:650px;margin:30px auto;">
+    <h3 style="margin-bottom:15px;color:var(--wine);">
+      Write a Review
+    </h3>
+
+    <form id="reviewForm">
+      <div class="field">
+        <label for="reviewRating">Your rating</label>
+        <select id="reviewRating" required>
+          <option value="">Select stars</option>
+          <option value="5">★★★★★ - Excellent</option>
+          <option value="4">★★★★ - Very good</option>
+          <option value="3">★★★ - Good</option>
+          <option value="2">★★ - Fair</option>
+          <option value="1">★ - Poor</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="reviewComment">Your review</label>
+        <textarea id="reviewComment" maxlength="1000"
+          placeholder="Share your experience..." required></textarea>
+      </div>
+
+      <button class="btn btn-primary" type="submit"
+        id="submitReview" style="width:100%;">
+        Submit Review
+      </button>
+    </form>
+  </div>
+</section>
+
+    <section class="related-section">
+      <h2 class="section-heading">You May Also Love</h2>
+      <p class="section-subtitle">A few more thoughtful ways to make someone smile.</p>
+
+      <div class="related-grid" id="relatedProducts">
+
+        <article class="related-card">
+          <a href="product-detail.html?id=personalized-mug" class="related-image">
+            <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=600&q=80" alt="Personalized mug" loading="lazy">
+          </a>
+          <div class="related-info">
+            <div class="related-category">Everyday Keepsakes</div>
+            <h3 class="related-name">Personalised Mug</h3>
+            <div class="related-price">₹399 <del>₹499</del></div>
+            <button class="related-add" data-id="personalized-mug">Add to Cart</button>
+          </div>
+        </article>
+
+        <article class="related-card">
+          <a href="product-detail.html?id=memory-scrapbook" class="related-image">
+            <img src="https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=600&q=80" alt="Memory scrapbook" loading="lazy">
+          </a>
+          <div class="related-info">
+            <div class="related-category">Memory Makers</div>
+            <h3 class="related-name">Memory Scrapbook</h3>
+            <div class="related-price">₹599 <del>₹799</del></div>
+            <button class="related-add" data-id="memory-scrapbook">Add to Cart</button>
+          </div>
+        </article>
+
+        <article class="related-card">
+          <a href="product-detail.html?id=gift-hamper" class="related-image">
+            <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80" alt="Gift hamper" loading="lazy">
+          </a>
+          <div class="related-info">
+            <div class="related-category">Curated Gifts</div>
+            <h3 class="related-name">Celebration Hamper</h3>
+            <div class="related-price">₹1,199 <del>₹1,499</del></div>
+            <button class="related-add" data-id="gift-hamper">Add to Cart</button>
+          </div>
+        </article>
+
+        <article class="related-card">
+          <a href="product-detail.html?id=photo-frame" class="related-image">
+            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80" alt="Decorative photo frame" loading="lazy">
+          </a>
+          <div class="related-info">
+            <div class="related-category">Home & Memories</div>
+            <h3 class="related-name">Personalised Photo Frame</h3>
+            <div class="related-price">₹699 <del>₹899</del></div>
+            <button class="related-add" data-id="photo-frame">Add to Cart</button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-main">
+      <div>
+        <div class="footer-brand">MakeIt<span>Mine</span>.</div>
+        <p class="footer-description">
+          Thoughtful gifts, personal touches and little things that turn
+          ordinary moments into unforgettable memories.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Explore</h4>
+        <a href="home.html">Home</a>
+        <a href="categories.html">Shop All</a>
+        <a href="about.html">Our Story</a>
+        <a href="customize.html">Create Your Gift</a>
+      </div>
+
+      <div class="footer-column">
+        <h4>Customer Care</h4>
+        <a href="contact.html">Contact Us</a>
+        <a href="order-tracking.html">Track Your Order</a>
+        <a href="cart.html">Shopping Cart</a>
+        <a href="about.html">Our Policies</a>
+      </div>
+
+      <div class="footer-column">
+        <h4>Get In Touch</h4>
+        <a href="contact.html">Questions? We're here to help.</a>
+        <a href="mailto:hello@makeitmine.com">hello@makeitmine.com</a>
+        <a href="categories.html">Find Your Perfect Gift</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 MakeItMine. All rights reserved.</span>
+      <span>Made with ♡ for your special moments.</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // --------------------------------------------------
+    // MakeItMine Product Detail Page
+    // Cart key: mim_cart
+    // Wishlist key: mim_wishlist
+    // --------------------------------------------------
+
+    const products = {
+      "gift-box": {
+        id: "gift-box",
+        name: "The Personalised Gift Box",
+        category: "Thoughtfully Personalized",
+        price: 799,
+        oldPrice: 999,
+        rating: "4.9",
+        reviews: 128,
+        badge: "Bestseller",
+        emoji: "🎁",
+        description: "Turn an ordinary moment into a beautiful memory. This thoughtfully curated gift is made special with your personal touch, premium finishing and elegant packaging. Perfect for birthdays, anniversaries and every little reason to celebrate.",
+        images: [
+          "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1513883049090-d0b7439799bf?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=1000&q=85"
+        ]
+      },
+      "personalized-mug": {
+        id: "personalized-mug",
+        name: "Personalised Mug",
+        category: "Everyday Keepsakes",
+        price: 399,
+        oldPrice: 499,
+        rating: "4.8",
+        reviews: 86,
+        badge: "Customer Favourite",
+        emoji: "☕",
+        description: "Make every coffee break a little more meaningful with a personalised mug. Add a name or heartfelt note to create an everyday keepsake for someone special.",
+        images: [
+          "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1000&q=85"
+        ]
+      },
+      "memory-scrapbook": {
+        id: "memory-scrapbook",
+        name: "Memory Scrapbook",
+        category: "Memory Makers",
+        price: 599,
+        oldPrice: 799,
+        rating: "4.9",
+        reviews: 64,
+        badge: "Made With Love",
+        emoji: "📔",
+        description: "Bring favourite moments together in one beautiful scrapbook. A thoughtful gift for preserving photographs, little notes and the memories you never want to forget.",
+        images: [
+          "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=1000&q=85"
+        ]
+      },
+      "gift-hamper": {
+        id: "gift-hamper",
+        name: "Celebration Hamper",
+        category: "Curated Gifts",
+        price: 1199,
+        oldPrice: 1499,
+        rating: "4.9",
+        reviews: 93,
+        badge: "Premium Pick",
+        emoji: "🎀",
+        description: "Celebrate in style with a thoughtfully arranged gift hamper. A beautiful choice for birthdays, anniversaries, festive celebrations and moments that deserve something extra.",
+        images: [
+          "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1513883049090-d0b7439799bf?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1000&q=85"
+        ]
+      },
+      "photo-frame": {
+        id: "photo-frame",
+        name: "Personalised Photo Frame",
+        category: "Home & Memories",
+        price: 699,
+        oldPrice: 899,
+        rating: "4.8",
+        reviews: 71,
+        badge: "Thoughtful Gift",
+        emoji: "🖼️",
+        description: "Give your favourite photograph a special place to live. This photo frame makes a meaningful gift for couples, friends and family members who treasure shared memories.",
+        images: [
+          "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=85",
+          "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85"
+        ]
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedId = params.get("id") || "gift-box";
+    const product = products[requestedId] || products["gift-box"];
+
+    let quantity = 1;
+    let toastTimer;
+
+    const $ = (id) => document.getElementById(id);
+
+    function readStorage(key, fallback) {
+      try {
+        const value = JSON.parse(localStorage.getItem(key));
+        return value ?? fallback;
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    function saveStorage(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch (error) {
+        showToast("Unable to save your changes. Please check browser storage.");
+        return false;
+      }
+    }
+
+    function money(value) {
+      return "₹" + Number(value).toLocaleString("en-IN");
+    }
+
+    function showToast(message) {
+      const toast = $("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
+    }
+
+    function renderProduct() {
+      document.title = product.name + " | MakeItMine";
+      $("productTitle").textContent = product.name;
+      $("productCategory").textContent = product.category;
+      $("breadcrumbProduct").textContent = product.name;
+      $("currentPrice").textContent = money(product.price);
+      $("oldPrice").textContent = money(product.oldPrice);
+      $("discountPercent").textContent =
+        Math.round((1 - product.price / product.oldPrice) * 100) + "% OFF";
+      $("ratingValue").textContent = product.rating;
+      $("reviewCount").textContent = "(" + product.reviews + " reviews)";
+      $("productBadge").textContent = product.badge;
+      $("productDescription").textContent = product.description;
+      $("longDescription").textContent = product.description;
+
+      $("mainImage").src = product.images[0];
+      $("mainImage").alt = product.name;
+
+      const thumbnails = $("thumbnails");
+      thumbnails.innerHTML = "";
+
+      product.images.forEach((src, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "thumbnail" + (index === 0 ? " active" : "");
+        button.setAttribute("aria-label", "Product image " + (index + 1));
+
+        const image = document.createElement("img");
+        image.src = src;
+        image.alt = product.name + " view " + (index + 1);
+        image.loading = "lazy";
+
+        button.appendChild(image);
+        button.addEventListener("click", () => {
+          $("mainImage").src = src;
+          document.querySelectorAll(".thumbnail").forEach(item => {
+            item.classList.remove("active");
+          });
+          button.classList.add("active");
+        });
+
+        thumbnails.appendChild(button);
+      });
+
+      updateHeaderCounts();
+      updateWishlistButton();
+    }
+
+    function updateHeaderCounts() {
+      const cart = readStorage("mim_cart", []);
+      const wishlist = readStorage("mim_wishlist", []);
+
+      $("cartCount").textContent = cart.reduce(
+        (sum, item) => sum + Math.max(0, Number(item.quantity) || 0), 0
+      );
+
+      $("wishlistCount").textContent = wishlist.length;
+    }
+
+    function getWishlist() {
+      const wishlist = readStorage("mim_wishlist", []);
+      return Array.isArray(wishlist) ? wishlist : [];
+    }
+
+    function isWishlisted() {
+      return getWishlist().some(item => {
+        const itemId = typeof item === "string" ? item : item.id;
+        return itemId === product.id;
+      });
+    }
+
+    function updateWishlistButton() {
+      const active = isWishlisted();
+      $("wishlistButton").textContent = active ? "♥" : "♡";
+      $("wishlistButton").style.color = active ? "#9d2848" : "";
+      $("wishlistButton").setAttribute(
+        "aria-label",
+        active ? "Remove from wishlist" : "Add to wishlist"
+      );
+    }
+
+    function toggleWishlist() {
+      let wishlist = getWishlist();
+
+      if (isWishlisted()) {
+        wishlist = wishlist.filter(item => {
+          const itemId = typeof item === "string" ? item : item.id;
+          return itemId !== product.id;
+        });
+        showToast("Removed from your wishlist.");
+      } else {
+        wishlist.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          oldPrice: product.oldPrice,
+          image: product.images[0],
+          emoji: product.emoji
+        });
+        showToast("Added to your wishlist ♡");
+      }
+
+      if (saveStorage("mim_wishlist", wishlist)) {
+        updateWishlistButton();
+        updateHeaderCounts();
+      }
+    }
+
+    function getConfiguredItem() {
+      const wrapping = $("giftWrap").value === "Yes";
+      const extra = wrapping ? 49 : 0;
+
+      return {
+        id: product.id,
+        name: product.name,
+        type: product.category,
+        basePrice: product.price,
+        price: product.price + extra,
+        quantity: quantity,
+        emoji: product.emoji,
+        image: product.images[0],
+        customProduct: true,
+        personalisation: {
+          name: $("personalName").value.trim(),
+          message: $("personalMessage").value.trim(),
+          occasion: $("giftOccasion").value,
+          giftWrap: wrapping ? "Yes" : "No"
+        }
+      };
+    }
+
+    function addProductToCart(goToCart = false) {
+      let cart = readStorage("mim_cart", []);
+
+      if (!Array.isArray(cart)) {
+        cart = [];
+      }
+
+      const newItem = getConfiguredItem();
+
+      // Keep personalised versions as separate cart entries.
+      // This prevents different names/messages being merged together.
+      newItem.id = product.id + "-" + Date.now() + "-" +
+        Math.random().toString(36).slice(2, 7);
+
+      cart.push(newItem);
+
+      if (!saveStorage("mim_cart", cart)) return;
+
+      updateHeaderCounts();
+
+      if (goToCart) {
+        window.location.href = "cart.html";
+      } else {
+        showToast(product.name + " added to your cart!");
+      }
+    }
+
+    $("decreaseQty").addEventListener("click", () => {
+      quantity = Math.max(1, quantity - 1);
+      $("quantity").value = quantity;
+    });
+
+    $("increaseQty").addEventListener("click", () => {
+      quantity = Math.min(20, quantity + 1);
+      $("quantity").value = quantity;
+      if (quantity === 20) {
+        showToast("Maximum quantity per selection is 20.");
+      }
+    });
+
+    $("wishlistButton").addEventListener("click", toggleWishlist);
+
+    $("addToCart").addEventListener("click", () => {
+      addProductToCart(false);
+    });
+
+    $("buyNow").addEventListener("click", () => {
+      addProductToCart(true);
+    });
+
+    $("personalMessage").addEventListener("input", event => {
+      $("messageCount").textContent = event.target.value.length;
+    });
+
+    $("giftWrap").addEventListener("change", event => {
+      const selected = event.target.value === "Yes";
+      showToast(selected
+        ? "Premium gift wrapping selected (+₹49)."
+        : "Standard packaging selected.");
+    });
+
+    document.querySelectorAll(".tab-button").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".tab-button").forEach(item => {
+          item.classList.remove("active");
+        });
+
+        document.querySelectorAll(".tab-content").forEach(item => {
+          item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+        $(button.dataset.tab).classList.add("active");
+      });
+    });
+
+    $("menuButton").addEventListener("click", () => {
+      $("navLinks").classList.toggle("open");
+    });
+
+    document.querySelectorAll(".related-add").forEach(button => {
+      button.addEventListener("click", () => {
+        const related = products[button.dataset.id];
+
+        if (!related) {
+          showToast("This product is not available right now.");
+          return;
+        }
+
+        const cart = readStorage("mim_cart", []);
+        const safeCart = Array.isArray(cart) ? cart : [];
+
+        safeCart.push({
+          id: related.id + "-" + Date.now(),
+          name: related.name,
+          type: related.category,
+          basePrice: related.price,
+          price: related.price,
+          quantity: 1,
+          emoji: related.emoji,
+          image: related.images[0],
+          customProduct: false,
+          personalisation: {
+            name: "",
+            message: "",
+            occasion: "",
+            giftWrap: "No"
+          }
+        });
+
+        if (saveStorage("mim_cart", safeCart)) {
+          updateHeaderCounts();
+          showToast(related.name + " added to your cart!");
+        }
+      });
+    });
+
+    renderProduct();
+
+    async function loadProductReviews() {
+  const productId = new URLSearchParams(window.location.search).get("id");
+  const message = document.getElementById("reviewsMessage");
+  const list = document.getElementById("reviewsList");
+
+  // Backend reviews need a real MongoDB product ID.
+  if (!productId || !/^[0-9a-fA-F]{24}$/.test(productId)) {
+    message.textContent =
+      "Reviews are available when you open a product from the shop.";
+    return;
+  }
+
+  try {
+    message.textContent = "Loading reviews...";
+
+    const response = await fetch(
+      `http://localhost:5000/api/products/${productId}/reviews`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Could not load reviews.");
+    }
+
+    const average = Number(data.summary?.averageRating || 0);
+    const total = Number(data.summary?.totalReviews || 0);
+
+    document.getElementById("reviewsAverage").textContent =
+      average.toFixed(1);
+
+    document.getElementById("reviewsTotal").textContent =
+      `(${total} ${total === 1 ? "review" : "reviews"})`;
+
+    document.getElementById("reviewsStars").textContent =
+      "★".repeat(Math.round(average)) +
+      "☆".repeat(5 - Math.round(average));
+
+    // Update the rating near the product title too.
+    document.getElementById("ratingValue").textContent =
+      average.toFixed(1);
+
+    document.getElementById("reviewCount").textContent =
+      `(${total} reviews)`;
+
+    if (!data.reviews || data.reviews.length === 0) {
+      list.innerHTML = "<p>No reviews yet for this product.</p>";
+    } else {
+      list.innerHTML = data.reviews.map(review => {
+        const name = escapeReviewText(review.user?.name || "Customer");
+        const comment = escapeReviewText(review.comment || "");
+        const rating = Math.min(5, Math.max(0, Number(review.rating) || 0));
+
+        return `
+          <article style="padding:18px 0;border-bottom:1px solid var(--border);">
+            <strong>${name}</strong>
+            <div class="stars">${"★".repeat(rating)}${"☆".repeat(5-rating)}</div>
+            <p style="margin-top:8px;">${comment}</p>
+            <small class="rating-muted">
+              ${review.createdAt
+                ? new Date(review.createdAt).toLocaleDateString("en-IN")
+                : ""}
+            </small>
+          </article>
+        `;
+      }).join("");
+    }
+
+    message.textContent = "";
+  } catch (error) {
+    console.error("Load reviews error:", error);
+    message.textContent = error.message;
+  }
+}
+
+function escapeReviewText(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+document.getElementById("reviewForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const token = localStorage.getItem("mim_token");
+  const productId = new URLSearchParams(window.location.search).get("id");
+  const message = document.getElementById("reviewsMessage");
+  const submitButton = document.getElementById("submitReview");
+
+  if (!token) {
+    message.textContent = "Please log in before submitting a review.";
+    return;
+  }
+
+  if (!productId || !/^[0-9a-fA-F]{24}$/.test(productId)) {
+    message.textContent =
+      "This page does not have a valid backend product ID. Open the product from the shop.";
+    return;
+  }
+
+  const rating = Number(document.getElementById("reviewRating").value);
+  const comment = document.getElementById("reviewComment").value.trim();
+
+  if (!rating || !comment) {
+    message.textContent = "Please select a rating and write a review.";
+    return;
+  }
+
+  submitButton.disabled = true;
+  message.textContent = "Submitting review...";
+
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/products/${productId}/reviews`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ rating, comment })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Review submission failed.");
+    }
+
+    document.getElementById("reviewForm").reset();
+    message.textContent = "Review submitted successfully!";
+    await loadProductReviews();
+  } catch (error) {
+    console.error("Submit review error:", error);
+    message.textContent = error.message;
+  } finally {
+    submitButton.disabled = false;
+  }
+});
+
+loadProductReviews();
+  </script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
+
++   

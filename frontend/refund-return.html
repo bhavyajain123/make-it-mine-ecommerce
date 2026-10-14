@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about MakeItMine returns, cancellations, replacements and refund procedures.">
+  <title>Refund & Returns | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #fffaf5;
+      --white: #ffffff;
+      --wine: #702d3d;
+      --wine-dark: #4e1c29;
+      --gold: #c59b62;
+      --text: #342823;
+      --muted: #84756c;
+      --border: #eaded4;
+      --soft: #f7eee6;
+      --green: #2d7855;
+      --green-bg: #e8f5ed;
+      --red: #a33e42;
+      --shadow: 0 12px 35px rgba(78, 28, 41, 0.06);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .announcement {
+      background: var(--wine-dark);
+      color: white;
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 10px;
+      letter-spacing: 1.1px;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 75px;
+      padding: 15px 7%;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 25px;
+      font-weight: 700;
+      color: var(--wine);
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--wine);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 20px;
+    }
+
+    .menu-toggle {
+      display: none;
+      padding: 6px 10px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--wine);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 70px 20px 65px;
+      background:
+        radial-gradient(ellipse at 50% 0%, #efdbca 0%, transparent 65%),
+        var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      color: var(--wine);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 13px;
+    }
+
+    h1, h2, h3 {
+      font-family: "Playfair Display", serif;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 55px);
+      line-height: 1.2;
+      margin-bottom: 17px;
+    }
+
+    .hero h1 span {
+      color: var(--wine);
+      font-style: italic;
+    }
+
+    .hero p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .breadcrumb {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .breadcrumb a {
+      color: var(--wine);
+    }
+
+    .page-wrap {
+      width: min(1120px, 90%);
+      margin: 55px auto 80px;
+    }
+
+    .notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 20px 22px;
+      border: 1px solid #e6d1b8;
+      background: #fbf3e9;
+      border-radius: 10px;
+      margin-bottom: 35px;
+    }
+
+    .notice-icon {
+      width: 37px;
+      height: 37px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: white;
+      color: var(--wine);
+      font-size: 18px;
+    }
+
+    .notice h3 {
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .notice p {
+      color: #77665b;
+      font-size: 12px;
+    }
+
+    .section-heading {
+      margin-bottom: 24px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(26px, 3vw, 34px);
+      margin-bottom: 7px;
+    }
+
+    .section-heading p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 65px;
+    }
+
+    .step-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 23px 19px;
+      box-shadow: var(--shadow);
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 39px;
+      height: 39px;
+      border-radius: 50%;
+      background: var(--soft);
+      color: var(--wine);
+      font-family: "Playfair Display", serif;
+      font-size: 19px;
+      margin-bottom: 17px;
+    }
+
+    .step-card h3 {
+      font-size: 19px;
+      margin-bottom: 9px;
+    }
+
+    .step-card p {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .policy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 65px;
+    }
+
+    .policy-card {
+      padding: 25px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .policy-card .icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      background: var(--soft);
+      border-radius: 10px;
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .policy-card h3 {
+      font-size: 21px;
+      margin-bottom: 10px;
+    }
+
+    .policy-card p,
+    .policy-card li {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .policy-card ul {
+      padding-left: 18px;
+      margin-top: 10px;
+    }
+
+    .policy-card li {
+      margin: 7px 0;
+      padding-left: 3px;
+    }
+
+    .policy-card li::marker {
+      color: var(--gold);
+    }
+
+    .policy-card .good {
+      color: var(--green);
+    }
+
+    .policy-card .caution {
+      color: var(--red);
+    }
+
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 35px;
+      align-items: start;
+      margin-bottom: 65px;
+    }
+
+    .faq-intro {
+      padding: 30px;
+      background: var(--wine-dark);
+      color: white;
+      border-radius: 12px;
+    }
+
+    .faq-intro .eyebrow {
+      color: #e3c291;
+    }
+
+    .faq-intro h2 {
+      font-size: 30px;
+      line-height: 1.3;
+      margin-bottom: 13px;
+    }
+
+    .faq-intro p {
+      font-size: 12px;
+      color: #ddc9c6;
+      margin-bottom: 20px;
+    }
+
+    .light-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 16px;
+      background: #fffaf5;
+      color: var(--wine);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .faq-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding: 17px 18px;
+      border: none;
+      background: white;
+      text-align: left;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .faq-question:hover {
+      color: var(--wine);
+    }
+
+    .faq-question .plus {
+      color: var(--wine);
+      font-size: 19px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .faq-item.open .plus {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 18px 18px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .contact-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      padding: 35px;
+      background: #f5e9de;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+    }
+
+    .contact-card h2 {
+      font-size: 28px;
+      margin-bottom: 7px;
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 570px;
+    }
+
+    .primary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 19px;
+      border: 1px solid var(--wine);
+      border-radius: 6px;
+      background: var(--wine);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .primary-btn:hover {
+      background: var(--wine-dark);
+    }
+
+    .footer {
+      background: #351b22;
+      color: #f9eee7;
+      padding: 45px 7% 20px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto 32px;
+    }
+
+    .footer .logo {
+      display: inline-block;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer p {
+      max-width: 280px;
+      color: #cbb8b2;
+      font-size: 12px;
+    }
+
+    .footer h4 {
+      color: #e3c291;
+      font-size: 13px;
+      margin-bottom: 13px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links a {
+      width: fit-content;
+      color: #d8c8c2;
+      font-size: 11px;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 17px;
+      border-top: 1px solid #65454b;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: #cbb8b2;
+      font-size: 11px;
+    }
+
+    .back-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      display: none;
+      width: 42px;
+      height: 42px;
+      background: var(--wine);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 5px 20px #702d3d40;
+      z-index: 10;
+      font-size: 18px;
+    }
+
+    .back-top.visible {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .navbar {
+        padding: 14px 5%;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 20px 6%;
+        background: var(--cream);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .faq-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        padding: 48px 18px;
+      }
+
+      .page-wrap {
+        width: 92%;
+        margin-top: 32px;
+      }
+
+      .steps-grid,
+      .policy-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-card {
+        padding: 25px 20px;
+      }
+
+      .contact-card h2 {
+        font-size: 24px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px 18px;
+      }
+
+      .footer-grid > div:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .footer {
+        padding: 38px 6% 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    THOUGHTFUL GIFTS, MADE PERSONAL — MAKE EVERY MOMENT COUNT
+  </div>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">MakeIt<span>Mine.</span></a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop All</a>
+      <a href="categories.html">Categories</a>
+      <a href="customize.html">Customize</a>
+      <a href="about.html">Our Story</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="wishlist.html" aria-label="Wishlist" title="Wishlist">♡</a>
+      <a href="cart.html" aria-label="Cart" title="Cart">🛍</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> &nbsp; / &nbsp; Refund & Returns
+    </div>
+
+    <div class="eyebrow">Your peace of mind matters</div>
+    <h1>Refunds & <span>Returns</span></h1>
+    <p>
+      We want every gift to make someone smile. Find out what to do if your
+      order arrives damaged, isn't what you expected, or needs attention.
+    </p>
+  </section>
+
+  <main class="page-wrap">
+
+    <div class="notice">
+      <div class="notice-icon">i</div>
+      <div>
+        <h3>Please read before placing an order</h3>
+        <p>
+          This is a starter policy template for MakeItMine. The actual return
+          window, eligibility rules, refund timelines and business contact
+          details must be confirmed and published before launch. Nothing here
+          removes any consumer rights that apply under law.
+        </p>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-heading">
+        <div class="eyebrow">Simple and transparent</div>
+        <h2>How the return process works</h2>
+        <p>Follow these steps if your order has an issue.</p>
+      </div>
+
+      <div class="steps-grid">
+        <article class="step-card">
+          <div class="step-number">01</div>
+          <h3>Contact Us</h3>
+          <p>
+            Visit our contact page with your order number and a clear
+            explanation of the issue.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">02</div>
+          <h3>Share Details</h3>
+          <p>
+            If the item is damaged or incorrect, include clear photos of
+            the product and packaging where possible.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">03</div>
+          <h3>Review</h3>
+          <p>
+            Our team can review the information and explain the available
+            options under the applicable policy.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">04</div>
+          <h3>Resolution</h3>
+          <p>
+            Depending on eligibility, the resolution may include a return,
+            replacement or refund.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <div class="eyebrow">Know your options</div>
+        <h2>Our policy guidelines</h2>
+        <p>Important things to know about different order situations.</p>
+      </div>
+
+      <div class="policy-grid">
+        <article class="policy-card">
+          <div class="icon">📦</div>
+          <h3>Damaged or Incorrect Items</h3>
+          <p>
+            If your order arrives damaged, defective or different from what
+            you ordered, contact us as soon as reasonably possible.
+          </p>
+          <ul>
+            <li>Keep the product and its packaging until the issue is reviewed.</li>
+            <li>Share your order number and photographs, if available.</li>
+            <li>Our team will explain the next steps and any applicable remedy.</li>
+          </ul>
+        </article>
+
+        <article class="policy-card">
+          <div class="icon">🎨</div>
+          <h3>Personalized Gifts</h3>
+          <p>
+            Personalized products are created using details supplied by the
+            customer, such as names, photos, dates and custom messages.
+          </p>
+          <ul>
+            <li>Review your spelling, names and custom instructions before ordering.</li>
+            <li>Returns for change of mind may be restricted for personalized products.</li>
+            <li>Errors, defects or other issues will be reviewed under the applicable policy and law.</li>
+          </ul>
+        </article>
+
+        <article class="policy-card">
+          <div class="icon">↩️</div>
+          <h3>Order Cancellation</h3>
+          <p>
+            Contact us promptly if you need to cancel an order. Whether
+            cancellation is possible can depend on its preparation or dispatch status.
+          </p>
+          <ul>
+            <li>Customized orders may enter production soon after confirmation.</li>
+            <li>Cancellation requests are not guaranteed once an order is being prepared or shipped.</li>
+            <li>If a cancellation and refund are approved, the applicable process will be communicated.</li>
+          </ul>
+        </article>
+
+        <article class="policy-card">
+          <div class="icon">💳</div>
+          <h3>Refund Processing</h3>
+          <p>
+            Where a refund is approved, the processing method and timing depend
+            on the payment method, payment provider and applicable requirements.
+          </p>
+          <ul>
+            <li>Refunds for online payments may be sent back through the original payment method where supported.</li>
+            <li>For Cash on Delivery, an appropriate refund method may need to be arranged.</li>
+            <li>We will communicate any additional information needed to process the refund.</li>
+          </ul>
+        </article>
+
+        <article class="policy-card">
+          <div class="icon">🚚</div>
+          <h3>Shipping & Return Delivery</h3>
+          <p>
+            If a return is authorized, we will explain the return procedure,
+            packaging requirements and applicable shipping arrangements.
+          </p>
+          <ul>
+            <li>Do not ship a product back before receiving return instructions.</li>
+            <li>Keep any return shipment receipt or tracking details.</li>
+            <li>Responsibility for return shipping costs must be confirmed under the applicable policy and law.</li>
+          </ul>
+        </article>
+
+        <article class="policy-card">
+          <div class="icon">🧾</div>
+          <h3>Order Information</h3>
+          <p>
+            Having your order details ready helps us investigate issues efficiently.
+          </p>
+          <ul>
+            <li>Order number and purchase date.</li>
+            <li>Product name and a description of the issue.</li>
+            <li>Photographs or other supporting information, if relevant.</li>
+            <li>A preferred way for our team to contact you.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="faq-layout">
+      <div class="faq-intro">
+        <div class="eyebrow">Need a quick answer?</div>
+        <h2>Frequently asked questions</h2>
+        <p>
+          Find helpful information about cancellations, damaged gifts
+          and refund requests.
+        </p>
+        <a href="contact.html" class="light-btn">Contact Our Team →</a>
+      </div>
+
+      <div class="faq-list">
+        <article class="faq-item open">
+          <button class="faq-question" aria-expanded="true">
+            What should I do if my order arrives damaged?
+            <span class="plus">+</span>
+          </button>
+          <div class="faq-answer">
+            Contact us through the contact page with your order number and
+            photographs of the damaged item and packaging, if possible.
+            Our team will review the issue and explain the available options.
+          </div>
+        </article>
+
+        <article class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Can I return a personalized gift?
+            <span class="plus">+</span>
+          </button>
+          <div class="faq-answer">
+            Personalized products may have special restrictions because they
+            are made to your instructions. However, defects, incorrect items
+            and mandatory consumer rights must be handled in accordance with
+            the applicable policy and law. Contact us for a review.
+          </div>
+        </article>
+
+        <article class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Can I cancel my order after placing it?
+            <span class="plus">+</span>
+          </button>
+          <div class="faq-answer">
+            Contact us as soon as possible. We will check whether the order
+            can still be cancelled based on its preparation and dispatch status.
+            A cancellation cannot be guaranteed once processing has progressed.
+          </div>
+        </article>
+
+        <article class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            How long does a refund take?
+            <span class="plus">+</span>
+          </button>
+          <div class="faq-answer">
+            The time depends on the payment provider and the refund method.
+            Once a refund is approved, we should communicate the applicable
+            process and expected timeline. The final policy should state
+            the actual timelines supported by your payment arrangements.
+          </div>
+        </article>
+
+        <article class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            What if I received the wrong product?
+            <span class="plus">+</span>
+          </button>
+          <div class="faq-answer">
+            Please contact us with your order number and photos showing the
+            product received. Our team can compare the details with the order
+            and advise on an appropriate resolution.
+          </div>
+        </article>
+
+        <article class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Where can I check my order status?
+            <span class="plus">+</span>
+          </button>
+          <div class="faq-answer">
+            Visit the <a href="order-history.html" style="color:var(--wine);font-weight:700;">My Orders</a>
+            page or <a href="order-tracking.html" style="color:var(--wine);font-weight:700;">Track Order</a>
+            page. The information shown depends on the order data and tracking
+            features currently connected to your website.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact-card">
+      <div>
+        <div class="eyebrow">We're here to help</div>
+        <h2>Let's make things right.</h2>
+        <p>
+          Have an issue with your gift or need help understanding your options?
+          Reach out to our team and include your order number so we can help
+          you more efficiently.
+        </p>
+      </div>
+
+      <a href="contact.html" class="primary-btn">Get in Touch →</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="logo">MakeIt<span>Mine.</span></a>
+        <p>
+          Thoughtful gifts, made personal. Celebrate your favourite people
+          with something uniquely theirs.
+        </p>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <div class="footer-links">
+          <a href="shop.html">Shop All</a>
+          <a href="categories.html">Categories</a>
+          <a href="customize.html">Create Your Gift</a>
+          <a href="about.html">Our Story</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Customer Care</h4>
+        <div class="footer-links">
+          <a href="contact.html">Contact Us</a>
+          <a href="faq.html">FAQs</a>
+          <a href="order-tracking.html">Track Order</a>
+          <a href="order-history.html">My Orders</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms & Conditions</a>
+          <a href="refund-return.html" aria-current="page">Refund & Returns</a>
+          <a href="profile.html">My Account</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> MakeItMine. All rights reserved.</span>
+      <span>Made with care, for the people you love ♡</span>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop" aria-label="Back to top" title="Back to top">↑</button>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.textContent = open ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    // FAQ accordion
+    document.querySelectorAll(".faq-question").forEach(button => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const willOpen = !item.classList.contains("open");
+
+        item.classList.toggle("open", willOpen);
+        button.setAttribute("aria-expanded", String(willOpen));
+      });
+    });
+
+    // Back to top
+    const backTop = document.getElementById("backTop");
+
+    window.addEventListener("scroll", () => {
+      backTop.classList.toggle("visible", window.scrollY > 450);
+    });
+
+    backTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+ <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#faf7f2">
+
+    <title>Our Story | MakeItMine</title>
+
+    <meta name="description"
+        content="Discover the story behind MakeItMine, where thoughtful gifting meets personal expression.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+     <link rel="stylesheet" href="style.css">
+
+    <style>
+        
+
+        :root {
+            --cream: #faf7f2;
+            --white: #ffffff;
+            --burgundy: #742d3d;
+            --burgundy-dark: #51202c;
+            --rose: #ead8d5;
+            --gold: #b78a51;
+            --text: #302722;
+            --muted: #81766e;
+            --border: #e9e0d7;
+            --serif: "Playfair Display", Georgia, serif;
+            --sans: "DM Sans", Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            width: min(1180px, 90%);
+            margin: 0 auto;
+        }
+
+        .section-label {
+            color: var(--burgundy);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-family: var(--serif);
+            font-size: clamp(32px, 4vw, 49px);
+            line-height: 1.2;
+            font-weight: 500;
+            letter-spacing: -1px;
+        }
+
+        .section-description {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--burgundy);
+            color: white;
+            padding: 15px 27px;
+            border: 1px solid var(--burgundy);
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+
+        .primary-btn:hover {
+            background: var(--burgundy-dark);
+            border-color: var(--burgundy-dark);
+            transform: translateY(-2px);
+        }
+
+        .text-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--burgundy);
+            font-size: 13px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--burgundy);
+            padding-bottom: 5px;
+            transition: 0.3s;
+        }
+
+        .text-link:hover {
+            gap: 15px;
+        }
+
+        /* ==============================
+           ANNOUNCEMENT BAR
+        ============================== */
+
+        .announcement {
+            background: var(--burgundy-dark);
+            color: #fff8f0;
+            text-align: center;
+            padding: 9px 15px;
+            font-size: 11px;
+            letter-spacing: 1.1px;
+        }
+
+        .announcement span {
+            color: #e5c69b;
+        }
+
+        /* ==============================
+           NAVIGATION
+        ============================== */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(250, 247, 242, 0.96);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            min-height: 83px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .logo {
+            display: inline-flex;
+            flex-direction: column;
+            line-height: 1.1;
+            flex-shrink: 0;
+        }
+
+        .logo-main {
+            font-family: var(--serif);
+            font-size: 29px;
+            font-weight: 600;
+            color: var(--burgundy);
+            letter-spacing: -1px;
+        }
+
+        .logo-sub {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 29px;
+        }
+
+        .nav-links a {
+            position: relative;
+            color: #51443d;
+            font-size: 12px;
+            font-weight: 600;
+            transition: color 0.25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--burgundy);
+        }
+
+        .nav-links a.active::after {
+            content: "";
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            bottom: -9px;
+            left: 0;
+            background: var(--burgundy);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+
+        .nav-icon {
+            position: relative;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .counter {
+            position: absolute;
+            top: -9px;
+            right: -10px;
+            min-width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--burgundy);
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--burgundy);
+            font-size: 27px;
+            cursor: pointer;
+        }
+
+        /* ==============================
+           PAGE HERO
+        ============================== */
+
+        .about-hero {
+            position: relative;
+            overflow: hidden;
+            background: #eee2d7;
+            min-height: 470px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 48%;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(38, 24, 21, 0.78) 0%,
+                rgba(38, 24, 21, 0.53) 44%,
+                rgba(38, 24, 21, 0.06) 100%
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 660px;
+            padding: 85px 0;
+            color: white;
+        }
+
+        .hero-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #f0d5b6;
+        }
+
+        .hero-eyebrow::before {
+            content: "";
+            width: 35px;
+            height: 1px;
+            background: #d7b27f;
+        }
+
+        .hero-content h1 {
+            font-family: var(--serif);
+            font-size: clamp(43px, 6.2vw, 76px);
+            line-height: 1.1;
+            font-weight: 500;
+            letter-spacing: -1.7px;
+            margin-bottom: 23px;
+        }
+
+        .hero-content h1 em {
+            color: #e9c99f;
+            font-weight: 400;
+        }
+
+        .hero-content p {
+            max-width: 465px;
+            color: rgba(255, 255, 255, 0.87);
+            font-size: 15px;
+            line-height: 1.9;
+            margin-bottom: 32px;
+        }
+
+        .hero-content .primary-btn {
+            background: #fffaf4;
+            border-color: #fffaf4;
+            color: var(--burgundy);
+        }
+
+        .hero-content .primary-btn:hover {
+            background: #ead8d5;
+            border-color: #ead8d5;
+        }
+
+        /* ==============================
+           INTRO SECTION
+        ============================== */
+
+        .intro-section {
+            padding: 110px 0;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 85px;
+        }
+
+        .intro-copy {
+            padding: 15px 0;
+        }
+
+        .intro-copy .section-title {
+            margin-bottom: 25px;
+        }
+
+        .intro-copy p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 2;
+            margin-bottom: 17px;
+        }
+
+        .intro-copy .text-link {
+            margin-top: 16px;
+        }
+
+        .intro-visual {
+            position: relative;
+            padding: 0 0 35px 35px;
+        }
+
+        .intro-visual::before {
+            content: "";
+            position: absolute;
+            width: 75%;
+            height: 78%;
+            right: 0;
+            top: -22px;
+            border: 1px solid #d9c5b5;
+            z-index: 0;
+        }
+
+        .intro-visual img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .image-note {
+            position: absolute;
+            z-index: 2;
+            left: 0;
+            bottom: 0;
+            background: var(--burgundy);
+            color: white;
+            padding: 21px 25px;
+            max-width: 240px;
+            box-shadow: 0 10px 35px rgba(50, 20, 25, 0.12);
+        }
+
+        .image-note strong {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 500;
+            display: block;
+            line-height: 1.35;
+        }
+
+        .image-note span {
+            display: block;
+            margin-top: 7px;
+            font-size: 10px;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #e9c99f;
+        }
+
+        /* ==============================
+           BRAND VALUES
+        ============================== */
+
+        .values-section {
+            background: #f0e8df;
+            padding: 100px 0;
+        }
+
+        .section-heading-center {
+            text-align: center;
+            max-width: 660px;
+            margin: 0 auto 58px;
+        }
+
+        .section-heading-center .section-description {
+            margin-top: 17px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.72);
+            padding: 38px 30px 35px;
+            border: 1px solid rgba(183, 138, 81, 0.13);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 18px 40px rgba(65, 39, 29, 0.07);
+        }
+
+        .value-icon {
+            width: 57px;
+            height: 57px;
+            display: grid;
+            place-items: center;
+            background: #f1e4df;
+            color: var(--burgundy);
+            font-size: 25px;
+            border-radius: 50%;
+            margin-bottom: 26px;
+        }
+
+        .value-card h3 {
+            font-family: var(--serif);
+            font-size: 23px;
+            font-weight: 500;
+            margin-bottom: 13px;
+        }
+
+        .value-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        /* ==============================
+           QUOTE / BRAND PROMISE
+        ============================== */
+
+        .quote-section {
+            padding: 105px 0;
+            text-align: center;
+            background: #fffdf9;
+        }
+
+        .quote-mark {
+            color: var(--gold);
+            font-family: var(--serif);
+            font-size: 76px;
+            line-height: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .quote-text {
+            max-width: 800px;
+            margin: 0 auto 26px;
+            font-family: var(--serif);
+            font-size: clamp(27px, 4vw, 43px);
+            line-height: 1.45;
+            font-weight: 400;
+            color: #47332c;
+        }
+
+        .quote-text em {
+            color: var(--burgundy);
+        }
+
+        .quote-author {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        /* ==============================
+           BRAND STATS
+        ============================== */
+
+        .stats-section {
+            background: var(--burgundy);
+            color: white;
+            padding: 65px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 15px 10px;
+            border-right: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-family: var(--serif);
+            font-size: 43px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            color: #f1d4ad;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.7px;
+            color: rgba(255, 255, 255, 0.83);
+        }
+
+        /* ==============================
+           CTA SECTION
+        ============================== */
+
+        .cta-section {
+            padding: 105px 0;
+        }
+
+        .cta-card {
+            position: relative;
+            overflow: hidden;
+            background: #eadbd1;
+            padding: 72px 30px;
+            text-align: center;
+        }
+
+        .cta-card::before,
+        .cta-card::after {
+            content: "✦";
+            position: absolute;
+            color: rgba(116, 45, 61, 0.15);
+            font-size: 120px;
+            font-family: var(--serif);
+            line-height: 1;
+        }
+
+        .cta-card::before {
+            top: 10px;
+            left: 6%;
+        }
+
+        .cta-card::after {
+            bottom: 0;
+            right: 6%;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-family: var(--serif);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 500;
+            line-height: 1.25;
+            margin-bottom: 17px;
+        }
+
+        .cta-content p {
+            max-width: 480px;
+            margin: 0 auto 29px;
+            color: #75665e;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        .footer {
+            background: #2d2220;
+            color: #f7eee6;
+            padding: 75px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+            gap: 45px;
+            padding-bottom: 55px;
+        }
+
+        .footer-logo {
+            font-family: var(--serif);
+            font-size: 31px;
+            font-weight: 500;
+            color: #f1d4ad;
+            margin-bottom: 17px;
+        }
+
+        .footer-about {
+            color: #c2b4ac;
+            font-size: 12px;
+            line-height: 2;
+            max-width: 270px;
+        }
+
+        .footer-heading {
+            color: #f1d4ad;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 22px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #c2b4ac;
+            font-size: 12px;
+            transition: color 0.25s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .newsletter-text {
+            color: #c2b4ac;
+            font-size: 12px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            border-bottom: 1px solid #77645c;
+            gap: 8px;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            min-width: 0;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 12px 0;
+            font-size: 12px;
+        }
+
+        .newsletter-form input::placeholder {
+            color: #a99990;
+        }
+
+        .newsletter-form button {
+            border: none;
+            background: transparent;
+            color: #f1d4ad;
+            font-size: 20px;
+            padding: 0 5px;
+            cursor: pointer;
+        }
+
+        .newsletter-message {
+            font-size: 11px;
+            color: #f1d4ad;
+            margin-top: 12px;
+            min-height: 17px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 22px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            color: #a99990;
+            font-size: 10px;
+        }
+
+        .footer-bottom a {
+            color: #c2b4ac;
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        /* ==============================
+           SCROLL ANIMATIONS
+        ============================== */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==============================
+           RESPONSIVE DESIGN
+        ============================== */
+
+        @media (max-width: 1000px) {
+            .nav-links {
+                gap: 17px;
+            }
+
+            .intro-grid {
+                gap: 45px;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .announcement {
+                font-size: 9px;
+                letter-spacing: 0.5px;
+            }
+
+            .nav-inner {
+                min-height: 72px;
+            }
+
+            .logo-main {
+                font-size: 26px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--cream);
+                padding: 18px 5% 25px;
+                border-bottom: 1px solid var(--border);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                box-shadow: 0 15px 25px rgba(40, 20, 15, 0.06);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                width: 100%;
+                padding: 13px 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links a.active::after {
+                display: none;
+            }
+
+            .nav-actions {
+                gap: 15px;
+            }
+
+            .about-hero {
+                min-height: 490px;
+            }
+
+            .hero-overlay {
+                background: linear-gradient(
+                    90deg,
+                    rgba(38, 24, 21, 0.82),
+                    rgba(38, 24, 21, 0.38)
+                );
+            }
+
+            .hero-content {
+                padding: 75px 0;
+            }
+
+            .hero-content p {
+                font-size: 14px;
+            }
+
+            .intro-section,
+            .values-section,
+            .quote-section,
+            .cta-section {
+                padding: 75px 0;
+            }
+
+            .intro-grid {
+                grid-template-columns: 1fr;
+                gap: 45px;
+            }
+
+            .intro-visual {
+                margin: 0 10px 0 0;
+            }
+
+            .intro-visual img {
+                height: 400px;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .value-card {
+                padding: 30px 25px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                row-gap: 20px;
+            }
+
+            .stat-item:nth-child(2) {
+                border-right: none;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            .cta-card {
+                padding: 65px 23px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 35px 25px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .container {
+                width: 91%;
+            }
+
+            .nav-icon {
+                font-size: 18px;
+            }
+
+            .nav-actions {
+                gap: 13px;
+            }
+
+            .hero-content h1 {
+                font-size: 43px;
+            }
+
+            .intro-visual img {
+                height: 330px;
+            }
+
+            .image-note {
+                max-width: 210px;
+                padding: 17px 19px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom-links {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ANNOUNCEMENT BAR -->
+    <div class="announcement">
+        LITTLE THINGS, LASTING MEMORIES
+        <span> ✦ </span>
+        MADE PERSONAL, MADE WITH LOVE
+    </div>
+
+    <!-- NAVIGATION -->
+    <header class="navbar">
+        <div class="container nav-inner">
+
+            <a href="index.html" class="logo" aria-label="MakeItMine home">
+                <span class="logo-main">MakeItMine</span>
+                <span class="logo-sub">Made Just For You</span>
+            </a>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html" class="active">Our Story</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">
+                    ♡
+                    <span class="counter" id="wishlistCount">0</span>
+                </a>
+
+                <a href="cart.html" class="nav-icon" aria-label="Shopping cart">
+                    ♧
+                    <span class="counter" id="cartCount">0</span>
+                </a>
+
+                <button class="menu-toggle" id="menuToggle"
+                    aria-label="Open navigation menu"
+                    aria-controls="navLinks"
+                    aria-expanded="false">
+                    ☰
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO SECTION -->
+        <section class="about-hero">
+
+            <img class="hero-image"
+                src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=2000&q=85"
+                alt="Beautifully wrapped gifts prepared with care">
+
+            <div class="hero-overlay"></div>
+
+            <div class="container">
+                <div class="hero-content">
+
+                    <div class="hero-eyebrow">The heart behind the brand</div>
+
+                    <h1>
+                        More Than a Gift.<br>
+                        <em>A Little Piece of You.</em>
+                    </h1>
+
+                    <p>
+                        We believe the most meaningful gifts aren't just things
+                        you give. They're feelings you share, memories you create,
+                        and little reminders that someone matters.
+                    </p>
+
+                    <a href="shop.html" class="primary-btn">
+                        Find Your Perfect Gift <span>→</span>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR STORY -->
+        <section class="intro-section">
+            <div class="container intro-grid">
+
+                <div class="intro-copy reveal">
+
+                    <span class="section-label">Our Story</span>
+
+                    <h2 class="section-title">
+                        Every Gift Has a Story.<br>
+                        Let's Make It Yours.
+                    </h2>
+
+                    <p>
+                        At MakeItMine, we see gifting as something deeply
+                        personal. It's the birthday surprise that brings happy
+                        tears, the small gesture that says "I'm thinking of you,"
+                        and the keepsake that takes you back to a beautiful moment.
+                    </p>
+
+                    <p>
+                        That's why we bring together thoughtful gift ideas and
+                        personal touches to help you create something that feels
+                        truly special. Something chosen with care, given with love,
+                        and remembered long after the wrapping comes off.
+                    </p>
+
+                    <p>
+                        Whether you're celebrating a milestone, expressing
+                        gratitude, or simply making an ordinary day extraordinary,
+                        we're here to help you make the moment yours.
+                    </p>
+
+                    <a href="shop.html" class="text-link">
+                        Explore Our Collection <span>→</span>
+                    </a>
+
+                </div>
+
+                <div class="intro-visual reveal">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1000&q=85"
+                        alt="Thoughtfully arranged gift boxes and flowers"
+                        loading="lazy">
+
+                    <div class="image-note">
+                        <strong>Thoughtfully chosen. Beautifully remembered.</strong>
+                        <span>The MakeItMine promise</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- OUR VALUES -->
+        <section class="values-section">
+            <div class="container">
+
+                <div class="section-heading-center reveal">
+                    <span class="section-label">What Makes Us Different</span>
+
+                    <h2 class="section-title">
+                        A Little More Heart<br>in Every Detail
+                    </h2>
+
+                    <p class="section-description">
+                        We want every part of your gifting experience to feel
+                        thoughtful, effortless, and genuinely meaningful.
+                    </p>
+                </div>
+
+                <div class="values-grid">
+
+                    <article class="value-card reveal">
+                        <div class="value-icon" aria-hidden="true">♡</div>
+
+                        <h3>Made Personal</h3>
+
+                        <p>
+                            Your relationships are one of a kind. Your gifts
+                            should feel that way too. Find thoughtful options
+                            that reflect the person and the moment.
+                        </p>
+                    </article>
+
+                    <article class="value-card reveal">
+                        <div class="value-icon" aria-hidden="true">✧</div>
+
+                        <h3>Details Matter</h3>
+
+                        <p>
+                            From choosing the right present to the little
+                            finishing touches, we believe the smallest details
+                            can make a big difference.
+                        </p>
+                    </article>
+
+                    <article class="value-card reveal">
+                        <div class="value-icon" aria-hidden="true">♧</div>
+
+                        <h3>Made to Be Remembered</h3>
+
+                        <p>
+                            Trends come and go, but meaningful moments stay.
+                            Our goal is to help you give something that brings
+                            a smile even after the occasion has passed.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- BRAND QUOTE -->
+        <section class="quote-section">
+            <div class="container reveal">
+
+                <div class="quote-mark" aria-hidden="true">“</div>
+
+                <p class="quote-text">
+                    The best gifts don't need to be the biggest.
+                    They just need to say,
+                    <em>"I know you. I thought of you. This is for you."</em>
+                </p>
+
+                <div class="quote-author">
+                    The feeling behind MakeItMine
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BRAND STATS -->
+        <section class="stats-section">
+            <div class="container stats-grid">
+
+                <div class="stat-item reveal">
+                    <div class="stat-number">01</div>
+                    <div class="stat-label">A Personal Touch</div>
+                </div>
+
+                <div class="stat-item reveal">
+                    <div class="stat-number">♡</div>
+                    <div class="stat-label">Thoughtful Gifting</div>
+                </div>
+
+                <div class="stat-item reveal">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Memories to Make</div>
+                </div>
+
+                <div class="stat-item reveal">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Heart in Every Detail</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CALL TO ACTION -->
+        <section class="cta-section">
+            <div class="container">
+
+                <div class="cta-card reveal">
+                    <div class="cta-content">
+
+                        <span class="section-label">Your Next Special Moment</span>
+
+                        <h2>Someone Deserves<br>Something Special.</h2>
+
+                        <p>
+                            Find a little something for someone who means a lot.
+                            Your next favourite gift might be just around the corner.
+                        </p>
+
+                        <a href="shop.html" class="primary-btn">
+                            Explore the Collection <span>→</span>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div>
+                    <a href="index.html" class="footer-logo">MakeItMine.</a>
+
+                    <p class="footer-about">
+                        Thoughtful gifts for the people who make life special.
+                        Because the best presents feel personal.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="footer-heading">Explore</h3>
+
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop All Gifts</a></li>
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="wishlist.html">Your Wishlist</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="footer-heading">Need Help?</h3>
+
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="shipping.html">Shipping Information</a></li>
+                        <li><a href="returns.html">Returns & Exchanges</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="footer-heading">A Little Love in Your Inbox</h3>
+
+                    <p class="newsletter-text">
+                        Get gifting inspiration, new arrivals, and thoughtful
+                        ideas delivered to your inbox.
+                    </p>
+
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input
+                            type="email"
+                            id="newsletterEmail"
+                            placeholder="Your email address"
+                            aria-label="Your email address"
+                            required>
+
+                        <button type="submit" aria-label="Subscribe">→</button>
+                    </form>
+
+                    <p class="newsletter-message" id="newsletterMessage"
+                        aria-live="polite"></p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>
+                    © <span id="currentYear"></span> MakeItMine.
+                    Made with love.
+                </p>
+
+                <div class="footer-bottom-links">
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                    <a href="contact.html">Support</a>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- INTERNAL JAVASCRIPT -->
+    <script>
+        /* ==============================
+           MOBILE NAVIGATION
+        ============================== */
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navLinks.classList.toggle("open");
+
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation menu" : "Open navigation menu"
+            );
+
+            menuToggle.textContent = isOpen ? "✕" : "☰";
+        });
+
+        navLinks.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation menu");
+                menuToggle.textContent = "☰";
+            });
+        });
+
+        /* ==============================
+           SHARED CART AND WISHLIST COUNTS
+           Uses the same keys as the other pages.
+        ============================== */
+
+        function readStoredItems(key) {
+            try {
+                const value = JSON.parse(localStorage.getItem(key) || "[]");
+                return Array.isArray(value) ? value : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function updateHeaderCounts() {
+            const cart = readStoredItems("mim_cart");
+            const wishlist = readStoredItems("mim_wishlist");
+
+            document.getElementById("cartCount").textContent =
+                cart.reduce(function (total, item) {
+                    return total + (Number(item.quantity) || 1);
+                }, 0);
+
+            document.getElementById("wishlistCount").textContent =
+                wishlist.length;
+        }
+
+        updateHeaderCounts();
+
+        window.addEventListener("storage", function (event) {
+            if (
+                event.key === "mim_cart" ||
+                event.key === "mim_wishlist"
+            ) {
+                updateHeaderCounts();
+            }
+        });
+
+        /* ==============================
+           FOOTER YEAR
+        ============================== */
+
+        document.getElementById("currentYear").textContent =
+            new Date().getFullYear();
+
+        /* ==============================
+           SCROLL REVEAL ANIMATIONS
+        ============================== */
+
+        const revealElements = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+            const revealObserver = new IntersectionObserver(
+                function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+            revealElements.forEach(function (element) {
+                revealObserver.observe(element);
+            });
+        } else {
+            revealElements.forEach(function (element) {
+                element.classList.add("visible");
+            });
+        }
+
+        /* ==============================
+           NEWSLETTER FORM
+        ============================== */
+
+        const newsletterForm = document.getElementById("newsletterForm");
+        const newsletterEmail = document.getElementById("newsletterEmail");
+        const newsletterMessage =
+            document.getElementById("newsletterMessage");
+
+        newsletterForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (!newsletterEmail.checkValidity()) {
+                newsletterEmail.reportValidity();
+                return;
+            }
+
+            
+
+            newsletterMessage.textContent =
+                "Thank you! Newsletter signup needs a backend connection.";
+
+            newsletterForm.reset();
+        });
+    </script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

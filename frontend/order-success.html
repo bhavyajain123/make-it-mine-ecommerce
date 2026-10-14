@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf6f0">
+  <title>Order Confirmed | MakeItMine</title>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #faf6f0;
+      --cream-dark: #f2e9dd;
+      --wine: #702b3b;
+      --wine-dark: #4d1b29;
+      --gold: #c5a15b;
+      --gold-light: #ead8aa;
+      --text: #302522;
+      --muted: #857872;
+      --white: #fffdf9;
+      --border: #e9dfd3;
+      --green: #47785a;
+      --shadow: 0 15px 45px rgba(77, 27, 41, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .announcement {
+      background: var(--wine-dark);
+      color: #fff5e9;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .announcement span {
+      color: var(--gold-light);
+    }
+
+    header {
+      background: rgba(250, 246, 240, 0.96);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+    }
+
+    .navbar {
+      max-width: 1240px;
+      margin: auto;
+      min-height: 83px;
+      padding: 15px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      color: var(--wine);
+      font-size: 29px;
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .logo small {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 3px;
+      font-weight: 500;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: -2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #62534d;
+    }
+
+    .nav-links a:hover {
+      color: var(--wine);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+    }
+
+    .nav-actions a {
+      white-space: nowrap;
+    }
+
+    .cart-link {
+      background: var(--wine);
+      color: white;
+      padding: 11px 17px;
+      border-radius: 3px;
+    }
+
+    main {
+      padding: 52px 20px 80px;
+    }
+
+    .success-wrapper {
+      max-width: 940px;
+      margin: 0 auto;
+    }
+
+    .success-hero {
+      text-align: center;
+      padding: 18px 15px 42px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .success-icon {
+      width: 94px;
+      height: 94px;
+      margin: 0 auto 25px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #edf3e9;
+      border: 1px solid #d9e5d2;
+    }
+
+    .success-icon::before,
+    .success-icon::after {
+      content: "";
+      position: absolute;
+      inset: -9px;
+      border: 1px solid rgba(197, 161, 91, 0.4);
+      border-radius: 50%;
+      animation: pulse 2.4s ease-out infinite;
+    }
+
+    .success-icon::after {
+      animation-delay: 0.8s;
+    }
+
+    .checkmark {
+      width: 34px;
+      height: 19px;
+      border-left: 4px solid var(--green);
+      border-bottom: 4px solid var(--green);
+      transform: rotate(-45deg) scale(0);
+      margin-top: -7px;
+      animation: checkIn 0.5s 0.25s ease forwards;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 13px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--wine-dark);
+      font-size: clamp(34px, 5vw, 53px);
+      line-height: 1.15;
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+
+    .success-hero p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      max-width: 510px;
+      margin: 0 auto;
+    }
+
+    .success-hero p strong {
+      color: var(--wine);
+      font-weight: 700;
+    }
+
+    .order-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+
+    .order-card-top {
+      background: #f6efe5;
+      padding: 24px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .order-label {
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: 1.7px;
+      margin-bottom: 7px;
+    }
+
+    .order-number {
+      color: var(--wine-dark);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #e9f1e5;
+      color: #3d6a4a;
+      border-radius: 30px;
+      padding: 9px 13px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #5e9669;
+    }
+
+    .order-content {
+      padding: 30px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      color: var(--wine-dark);
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 22px;
+    }
+
+    .items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee7de;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .item-image {
+      width: 76px;
+      height: 76px;
+      flex-shrink: 0;
+      background: #f3e9dd;
+      border-radius: 4px;
+      display: grid;
+      place-items: center;
+      font-size: 32px;
+    }
+
+    .item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      overflow-wrap: anywhere;
+    }
+
+    .item-meta {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .item-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--wine);
+      white-space: nowrap;
+    }
+
+    .empty-items {
+      padding: 24px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .order-summary {
+      border-top: 1px solid var(--border);
+      margin-top: 29px;
+      padding-top: 24px;
+      max-width: 380px;
+      margin-left: auto;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 13px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .summary-row strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .summary-row.total {
+      border-top: 1px solid var(--border);
+      padding-top: 17px;
+      margin-top: 17px;
+      margin-bottom: 0;
+      font-size: 16px;
+      color: var(--wine-dark);
+      font-weight: 700;
+    }
+
+    .summary-row.total strong {
+      color: var(--wine);
+      font-size: 20px;
+    }
+
+    .delivery-panel {
+      margin-top: 22px;
+      padding: 25px 30px;
+      background: #fffaf2;
+      border: 1px solid #ecdfc8;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .delivery-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      background: #f0e3cb;
+      font-size: 24px;
+    }
+
+    .delivery-info {
+      flex: 1;
+    }
+
+    .delivery-info .small {
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .delivery-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--wine-dark);
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .delivery-info p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      padding: 31px 10px 12px;
+      margin-top: 15px;
+    }
+
+    .timeline-step {
+      position: relative;
+      text-align: center;
+      padding-top: 24px;
+    }
+
+    .timeline-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: calc(50% + 18px);
+      width: calc(100% - 22px);
+      height: 1px;
+      background: #dfd2bf;
+    }
+
+    .step-dot {
+      position: absolute;
+      top: 0;
+      left: calc(50% - 5px);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--cream);
+      box-shadow: 0 0 0 1px var(--gold);
+    }
+
+    .timeline-step h4 {
+      font-size: 11px;
+      color: var(--wine-dark);
+      margin-bottom: 6px;
+    }
+
+    .timeline-step p {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 13px;
+      flex-wrap: wrap;
+      margin-top: 33px;
+    }
+
+    .btn {
+      min-height: 48px;
+      padding: 0 25px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      transition: all 0.25s ease;
+      border: 1px solid var(--wine);
+    }
+
+    .btn-primary {
+      background: var(--wine);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--wine-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(77, 27, 41, 0.15);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--wine);
+    }
+
+    .btn-secondary:hover {
+      background: #f2e8df;
+    }
+
+    .help-note {
+      margin-top: 31px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .help-note a {
+      color: var(--wine);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      margin-top: 38px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #7b6c63;
+      font-size: 10px;
+    }
+
+    .trust-item span {
+      font-size: 16px;
+    }
+
+    footer {
+      background: var(--wine-dark);
+      color: #eaded4;
+      padding: 35px 20px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 24px;
+      margin-bottom: 9px;
+    }
+
+    .footer-logo span {
+      color: var(--gold-light);
+    }
+
+    footer p {
+      font-size: 10px;
+      color: #c8b7ae;
+      line-height: 1.8;
+    }
+
+    .confetti {
+      position: fixed;
+      top: -15px;
+      z-index: 100;
+      pointer-events: none;
+      width: 7px;
+      height: 12px;
+      animation: fall 3.5s linear forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes checkIn {
+      to {
+        transform: rotate(-45deg) scale(1);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.94);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1.35);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(650deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 850px) {
+      .nav-links {
+        gap: 14px;
+      }
+
+      .nav-links a:nth-child(2),
+      .nav-links a:nth-child(3) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .announcement {
+        font-size: 9px;
+        letter-spacing: 1px;
+      }
+
+      .navbar {
+        min-height: 70px;
+        padding: 12px 16px;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-actions {
+        gap: 10px;
+        font-size: 11px;
+      }
+
+      .cart-link {
+        padding: 10px 12px;
+      }
+
+      main {
+        padding: 35px 13px 55px;
+      }
+
+      .success-hero {
+        padding: 14px 6px 32px;
+      }
+
+      .success-icon {
+        width: 78px;
+        height: 78px;
+      }
+
+      .order-card-top {
+        padding: 21px 18px;
+      }
+
+      .order-content {
+        padding: 23px 17px;
+      }
+
+      .item {
+        gap: 12px;
+      }
+
+      .item-image {
+        width: 59px;
+        height: 59px;
+        font-size: 25px;
+      }
+
+      .item-name {
+        font-size: 12px;
+      }
+
+      .item-price {
+        font-size: 12px;
+      }
+
+      .delivery-panel {
+        padding: 20px 16px;
+        gap: 13px;
+      }
+
+      .delivery-icon {
+        width: 43px;
+        height: 43px;
+        font-size: 20px;
+      }
+
+      .delivery-info h3 {
+        font-size: 17px;
+      }
+
+      .timeline {
+        gap: 8px;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .timeline-step h4 {
+        font-size: 10px;
+      }
+
+      .timeline-step p {
+        font-size: 9px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .actions {
+        gap: 10px;
+      }
+
+      .trust-row {
+        gap: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    A LITTLE LOVE, BEAUTIFULLY WRAPPED <span>✦</span> THANK YOU FOR SHOPPING WITH US
+  </div>
+
+  <header>
+    <nav class="navbar">
+      <a href="home.html" class="logo">
+        MakeIt<span>Mine</span>
+        <small>Made personal. Made with love.</small>
+      </a>
+
+      <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="categories.html">Shop Gifts</a>
+        <a href="customize.html">Customize</a>
+        <a href="about.html">Our Story</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="login.html">My Account</a>
+        <a href="cart.html" class="cart-link">Bag <span id="cartCount">0</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="success-wrapper">
+
+      <section class="success-hero">
+        <div class="success-icon">
+          <div class="checkmark"></div>
+        </div>
+
+        <div class="eyebrow">A Moment Worth Celebrating</div>
+        <h1>Order Confirmed!</h1>
+        <p>
+          Thank you for choosing MakeItMine. Your order is in our hands,
+          and we're getting your special gifts ready with
+          <strong>a little extra love.</strong>
+        </p>
+      </section>
+
+      <section class="order-card">
+        <div class="order-card-top">
+          <div>
+            <div class="order-label">Your order number</div>
+            <div class="order-number" id="orderNumber">MIM-000000</div>
+          </div>
+
+          <div class="status">
+            <span class="status-dot"></span>
+            Order Placed
+          </div>
+        </div>
+
+        <div class="order-content">
+          <h2 class="section-title">A little something for you</h2>
+
+          <div class="items-list" id="orderItems">
+            <div class="empty-items">
+              Your order summary will appear here when order details are available.
+            </div>
+          </div>
+
+          <div class="order-summary">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <strong id="subtotal">₹0</strong>
+            </div>
+
+            <div class="summary-row">
+              <span>Shipping</span>
+              <strong id="shipping">Free</strong>
+            </div>
+
+            <div class="summary-row">
+              <span>Payment method</span>
+              <strong id="paymentMethod">As selected at checkout</strong>
+            </div>
+
+            <div class="summary-row total">
+              <span>Total Paid / Payable</span>
+              <strong id="grandTotal">₹0</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="delivery-panel">
+        <div class="delivery-icon">🎁</div>
+
+        <div class="delivery-info">
+          <div class="small">The countdown to something special</div>
+          <h3 id="deliveryDate">Your gift is on its way!</h3>
+          <p id="deliveryMessage">
+            We'll keep you updated as your order moves through each stage.
+          </p>
+        </div>
+      </section>
+
+      <section class="timeline">
+        <div class="timeline-step">
+          <span class="step-dot"></span>
+          <h4>Order Placed</h4>
+          <p>Your order has been recorded</p>
+        </div>
+
+        <div class="timeline-step">
+          <span class="step-dot"></span>
+          <h4>Being Prepared</h4>
+          <p>We'll carefully prepare your gift</p>
+        </div>
+
+        <div class="timeline-step">
+          <span class="step-dot"></span>
+          <h4>Out for Delivery</h4>
+          <p>A special delivery is coming</p>
+        </div>
+      </section>
+
+      <div class="actions">
+        <a href="home.html" class="btn btn-primary">
+          Continue Shopping <span>→</span>
+        </a>
+
+        <button class="btn btn-secondary" id="trackButton" type="button">
+          View Order Details
+        </button>
+      </div>
+
+      <p class="help-note">
+        Need a hand with your order?
+        <a href="contact.html">We're happy to help.</a>
+        <br>
+        Keep your order number handy when contacting our support team.
+      </p>
+
+      <div class="trust-row">
+        <div class="trust-item"><span>♡</span> Made with love</div>
+        <div class="trust-item"><span>✧</span> Thoughtfully personalized</div>
+        <div class="trust-item"><span>♧</span> Carefully packed</div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-logo">MakeIt<span>Mine</span></div>
+    <p>Every gift tells a story. Thank you for letting us be part of yours.</p>
+    <p style="margin-top: 12px;">© <span id="year"></span> MakeItMine. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const CART_KEY = "mim_cart";
+    const ORDER_KEY = "mim_last_order";
+
+    function readStorage(key, fallback) {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+      } catch (error) {
+        console.warn("Could not read local storage:", key);
+        return fallback;
+      }
+    }
+
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0
+      }).format(Number(amount) || 0);
+    }
+
+    function getProductName(item) {
+      return item.name || item.title || item.productName || "Personalized Gift";
+    }
+
+    function getQuantity(item) {
+      return Math.max(1, Number(item.quantity) || 1);
+    }
+
+    function getUnitPrice(item) {
+      return Number(item.price ?? item.basePrice ?? item.amount ?? 0) || 0;
+    }
+
+    function getItemEmoji(item) {
+      if (item.emoji) return item.emoji;
+
+      const text = (
+        getProductName(item) + " " +
+        (item.type || "") + " " +
+        (item.category || "")
+      ).toLowerCase();
+
+      if (text.includes("mug") || text.includes("cup")) return "☕";
+      if (text.includes("frame") || text.includes("photo")) return "🖼️";
+      if (text.includes("hamper") || text.includes("gift box")) return "🎁";
+      if (text.includes("jewel") || text.includes("necklace")) return "💎";
+      if (text.includes("flower")) return "💐";
+      if (text.includes("candle")) return "🕯️";
+      if (text.includes("teddy")) return "🧸";
+
+      return "🎁";
+    }
+
+    function getPersonalisation(item) {
+      const details = item.personalisation || item.personalization || {};
+      const parts = [];
+
+      if (typeof details === "string") {
+        return details;
+      }
+
+      for (const [key, value] of Object.entries(details)) {
+        if (
+          value !== undefined &&
+          value !== null &&
+          String(value).trim() !== ""
+        ) {
+          const label = key
+            .replace(/([A-Z])/g, " $1")
+            .replace(/[_-]/g, " ")
+            .replace(/^./, char => char.toUpperCase());
+
+          parts.push(label + ": " + String(value));
+        }
+      }
+
+      if (item.variant) parts.push("Variant: " + item.variant);
+      if (item.size) parts.push("Size: " + item.size);
+
+      return parts.join(" · ");
+    }
+
+    function getCartCount(cart) {
+      return cart.reduce((total, item) => total + getQuantity(item), 0);
+    }
+
+    function getOrderNumber(order) {
+      if (order && order.orderNumber) return order.orderNumber;
+      if (order && order.id) return order.id;
+      if (order && order.orderId) return order.orderId;
+
+      // Fallback for frontend demonstrations without a saved order record.
+      const now = new Date();
+      const datePart = [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0")
+      ].join("");
+
+      return "MIM-" + datePart + "-" +
+        Math.random().toString(36).slice(2, 6).toUpperCase();
+    }
+
+    function getExpectedDelivery(order) {
+      if (order && order.estimatedDelivery) {
+        const date = new Date(order.estimatedDelivery);
+
+        if (!Number.isNaN(date.getTime())) {
+          return date.toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+          });
+        }
+      }
+
+      const date = new Date();
+      date.setDate(date.getDate() + 5);
+
+      return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+    }
+
+    function renderOrder() {
+      const cart = readStorage(CART_KEY, []);
+      const savedOrder = readStorage(ORDER_KEY, null);
+
+      const orderItems = savedOrder && Array.isArray(savedOrder.items)
+        ? savedOrder.items
+        : cart;
+
+      const itemsContainer = document.getElementById("orderItems");
+
+      document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+      document.getElementById("cartCount").textContent =
+        getCartCount(cart);
+
+      document.getElementById("orderNumber").textContent =
+        getOrderNumber(savedOrder);
+
+      if (!orderItems.length) {
+        itemsContainer.innerHTML = `
+          <div class="empty-items">
+            Your order confirmation page is ready, but no saved order items
+            were found in this browser. If you arrived here directly, complete
+            checkout first or connect this page to your order backend.
+          </div>
+        `;
+      } else {
+        itemsContainer.innerHTML = orderItems.map(item => {
+          const name = getProductName(item);
+          const quantity = getQuantity(item);
+          const unitPrice = getUnitPrice(item);
+          const lineTotal = Number(item.totalPrice) ||
+            unitPrice * quantity;
+          const emoji = getItemEmoji(item);
+          const personalisation = getPersonalisation(item);
+
+          return `
+            <div class="item">
+              <div class="item-image" aria-hidden="true">${emoji}</div>
+
+              <div class="item-info">
+                <div class="item-name">${escapeHTML(name)}</div>
+                <div class="item-meta">
+                  Quantity: ${quantity}
+                  ${personalisation
+                    ? `<br>${escapeHTML(personalisation)}`
+                    : ""}
+                </div>
+              </div>
+
+              <div class="item-price">${formatCurrency(lineTotal)}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      const calculatedSubtotal = orderItems.reduce((sum, item) => {
+        return sum + (Number(item.totalPrice) ||
+          getUnitPrice(item) * getQuantity(item));
+      }, 0);
+
+      const subtotal = savedOrder && Number.isFinite(Number(savedOrder.subtotal))
+        ? Number(savedOrder.subtotal)
+        : calculatedSubtotal;
+
+      const shipping = savedOrder && Number.isFinite(Number(savedOrder.shipping))
+        ? Number(savedOrder.shipping)
+        : 0;
+
+      const total = savedOrder && Number.isFinite(Number(savedOrder.total))
+        ? Number(savedOrder.total)
+        : subtotal + shipping;
+
+      document.getElementById("subtotal").textContent =
+        formatCurrency(subtotal);
+
+      document.getElementById("shipping").textContent =
+        shipping === 0 ? "Free" : formatCurrency(shipping);
+
+      document.getElementById("grandTotal").textContent =
+        formatCurrency(total);
+
+      const paymentMethod = savedOrder && savedOrder.paymentMethod
+        ? savedOrder.paymentMethod
+        : "As selected at checkout";
+
+      document.getElementById("paymentMethod").textContent =
+        paymentMethod;
+
+      document.getElementById("deliveryDate").textContent =
+        getExpectedDelivery(savedOrder);
+
+      if (savedOrder && savedOrder.customerName) {
+        document.querySelector(".success-hero p").innerHTML =
+          "Thank you, <strong>" +
+          escapeHTML(savedOrder.customerName) +
+          "!</strong> Your order is in our hands, and we're getting your special gifts ready with a little extra love.";
+      }
+
+      if (savedOrder && savedOrder.status) {
+        document.querySelector(".status").innerHTML =
+          '<span class="status-dot"></span>' +
+          escapeHTML(savedOrder.status);
+      }
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+  document.getElementById("trackButton").addEventListener("click", async () => {
+  const token = localStorage.getItem("mim_token");
+
+  if (!token) {
+    alert("Please sign in to view your order details.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  // URL se MongoDB order ID lo
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get("orderId");
+
+  if (!orderId || !/^[a-f\d]{24}$/i.test(orderId)) {
+    alert("Valid order ID nahi mila. Please My Orders se order open karein.");
+    window.location.href = "profile.html";
+    return;
+  }
+
+  const button = document.getElementById("trackButton");
+  button.disabled = true;
+  button.textContent = "Loading...";
+
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/orders/${encodeURIComponent(orderId)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Unable to fetch order details.");
+    }
+
+    const order = result.order;
+
+    if (!order) {
+      throw new Error("Order details were not returned by the server.");
+    }
+
+    // Order details ko page par display karo
+    const details = [
+      `Order Number: ${order.orderNumber || order._id}`,
+      `Status: ${order.status || "Unknown"}`,
+      `Payment Method: ${order.paymentMethod || "N/A"}`,
+      `Payment Status: ${order.paymentStatus || "N/A"}`,
+      "",
+      "Products:",
+      ...(order.items || []).map(item =>
+        `${item.productName || item.product?.name || "Gift"} x ${item.quantity || 1} — ₹${Number(item.lineTotal ?? (item.unitPrice || item.price || 0) * (item.quantity || 1)).toFixed(2)}`
+      ),
+      "",
+      `Subtotal: ₹${Number(order.subtotal || 0).toFixed(2)}`,
+      `Shipping: ₹${Number(order.shippingFee || 0).toFixed(2)}`,
+      `Discount: ₹${Number(order.discount || 0).toFixed(2)}`,
+      `Total: ₹${Number(order.totalAmount || 0).toFixed(2)}`
+    ];
+
+    alert(details.join("\n"));
+
+    console.log("Order details loaded:", order);
+
+  } catch (error) {
+    console.error("Order details error:", error);
+    alert(error.message || "Could not load order details.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "View Order Details";
+  }
+});
+
+    function launchConfetti() {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      const symbols = ["✦", "•", "✧", "◆"];
+      const colors = ["#c5a15b", "#702b3b", "#e4cba1", "#9f6571"];
+
+      for (let i = 0; i < 28; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.color = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.fontSize = (9 + Math.random() * 12) + "px";
+        piece.style.animationDelay = (Math.random() * 1.5) + "s";
+        piece.style.animationDuration = (2.5 + Math.random() * 2) + "s";
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => piece.remove(), 5500);
+      }
+    }
+
+    renderOrder();
+    launchConfetti();
+  </script>
+ <script type="module" src="js/app.js"></script>
+
+  
+<script>
+(async function loadActualOrder() {
+  const orderItems = document.getElementById("orderItems");
+  const orderNumber = document.getElementById("orderNumber");
+  const subtotalElement = document.getElementById("subtotal");
+  const shippingElement = document.getElementById("shipping");
+  const paymentElement = document.getElementById("paymentMethod");
+  const grandTotalElement = document.getElementById("grandTotal");
+
+ const params = new URLSearchParams(window.location.search);
+
+
+
+
+let orderId = params.get("orderId");
+const token = localStorage.getItem("mim_token");
+
+if (!token) {
+  throw new Error("Please log in again to view your order.");
+}
+
+if (!orderId || !/^[a-f\d]{24}$/i.test(orderId)) {
+  
+
+
+  const ordersResponse = await fetch(
+    "http://localhost:5000/api/orders/my",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  const ordersResult = await ordersResponse.json();
+
+  if (!ordersResponse.ok || !ordersResult.orders?.length) {
+    alert("Order nahi mila. Please My Orders check karein.");
+    return;
+  }
+
+  orderId = ordersResult.orders[0]._id;
+}
+
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/orders/${encodeURIComponent(orderId)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Unable to load order.");
+    }
+
+    const order = data.order;
+
+    if (!order) {
+      throw new Error("Order details were not returned by the server.");
+    }
+
+    orderNumber.textContent = order.orderNumber || order._id;
+
+    orderItems.replaceChildren();
+
+    (order.items || []).forEach(item => {
+      const row = document.createElement("div");
+      row.className = "order-item";
+
+      const name = document.createElement("strong");
+      name.textContent = item.productName || "Product";
+
+      const details = document.createElement("p");
+      details.textContent =
+        `Quantity: ${item.quantity} · ${formatPrice(item.unitPrice ?? 0)}`;
+
+      const amount = document.createElement("strong");
+      amount.textContent = formatPrice(item.lineTotal ?? 0);
+
+      row.append(name, details, amount);
+      orderItems.appendChild(row);
+    });
+
+    subtotalElement.textContent = formatPrice(order.subtotal ?? 0);
+    shippingElement.textContent = formatPrice(order.shippingFee ?? 0);
+    paymentElement.textContent =
+      order.paymentMethod === "cod" ? "Cash on Delivery" :
+      order.paymentMethod === "online" ? "Online payment (gateway not connected)" :
+      "Not specified";
+
+    grandTotalElement.textContent =
+      formatPrice(order.totalAmount ?? 0);
+
+  } catch (error) {
+    console.error("Order confirmation error:", error);
+    orderItems.textContent =
+      error.message || "Unable to load order details.";
+  }
+
+  function formatPrice(amount) {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 2
+    }).format(Number(amount) || 0);
+  }
+})();
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const trackButton = document.getElementById("trackButton");
+
+  if (!trackButton) return;
+
+  trackButton.addEventListener("click", () => {
+    const orderId = new URLSearchParams(window.location.search)
+      .get("orderId");
+
+    if (!orderId) {
+      alert("Order ID not found.");
+      return;
+    }
+
+    window.location.href =
+      `order-details.html?orderId=${encodeURIComponent(orderId)}`;
+  });
+});
+</script>
+
+
+</body>
+</html>
