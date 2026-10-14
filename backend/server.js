@@ -51,7 +51,7 @@ app.get("/", (req,res)=>{
 
 app.use(
   "/uploads",
-  express.static(path.join(process.cwd(), "uploads"))
+  express.static(path.join(__dirname, "uploads"))
 );
 
 app.use((req,res)=> {
