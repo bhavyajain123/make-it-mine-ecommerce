@@ -18,13 +18,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.json({ limit: "10kb" }));
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "makeitmine-ai"
+  });
+});
 app.use(express.static(path.join(__dirname, "public")));
 
 const ai = process.env.GEMINI_API_KEY
   ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
   : null;
 
-  
+
 
 
 async function generateWithRetry(prompt) {
@@ -144,8 +150,6 @@ try {
 console.log("Gemini response received");
 
 
-console.log("Gemini response received");
-console.log(response.text);
 
 
 
@@ -168,11 +172,14 @@ console.log(response.text);
       intro: String(result.intro || "Here are your gift ideas!"),
       gifts
     });
-  }  catch (error) {
-  console.error("Gemini error details:", error);
+  } catch (error) {
+  console.error("Gemini request failed:", {
+    status: error.status,
+    message: error.message
+  });
 
-  res.status(500).json({
-    error: error.message || "Gift suggestions generate nahi ho paaye."
+  return res.status(500).json({
+    error: "Gift suggestions generate nahi ho paaye. Please try again."
   });
 }
 });
