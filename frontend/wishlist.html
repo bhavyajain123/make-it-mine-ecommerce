@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Wishlist | MakeItMine</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./css/style.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -912,8 +912,8 @@
 
 <body>
   <div class="announcement">
-    MAKE EVERY MOMENT SPECIAL &nbsp; ✦ &nbsp;
-    <span>FREE SHIPPING ON ORDERS ABOVE ₹999</span>
+    MAKE EVERY MOMENT SPECIAL &nbsp; âœ¦ &nbsp;
+    <span>FREE SHIPPING ON ORDERS ABOVE â‚¹999</span>
   </div>
 
   <header class="header">
@@ -922,23 +922,23 @@
 
       <form class="search" id="searchForm">
         <input id="searchInput" type="search" placeholder="Search for personalised gifts..." aria-label="Search products">
-        <button type="submit" aria-label="Search">⌕</button>
+        <button type="submit" aria-label="Search">âŒ•</button>
       </form>
 
       <div class="header-actions">
         <a class="header-action" href="profile.html">
-          <span class="symbol">♙</span>
+          <span class="symbol">â™™</span>
           <span>Account</span>
         </a>
 
         <a class="header-action" href="wishlist.html">
-          <span class="symbol">♡</span>
+          <span class="symbol">â™¡</span>
           <span>Wishlist</span>
           <span class="count" id="headerWishlistCount">0</span>
         </a>
 
         <a class="header-action" href="cart.html">
-          <span class="symbol">♧</span>
+          <span class="symbol">â™§</span>
           <span>Cart</span>
           <span class="count" id="headerCartCount">0</span>
         </a>
@@ -965,7 +965,7 @@
     <section class="page-heading">
       <div>
         <p class="eyebrow">Your little collection</p>
-        <h1>My Wishlist <span style="color:var(--gold);">♡</span></h1>
+        <h1>My Wishlist <span style="color:var(--gold);">â™¡</span></h1>
         <p class="page-description">
           All the thoughtful little things you've fallen in love with, in one place.
         </p>
@@ -997,13 +997,13 @@
     <section class="wishlist-grid" id="wishlistGrid" aria-live="polite"></section>
 
     <section class="empty-state" id="emptyState">
-      <div class="empty-icon">♡</div>
+      <div class="empty-icon">â™¡</div>
       <h2>Your wishlist is waiting for a little love.</h2>
       <p>
         You haven't saved anything just yet. Explore our thoughtful collection
         and tap the heart on anything that catches your eye.
       </p>
-      <a class="primary-btn" href="shop.html">EXPLORE OUR GIFTS &nbsp; →</a>
+      <a class="primary-btn" href="shop.html">EXPLORE OUR GIFTS &nbsp; â†’</a>
     </section>
 
     <section class="suggestion-section">
@@ -1018,7 +1018,7 @@
 
     <section class="benefits">
       <div class="benefit">
-        <span class="benefit-icon">🎁</span>
+        <span class="benefit-icon">ðŸŽ</span>
         <div>
           <h3>Thoughtfully Wrapped</h3>
           <p>Beautiful packaging for every occasion.</p>
@@ -1026,7 +1026,7 @@
       </div>
 
       <div class="benefit">
-        <span class="benefit-icon">♡</span>
+        <span class="benefit-icon">â™¡</span>
         <div>
           <h3>Made Personal</h3>
           <p>Add names, photos and heartfelt messages.</p>
@@ -1034,7 +1034,7 @@
       </div>
 
       <div class="benefit">
-        <span class="benefit-icon">↗</span>
+        <span class="benefit-icon">â†—</span>
         <div>
           <h3>Delivered with Care</h3>
           <p>From our hands to your special someone.</p>
@@ -1067,7 +1067,7 @@
       <a href="terms.html">Terms & Conditions</a>
     </div>
 
-    <p>© 2026 MakeItMine. Made with love.</p>
+    <p>Â© 2026 MakeItMine. Made with love.</p>
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1280,7 +1280,7 @@ async function loadProductsFromBackend() {
     }
 
     function money(value) {
-      return "₹" + Number(value || 0).toLocaleString("en-IN");
+      return "â‚¹" + Number(value || 0).toLocaleString("en-IN");
     }
 
     function escapeHTML(value) {
@@ -1324,7 +1324,7 @@ async function loadProductsFromBackend() {
     function productCard(product) {
       const image = product.image
         ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" loading="lazy" onerror="this.style.display='none'">`
-        : `<div style="height:100%;display:grid;place-items:center;font-size:50px;">🎁</div>`;
+        : `<div style="height:100%;display:grid;place-items:center;font-size:50px;">ðŸŽ</div>`;
 
       const oldPrice = product.oldPrice && Number(product.oldPrice) > product.price
         ? `<span class="old-price">${money(product.oldPrice)}</span>
@@ -1332,7 +1332,7 @@ async function loadProductsFromBackend() {
         : "";
 
       const rating = product.rating
-        ? `<div class="product-rating">★★★★★ <span>${Number(product.rating).toFixed(1)} / 5</span></div>`
+        ? `<div class="product-rating">â˜…â˜…â˜…â˜…â˜… <span>${Number(product.rating).toFixed(1)} / 5</span></div>`
         : "";
 
       return `
@@ -1348,10 +1348,10 @@ async function loadProductsFromBackend() {
               data-id="${escapeHTML(product.id)}"
               aria-label="Remove ${escapeHTML(product.name)} from wishlist"
               title="Remove from wishlist"
-            >♥</button>
+            >â™¥</button>
 
             <a class="image-link" href="${productURL(product)}">
-              VIEW PRODUCT &nbsp; →
+              VIEW PRODUCT &nbsp; â†’
             </a>
           </div>
 
@@ -1459,7 +1459,7 @@ async function loadWishlistFromBackend() {
               type="button"
               data-action="save"
               data-id="${escapeHTML(product.id)}"
-            >♡ SAVE TO WISHLIST</button>
+            >â™¡ SAVE TO WISHLIST</button>
           </div>
         </article>
       `).join("");
@@ -1545,7 +1545,7 @@ console.log("Catalogue product:", findProduct(id));
     }
 
     await loadWishlistFromBackend();
-    showToast("♡ Saved to your wishlist!");
+    showToast("â™¡ Saved to your wishlist!");
   } catch (error) {
     console.error("Add wishlist error:", error);
     showToast(error.message || "Unable to save product.");

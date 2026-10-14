@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Read the terms and conditions for shopping with MakeItMine.">
   <title>Terms & Conditions | MakeItMine</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./css/style.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -480,7 +480,7 @@
 
 <body>
   <div class="announcement">
-    A LITTLE SOMETHING SPECIAL — 10% OFF YOUR FIRST ORDER WITH CODE: WELCOME10
+    A LITTLE SOMETHING SPECIAL â€” 10% OFF YOUR FIRST ORDER WITH CODE: WELCOME10
   </div>
 
   <header class="navbar">
@@ -495,9 +495,9 @@
     </nav>
 
     <div class="nav-actions">
-      <a href="wishlist.html" aria-label="Wishlist" title="Wishlist">♡</a>
-      <a href="cart.html" aria-label="Shopping cart" title="Shopping cart">🛍</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <a href="wishlist.html" aria-label="Wishlist" title="Wishlist">â™¡</a>
+      <a href="cart.html" aria-label="Shopping cart" title="Shopping cart">ðŸ›</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">â˜°</button>
     </div>
   </header>
 
@@ -535,7 +535,7 @@
       <div class="help-box">
         <strong>Need clarification?</strong>
         Have a question about these terms?
-        <a href="contact.html">Talk to our team →</a>
+        <a href="contact.html">Talk to our team â†’</a>
       </div>
     </aside>
 
@@ -794,7 +794,7 @@
           product, please get in touch through our contact page.
         </p>
         <p>
-          <a class="inline-link" href="contact.html">Contact MakeItMine →</a>
+          <a class="inline-link" href="contact.html">Contact MakeItMine â†’</a>
         </p>
         <p>
           Any governing-law, jurisdiction or formal business details should be
@@ -849,12 +849,12 @@
     </div>
 
     <div class="footer-bottom">
-      <span>© <span id="year"></span> MakeItMine. All rights reserved.</span>
-      <span>Made with care, for the people you love ♡</span>
+      <span>Â© <span id="year"></span> MakeItMine. All rights reserved.</span>
+      <span>Made with care, for the people you love â™¡</span>
     </div>
   </footer>
 
-  <button class="back-top" id="backTop" aria-label="Back to top" title="Back to top">↑</button>
+  <button class="back-top" id="backTop" aria-label="Back to top" title="Back to top">â†‘</button>
 
   <script>
     // Mobile navigation
@@ -864,14 +864,14 @@
     menuToggle.addEventListener("click", () => {
       const isOpen = navLinks.classList.toggle("open");
       menuToggle.setAttribute("aria-expanded", String(isOpen));
-      menuToggle.textContent = isOpen ? "✕" : "☰";
+      menuToggle.textContent = isOpen ? "âœ•" : "â˜°";
     });
 
     navLinks.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
         navLinks.classList.remove("open");
         menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.textContent = "☰";
+        menuToggle.textContent = "â˜°";
       });
     });
 
