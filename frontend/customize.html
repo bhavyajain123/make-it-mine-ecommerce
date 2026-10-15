@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.API_ORIGIN = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000'
+    : 'https://mim-backend-api-2026-bj111234.onrender.com';
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Customize Your Gift | MakeItMine</title>
@@ -2220,7 +2225,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             // Save design in MongoDB through backend API
             const designResponse = await fetch(
-                "http://localhost:5000/api/designs",
+                `${API_ORIGIN}/api/designs`,
                 {
                     method: "POST",
                     headers: {
@@ -2265,7 +2270,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
            
-const cartResponse = await fetch("http://localhost:5000/api/cart/items", {
+const cartResponse = await fetch(`${API_ORIGIN}/api/cart/items`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",

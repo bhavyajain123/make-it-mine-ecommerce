@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.API_ORIGIN = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000'
+    : 'https://mim-backend-api-2026-bj111234.onrender.com';
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#faf7f2">
@@ -2088,7 +2093,7 @@ async function loadCartFromBackend() {
     }
 
     try {
-        const response = await fetch("http://localhost:5000/api/cart", {
+        const response = await fetch(`${API_ORIGIN}/api/cart`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -2159,7 +2164,7 @@ async function updateBackendCartItem(cartItemId, quantity) {
     }
 
     const response = await fetch(
-        `http://localhost:5000/api/cart/items/${encodeURIComponent(cartItemId)}`,
+        `${API_ORIGIN}/api/cart/items/${encodeURIComponent(cartItemId)}`,
         {
             method: "PATCH",
             headers: {
@@ -2187,7 +2192,7 @@ async function removeBackendCartItem(cartItemId) {
     }
 
     const response = await fetch(
-        `http://localhost:5000/api/cart/items/${encodeURIComponent(cartItemId)}`,
+        `${API_ORIGIN}/api/cart/items/${encodeURIComponent(cartItemId)}`,
         {
             method: "DELETE",
             headers: {
@@ -2214,7 +2219,7 @@ async function clearBackendCart() {
         throw new Error("Please log in to clear your cart.");
     }
 
-    const response = await fetch("http://localhost:5000/api/cart", {
+    const response = await fetch(`${API_ORIGIN}/api/cart`, {
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${token}`
@@ -2414,7 +2419,7 @@ document.getElementById("couponForm").addEventListener(
 
         try {
             const response = await fetch(
-                "http://localhost:5000/api/coupons/validate",
+                `${API_ORIGIN}/api/coupons/validate`,
                 {
                     method: "POST",
                     headers: {

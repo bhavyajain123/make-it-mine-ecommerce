@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.API_ORIGIN = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000'
+    : 'https://mim-backend-api-2026-bj111234.onrender.com';
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout | MakeItMine</title>
@@ -1986,7 +1991,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
     const addressResponse = await fetch(
-        "http://localhost:5000/api/addresses",
+        `${API_ORIGIN}/api/addresses`,
         {
             method: "POST",
             headers: {
@@ -2026,7 +2031,7 @@ addressType: (details.addressType || "home").toLowerCase(),
 
    
     const orderResponse = await fetch(
-        "http://localhost:5000/api/orders",
+        `${API_ORIGIN}/api/orders`,
         {
             method: "POST",
             headers: {
@@ -2078,7 +2083,7 @@ async function loadBackendCart() {
       return;
     }
 
-    const response = await fetch("http://localhost:5000/api/cart", {
+    const response = await fetch(`${API_ORIGIN}/api/cart`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

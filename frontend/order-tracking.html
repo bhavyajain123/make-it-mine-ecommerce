@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.API_ORIGIN = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000'
+    : 'https://mim-backend-api-2026-bj111234.onrender.com';
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#faf6f0">
@@ -2213,7 +2218,7 @@ const timeValue = saved?.timestamp || saved?.changedAt || saved?.date ||
     }
 
     
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = `${API_ORIGIN}/api`;
 
 function getAuthToken() {
   return localStorage.getItem("mim_token");

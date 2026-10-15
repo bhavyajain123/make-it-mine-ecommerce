@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.API_ORIGIN = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000'
+    : 'https://mim-backend-api-2026-bj111234.onrender.com';
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#faf6f0">
@@ -1193,7 +1198,7 @@
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/orders/${encodeURIComponent(orderId)}`,
+      `${API_ORIGIN}/api/orders/${encodeURIComponent(orderId)}`,
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -1300,7 +1305,7 @@ if (!orderId || !/^[a-f\d]{24}$/i.test(orderId)) {
 
 
   const ordersResponse = await fetch(
-    "http://localhost:5000/api/orders/my",
+    `${API_ORIGIN}/api/orders/my`,
     {
       headers: {
         Authorization: `Bearer ${token}`
@@ -1320,7 +1325,7 @@ if (!orderId || !/^[a-f\d]{24}$/i.test(orderId)) {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/orders/${encodeURIComponent(orderId)}`,
+      `${API_ORIGIN}/api/orders/${encodeURIComponent(orderId)}`,
       {
         headers: {
           Authorization: `Bearer ${token}`

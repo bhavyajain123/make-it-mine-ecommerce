@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.API_ORIGIN = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000'
+    : 'https://mim-backend-api-2026-bj111234.onrender.com';
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#fbf7f0">
@@ -1693,7 +1698,7 @@
     message.textContent = "Loading reviews...";
 
     const response = await fetch(
-      `http://localhost:5000/api/products/${productId}/reviews`
+      `${API_ORIGIN}/api/products/${productId}/reviews`
     );
 
     const data = await response.json();
@@ -1794,7 +1799,7 @@ document.getElementById("reviewForm").addEventListener("submit", async event => 
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/products/${productId}/reviews`,
+      `${API_ORIGIN}/api/products/${productId}/reviews`,
       {
         method: "POST",
         headers: {

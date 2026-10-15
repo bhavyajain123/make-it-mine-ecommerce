@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  window.API_ORIGIN = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000'
+    : 'https://mim-backend-api-2026-bj111234.onrender.com';
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shop All Gifts | MakeItMine</title>
@@ -784,7 +789,7 @@ async function loadBackendProducts() {
   const grid = document.getElementById("productGrid");
 
   try {
-    const response = await fetch("http://localhost:5000/api/products");
+    const response = await fetch(`${API_ORIGIN}/api/products`);
 
     if (!response.ok) {
       throw new Error(`Products API failed: ${response.status}`);
@@ -927,7 +932,7 @@ console.log("MAPPED PRODUCTS:", backendProducts);
   
 async function loadBackendProducts() {
   try {
-    const response = await fetch("http://localhost:5000/api/products");
+    const response = await fetch(`${API_ORIGIN}/api/products`);
 
     if (!response.ok) {
       throw new Error(`Products API failed: ${response.status}`);
