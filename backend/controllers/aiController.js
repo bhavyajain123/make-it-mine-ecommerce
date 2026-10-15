@@ -10,21 +10,50 @@ const ai = process.env.GEMINI_API_KEY
 const TEXT_MODEL = process.env.GEMINI_TEXT_MODEL || "gemini-3.8-flash";
 const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-2.5-flash-image";
 
+const FALLBACK_MODEL =
+  process.env.GEMINI_FALLBACK_MODEL || "gemini-flash-lite-latest";
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+function isRetryable(err) {
+  const msg = String(err && err.message);
+  return (
+    err?.status === 503 ||
+    err?.status === 429 ||
+    msg.includes("UNAVAILABLE") ||
+    msg.includes("RESOURCE_EXHAUSTED") ||
+    msg.includes('"code":503') ||
+    msg.includes('"code":429')
+  );
+}
+
 async function generateText(instructions, input, { json = false } = {}) {
   if (!ai) {
     throw new Error("GEMINI_API_KEY is not configured");
   }
 
-  const response = await ai.models.generateContent({
-    model: TEXT_MODEL,
-    contents: input,
-    config: {
-      systemInstruction: instructions,
-      ...(json ? { responseMimeType: "application/json" } : {}),
-    },
-  });
+  const models = [TEXT_MODEL, TEXT_MODEL, FALLBACK_MODEL];
+  let lastError;
 
-  return response.text;
+  for (let i = 0; i < models.length; i++) {
+    try {
+      const response = await ai.models.generateContent({
+        model: models[i],
+        contents: input,
+        config: {
+          systemInstruction: instructions,
+          ...(json ? { responseMimeType: "application/json" } : {}),
+        },
+      });
+      return response.text;
+    } catch (err) {
+      lastError = err;
+      if (!isRetryable(err)) throw err;
+      await sleep(1500 * (i + 1));
+    }
+  }
+
+  throw lastError;
 }
 
 function validateText(value, field, maxLength = 200) {
