@@ -1270,12 +1270,53 @@ async function loadBackendProducts() {
     }
   });
 
-  $("newsletterForm").addEventListener("submit",event=>{
+   $("newsletterForm").addEventListener("submit",async event=>{
     event.preventDefault();
+
+    const form=$("newsletterForm");
     const email=$("newsletterEmail").value.trim();
     if(!email)return;
-    showToast("<strong>Thank you!</strong> Newsletter signup UI is ready. Connect an email service to save subscriptions.");
-    $("newsletterForm").reset();
+
+    const button=form.querySelector("button");
+    const originalText=button?button.textContent:"";
+    if(button){
+      button.disabled=true;
+      button.textContent="Joining...";
+    }
+
+    const apiOrigin=window.API_ORIGIN||
+      (location.hostname==="localhost"||location.hostname==="127.0.0.1"
+        ?"http://localhost:5000"
+        :"https://mim-backend-api-2026-bj111234.onrender.com");
+
+    try{
+      const response=await fetch(`${apiOrigin}/api/newsletter/subscribe`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({email}),
+        signal:AbortSignal.timeout(60000)
+      });
+
+      const data=await response.json().catch(()=>({}));
+
+      if(!response.ok){
+        throw new Error(data.message||"Could not subscribe right now.");
+      }
+
+      showToast(data.message||"Thanks for joining us!");
+      form.reset();
+    }catch(error){
+      showToast(
+        error.name==="TimeoutError"
+          ?"This is taking too long. Please try again."
+          :error.message||"Could not subscribe right now."
+      );
+    }finally{
+      if(button){
+        button.disabled=false;
+        button.textContent=originalText;
+      }
+    }
   });
 
   // Optional deep link: shop.html?category=Mugs
