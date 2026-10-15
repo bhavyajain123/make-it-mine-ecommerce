@@ -1,18 +1,32 @@
+const fs = require("fs");
+const path = require("path");
+const { randomUUID } = require("crypto");
+const { GoogleGenAI } = require("@google/genai");
 
-const OpenAI = require("openai");
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const textModel = process.env.OPENAI_TEXT_MODEL || "gpt-4.1-mini";
-async function generateText(instructions, input) {
-  const response = await openai.responses.create({
-    model: textModel,
-    instructions,
-    input,
+const ai = process.env.GEMINI_API_KEY
+  ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
+  : null;
+
+const TEXT_MODEL = process.env.GEMINI_TEXT_MODEL || "gemini-2.5-flash";
+const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-2.5-flash-image";
+
+async function generateText(instructions, input, { json = false } = {}) {
+  if (!ai) {
+    throw new Error("GEMINI_API_KEY is not configured");
+  }
+
+  const response = await ai.models.generateContent({
+    model: TEXT_MODEL,
+    contents: input,
+    config: {
+      systemInstruction: instructions,
+      ...(json ? { responseMimeType: "application/json" } : {}),
+    },
   });
 
-  return response.output_text;
+  return response.text;
 }
+
 function validateText(value, field, maxLength = 200) {
   if (typeof value !== "string" || !value.trim()) {
     return `${field} is required`;
@@ -26,10 +40,10 @@ function validateText(value, field, maxLength = 200) {
 }
 
 function parseJson(text) {
-  // Model output is expected to be JSON, but still validate parsing.
   const cleaned = text.replace(/^```json\s*|\s*```$/g, "").trim();
   return JSON.parse(cleaned);
 }
+
 exports.giftRecommendations = async (req, res) => {
   try {
     const { occasion, recipient, budget, interests } = req.body;
@@ -66,7 +80,8 @@ Return only valid JSON in this shape:
 {"suggestions":[{"name":"...","productType":"tshirt|hoodie|mug|phone-case|other","estimatedPrice":500,"reason":"...","customizationIdea":"..."}]}
 Give 3 suggestions. Keep every estimatedPrice within the supplied budget.
 These are suggestions, not verified live inventory. Never claim a product is in stock.`,
-      JSON.stringify({ occasion, recipient, budget, interests: interests || "" })
+      JSON.stringify({ occasion, recipient, budget, interests: interests || "" }),
+      { json: true }
     );
 
     const result = parseJson(text);
@@ -87,7 +102,6 @@ These are suggestions, not verified live inventory. Never claim a product is in 
     });
   }
 };
-
 
 exports.giftMessage = async (req, res) => {
   try {
@@ -111,7 +125,9 @@ exports.giftMessage = async (req, res) => {
       details !== undefined &&
       (typeof details !== "string" || details.length > 500)
     ) {
-      return res.status(400).json({ message: "Details must be under 500 characters" });
+      return res
+        .status(400)
+        .json({ message: "Details must be under 500 characters" });
     }
 
     const message = await generateText(
@@ -135,7 +151,6 @@ exports.giftMessage = async (req, res) => {
   }
 };
 
-
 exports.designSuggestions = async (req, res) => {
   try {
     const { productType, theme, text, colors } = req.body;
@@ -149,7 +164,9 @@ exports.designSuggestions = async (req, res) => {
     }
 
     if (text !== undefined && (typeof text !== "string" || text.length > 100)) {
-      return res.status(400).json({ message: "Text must be under 100 characters" });
+      return res
+        .status(400)
+        .json({ message: "Text must be under 100 characters" });
     }
 
     if (
@@ -172,7 +189,8 @@ Avoid copyrighted characters, logos, or imitating a living artist's style.`,
         theme,
         text: text || "",
         colors: colors || [],
-      })
+      }),
+      { json: true }
     );
 
     const result = parseJson(resultText);
@@ -192,9 +210,6 @@ Avoid copyrighted characters, logos, or imitating a living artist's style.`,
   }
 };
 
-const fs = require("fs");
-const path = require("path");
-const { randomUUID } = require("crypto");
 exports.generateDesign = async (req, res) => {
   try {
     const { prompt, productType } = req.body;
@@ -207,13 +222,18 @@ exports.generateDesign = async (req, res) => {
       return res.status(400).json({ message: error });
     }
 
-    const result = await openai.images.generate({
-      model: process.env.OPENAI_IMAGE_MODEL || "gpt-image-1",
-      prompt: `Create a clean, original, print-ready custom gift graphic for a ${productType}. Theme: ${prompt}. Show the artwork only, centered on a plain background. Do not create a product mockup.`,
-      size: "1024x1024",
+    if (!ai) {
+      return res.status(503).json({ message: "AI is not configured" });
+    }
+
+    const response = await ai.models.generateContent({
+      model: IMAGE_MODEL,
+      contents: `Create a clean, original, print-ready custom gift graphic for a ${productType}. Theme: ${prompt}. Show the artwork only, centered on a plain background. Do not create a product mockup.`,
     });
 
-    const base64 = result.data?.[0]?.b64_json;
+    const parts = response.candidates?.[0]?.content?.parts || [];
+    const imagePart = parts.find((p) => p.inlineData && p.inlineData.data);
+    const base64 = imagePart?.inlineData?.data;
 
     if (!base64) {
       return res.status(502).json({
@@ -221,12 +241,7 @@ exports.generateDesign = async (req, res) => {
       });
     }
 
-    const outputDir = path.join(
-      process.cwd(),
-      "uploads",
-      "ai-designs"
-    );
-
+    const outputDir = path.join(process.cwd(), "uploads", "ai-designs");
     fs.mkdirSync(outputDir, { recursive: true });
 
     const filename = `${randomUUID()}.png`;
@@ -239,12 +254,10 @@ exports.generateDesign = async (req, res) => {
       message: "Design generated successfully",
       imageUrl: `/uploads/ai-designs/${filename}`,
     });
- } catch (error) {
-  console.error("Gift recommendations error:", error);
-
-  return res.status(502).json({
-    message: "Gift recommendations are temporarily unavailable"
-  });
-}
+  } catch (error) {
+    console.error("Generate design error:", error.message);
+    return res.status(502).json({
+      message: "Unable to generate the design right now",
+    });
+  }
 };
-
