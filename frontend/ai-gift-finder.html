@@ -283,6 +283,12 @@
   </footer>
 
   <script>
+
+    const API_ORIGIN =
+  location.hostname === "localhost" || location.hostname === "127.0.0.1"
+    ? "http://localhost:5000"
+    : "https://mim-backend-api-2026-bj111234.onrender.com";
+
     const form = document.getElementById("giftForm");
     const submitBtn = document.getElementById("submitBtn");
     const statusBox = document.getElementById("status");
@@ -300,12 +306,20 @@
         interests: document.getElementById("interests").value.trim()
       };
 
-      if (!request.recipient || !request.interests ||
-          !Number.isFinite(request.budget) ||
-          request.budget < 1 || request.budget > 1000000) {
-        statusBox.textContent = "Please enter valid gift preferences.";
-        return;
-      }
+if (!request.recipient || !request.interests ||
+    !Number.isFinite(request.budget) ||
+    request.budget < 100 || request.budget > 100000) {
+  statusBox.textContent =
+    "Please enter valid details. Budget must be between ₹100 and ₹1,00,000.";
+  return;
+}
+
+const token = localStorage.getItem("mim_token");
+if (!token) {
+  statusBox.textContent = "Please log in to use the AI Gift Finder. Redirecting...";
+  setTimeout(() => { window.location.href = "login.html"; }, 1500);
+  return;
+}
 
       submitBtn.disabled = true;
       submitBtn.textContent = "Finding thoughtful gifts...";
@@ -314,26 +328,37 @@
       giftGrid.replaceChildren();
 
       try {
-        const response = await fetch("/api/gifts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(request),
-          signal: AbortSignal.timeout(30000)
-        });
+      const response = await fetch(`${API_ORIGIN}/api/ai/gift-recommendations`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`
+  },
+  body: JSON.stringify(request),
+  signal: AbortSignal.timeout(90000)
+});
 
-        const data = await response.json();
+const data = await response.json();
 
-        if (!response.ok) {
-          throw new Error(data.error || "Could not generate gift ideas.");
-        }
+if (response.status === 401) {
+  statusBox.textContent = "Your session expired. Please log in again.";
+  setTimeout(() => { window.location.href = "login.html"; }, 1500);
+  return;
+}
 
-        if (!Array.isArray(data.gifts) || data.gifts.length !== 3) {
-          throw new Error("The AI returned an unexpected response. Try again.");
-        }
+if (!response.ok) {
+  throw new Error(data.message || data.error || "Could not generate gift ideas.");
+}
 
-        intro.textContent = data.intro || "Here are your personalized ideas.";
+const gifts = data.suggestions;
 
-        data.gifts.forEach((gift, index) => {
+if (!Array.isArray(gifts) || gifts.length === 0) {
+  throw new Error("The AI returned an unexpected response. Try again.");
+}
+
+intro.textContent = data.note || "Here are your personalized ideas.";
+
+        gifts.forEach((gift, index) => {
           const card = document.createElement("article");
           card.className = "gift-card";
 
@@ -358,7 +383,7 @@
           personalHeading.textContent = "Make it personal";
 
           const personalTouch = document.createElement("p");
-          personalTouch.textContent = gift.personalTouch || "";
+          personalTouch.textContent = gift.customizationIdea || "";
 
           card.append(number, title, price, reason, personalHeading, personalTouch);
           giftGrid.appendChild(card);
