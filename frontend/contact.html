@@ -1711,7 +1711,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
  
-    messageForm.addEventListener("submit", async function (event) {
+       messageForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const fields = Array.from(
@@ -1744,7 +1744,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-            const formData = {
+        const formData = {
             name: document.getElementById("name").value.trim(),
             email: document.getElementById("email").value.trim(),
             phone: optionalPhone.value.trim(),
@@ -1797,6 +1797,7 @@ document.addEventListener("DOMContentLoaded", function () {
             submitButton.disabled = false;
             buttonLabel.textContent = "SEND YOUR MESSAGE";
         }
+    });
 
     // FAQ ACCORDION
     document.querySelectorAll(".faq-question").forEach(function (button) {
