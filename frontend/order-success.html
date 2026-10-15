@@ -773,7 +773,7 @@
 
 <body>
   <div class="announcement">
-    A LITTLE LOVE, BEAUTIFULLY WRAPPED <span>âœ¦</span> THANK YOU FOR SHOPPING WITH US
+    A LITTLE LOVE, BEAUTIFULLY WRAPPED <span>✦</span> THANK YOU FOR SHOPPING WITH US
   </div>
 
   <header>
@@ -839,7 +839,7 @@
           <div class="order-summary">
             <div class="summary-row">
               <span>Subtotal</span>
-              <strong id="subtotal">â‚¹0</strong>
+              <strong id="subtotal">₹0</strong>
             </div>
 
             <div class="summary-row">
@@ -854,14 +854,14 @@
 
             <div class="summary-row total">
               <span>Total Paid / Payable</span>
-              <strong id="grandTotal">â‚¹0</strong>
+              <strong id="grandTotal">₹0</strong>
             </div>
           </div>
         </div>
       </section>
 
       <section class="delivery-panel">
-        <div class="delivery-icon">ðŸŽ</div>
+        <div class="delivery-icon">🎁</div>
 
         <div class="delivery-info">
           <div class="small">The countdown to something special</div>
@@ -894,7 +894,7 @@
 
       <div class="actions">
         <a href="home.html" class="btn btn-primary">
-          Continue Shopping <span>â†’</span>
+          Continue Shopping <span>→</span>
         </a>
 
         <button class="btn btn-secondary" id="trackButton" type="button">
@@ -910,9 +910,9 @@
       </p>
 
       <div class="trust-row">
-        <div class="trust-item"><span>â™¡</span> Made with love</div>
-        <div class="trust-item"><span>âœ§</span> Thoughtfully personalized</div>
-        <div class="trust-item"><span>â™§</span> Carefully packed</div>
+        <div class="trust-item"><span>♡</span> Made with love</div>
+        <div class="trust-item"><span>✧</span> Thoughtfully personalized</div>
+        <div class="trust-item"><span>♧</span> Carefully packed</div>
       </div>
 
     </div>
@@ -921,7 +921,7 @@
   <footer>
     <div class="footer-logo">MakeIt<span>Mine</span></div>
     <p>Every gift tells a story. Thank you for letting us be part of yours.</p>
-    <p style="margin-top: 12px;">Â© <span id="year"></span> MakeItMine. All rights reserved.</p>
+    <p style="margin-top: 12px;">© <span id="year"></span> MakeItMine. All rights reserved.</p>
   </footer>
 
   <script>
@@ -967,15 +967,15 @@
         (item.category || "")
       ).toLowerCase();
 
-      if (text.includes("mug") || text.includes("cup")) return "â˜•";
-      if (text.includes("frame") || text.includes("photo")) return "ðŸ–¼ï¸";
-      if (text.includes("hamper") || text.includes("gift box")) return "ðŸŽ";
-      if (text.includes("jewel") || text.includes("necklace")) return "ðŸ’Ž";
-      if (text.includes("flower")) return "ðŸ’";
-      if (text.includes("candle")) return "ðŸ•¯ï¸";
-      if (text.includes("teddy")) return "ðŸ§¸";
+      if (text.includes("mug") || text.includes("cup")) return "☕";
+      if (text.includes("frame") || text.includes("photo")) return "🖼️";
+      if (text.includes("hamper") || text.includes("gift box")) return "🎁";
+      if (text.includes("jewel") || text.includes("necklace")) return "💎";
+      if (text.includes("flower")) return "💐";
+      if (text.includes("candle")) return "🕯️";
+      if (text.includes("teddy")) return "🧸";
 
-      return "ðŸŽ";
+      return "🎁";
     }
 
     function getPersonalisation(item) {
@@ -1004,7 +1004,7 @@
       if (item.variant) parts.push("Variant: " + item.variant);
       if (item.size) parts.push("Size: " + item.size);
 
-      return parts.join(" Â· ");
+      return parts.join(" · ");
     }
 
     function getCartCount(cart) {
@@ -1222,13 +1222,13 @@
       "",
       "Products:",
       ...(order.items || []).map(item =>
-        `${item.productName || item.product?.name || "Gift"} x ${item.quantity || 1} â€” â‚¹${Number(item.lineTotal ?? (item.unitPrice || item.price || 0) * (item.quantity || 1)).toFixed(2)}`
+        `${item.productName || item.product?.name || "Gift"} x ${item.quantity || 1} — ₹${Number(item.lineTotal ?? (item.unitPrice || item.price || 0) * (item.quantity || 1)).toFixed(2)}`
       ),
       "",
-      `Subtotal: â‚¹${Number(order.subtotal || 0).toFixed(2)}`,
-      `Shipping: â‚¹${Number(order.shippingFee || 0).toFixed(2)}`,
-      `Discount: â‚¹${Number(order.discount || 0).toFixed(2)}`,
-      `Total: â‚¹${Number(order.totalAmount || 0).toFixed(2)}`
+      `Subtotal: ₹${Number(order.subtotal || 0).toFixed(2)}`,
+      `Shipping: ₹${Number(order.shippingFee || 0).toFixed(2)}`,
+      `Discount: ₹${Number(order.discount || 0).toFixed(2)}`,
+      `Total: ₹${Number(order.totalAmount || 0).toFixed(2)}`
     ];
 
     alert(details.join("\n"));
@@ -1249,7 +1249,7 @@
         return;
       }
 
-      const symbols = ["âœ¦", "â€¢", "âœ§", "â—†"];
+      const symbols = ["✦", "•", "✧", "◆"];
       const colors = ["#c5a15b", "#702b3b", "#e4cba1", "#9f6571"];
 
       for (let i = 0; i < 28; i++) {
@@ -1353,7 +1353,7 @@ if (!orderId || !/^[a-f\d]{24}$/i.test(orderId)) {
 
       const details = document.createElement("p");
       details.textContent =
-        `Quantity: ${item.quantity} Â· ${formatPrice(item.unitPrice ?? 0)}`;
+        `Quantity: ${item.quantity} · ${formatPrice(item.unitPrice ?? 0)}`;
 
       const amount = document.createElement("strong");
       amount.textContent = formatPrice(item.lineTotal ?? 0);

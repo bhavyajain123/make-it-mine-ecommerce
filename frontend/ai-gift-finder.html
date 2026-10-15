@@ -206,7 +206,7 @@
     <nav>
       <a href="home.html">Home</a>
       <a href="categories.html">Shop All</a>
-      <a href="ai-gift-finder.html">AI Gift Finder âœ¨</a>
+      <a href="ai-gift-finder.html">AI Gift Finder ✨</a>
       <a href="cart.html">Cart</a>
     </nav>
   </header>
@@ -241,7 +241,7 @@
         required
       >
 
-      <label for="budget">Your budget (â‚¹)</label>
+      <label for="budget">Your budget (₹)</label>
       <input
         id="budget"
         type="number"
@@ -260,7 +260,7 @@
       ></textarea>
 
       <button id="submitBtn" type="submit">
-        Find my gift ideas â†’
+        Find my gift ideas →
       </button>
 
       <p class="note">
@@ -347,8 +347,8 @@
           const price = document.createElement("div");
           price.className = "price";
           const amount = Number(gift.estimatedPrice);
-          price.textContent = `Approx. â‚¹${
-            Number.isFinite(amount) ? amount.toLocaleString("en-IN") : "â€”"
+          price.textContent = `Approx. ₹${
+            Number.isFinite(amount) ? amount.toLocaleString("en-IN") : "—"
           }`;
 
           const reason = document.createElement("p");
@@ -376,7 +376,7 @@
             : error.message || "AI is busy right now. Please try again shortly.";
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = "Find my gift ideas â†’";
+        submitBtn.textContent = "Find my gift ideas →";
       }
     });
   </script>

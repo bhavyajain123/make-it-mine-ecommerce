@@ -609,7 +609,7 @@
 
         .cta-card::before,
         .cta-card::after {
-            content: "âœ¦";
+            content: "✦";
             position: absolute;
             color: rgba(116, 45, 61, 0.15);
             font-size: 120px;
@@ -1001,7 +1001,7 @@
     <!-- ANNOUNCEMENT BAR -->
     <div class="announcement">
         LITTLE THINGS, LASTING MEMORIES
-        <span> âœ¦ </span>
+        <span> ✦ </span>
         MADE PERSONAL, MADE WITH LOVE
     </div>
 
@@ -1023,12 +1023,12 @@
 
             <div class="nav-actions">
                 <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">
-                    â™¡
+                    ♡
                     <span class="counter" id="wishlistCount">0</span>
                 </a>
 
                 <a href="cart.html" class="nav-icon" aria-label="Shopping cart">
-                    â™§
+                    ♧
                     <span class="counter" id="cartCount">0</span>
                 </a>
 
@@ -1036,7 +1036,7 @@
                     aria-label="Open navigation menu"
                     aria-controls="navLinks"
                     aria-expanded="false">
-                    â˜°
+                    ☰
                 </button>
             </div>
 
@@ -1071,7 +1071,7 @@
                     </p>
 
                     <a href="shop.html" class="primary-btn">
-                        Find Your Perfect Gift <span>â†’</span>
+                        Find Your Perfect Gift <span>→</span>
                     </a>
 
                 </div>
@@ -1112,7 +1112,7 @@
                     </p>
 
                     <a href="shop.html" class="text-link">
-                        Explore Our Collection <span>â†’</span>
+                        Explore Our Collection <span>→</span>
                     </a>
 
                 </div>
@@ -1154,7 +1154,7 @@
                 <div class="values-grid">
 
                     <article class="value-card reveal">
-                        <div class="value-icon" aria-hidden="true">â™¡</div>
+                        <div class="value-icon" aria-hidden="true">♡</div>
 
                         <h3>Made Personal</h3>
 
@@ -1166,7 +1166,7 @@
                     </article>
 
                     <article class="value-card reveal">
-                        <div class="value-icon" aria-hidden="true">âœ§</div>
+                        <div class="value-icon" aria-hidden="true">✧</div>
 
                         <h3>Details Matter</h3>
 
@@ -1178,7 +1178,7 @@
                     </article>
 
                     <article class="value-card reveal">
-                        <div class="value-icon" aria-hidden="true">â™§</div>
+                        <div class="value-icon" aria-hidden="true">♧</div>
 
                         <h3>Made to Be Remembered</h3>
 
@@ -1197,7 +1197,7 @@
         <section class="quote-section">
             <div class="container reveal">
 
-                <div class="quote-mark" aria-hidden="true">â€œ</div>
+                <div class="quote-mark" aria-hidden="true">“</div>
 
                 <p class="quote-text">
                     The best gifts don't need to be the biggest.
@@ -1222,12 +1222,12 @@
                 </div>
 
                 <div class="stat-item reveal">
-                    <div class="stat-number">â™¡</div>
+                    <div class="stat-number">♡</div>
                     <div class="stat-label">Thoughtful Gifting</div>
                 </div>
 
                 <div class="stat-item reveal">
-                    <div class="stat-number">âˆž</div>
+                    <div class="stat-number">∞</div>
                     <div class="stat-label">Memories to Make</div>
                 </div>
 
@@ -1256,7 +1256,7 @@
                         </p>
 
                         <a href="shop.html" class="primary-btn">
-                            Explore the Collection <span>â†’</span>
+                            Explore the Collection <span>→</span>
                         </a>
 
                     </div>
@@ -1320,7 +1320,7 @@
                             aria-label="Your email address"
                             required>
 
-                        <button type="submit" aria-label="Subscribe">â†’</button>
+                        <button type="submit" aria-label="Subscribe">→</button>
                     </form>
 
                     <p class="newsletter-message" id="newsletterMessage"
@@ -1332,7 +1332,7 @@
             <div class="footer-bottom">
 
                 <p>
-                    Â© <span id="currentYear"></span> MakeItMine.
+                    © <span id="currentYear"></span> MakeItMine.
                     Made with love.
                 </p>
 
@@ -1365,7 +1365,7 @@
                 isOpen ? "Close navigation menu" : "Open navigation menu"
             );
 
-            menuToggle.textContent = isOpen ? "âœ•" : "â˜°";
+            menuToggle.textContent = isOpen ? "✕" : "☰";
         });
 
         navLinks.querySelectorAll("a").forEach(function (link) {
@@ -1373,7 +1373,7 @@
                 navLinks.classList.remove("open");
                 menuToggle.setAttribute("aria-expanded", "false");
                 menuToggle.setAttribute("aria-label", "Open navigation menu");
-                menuToggle.textContent = "â˜°";
+                menuToggle.textContent = "☰";
             });
         });
 

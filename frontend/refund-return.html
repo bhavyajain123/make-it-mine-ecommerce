@@ -623,7 +623,7 @@
 
 <body>
   <div class="announcement">
-    THOUGHTFUL GIFTS, MADE PERSONAL â€” MAKE EVERY MOMENT COUNT
+    THOUGHTFUL GIFTS, MADE PERSONAL — MAKE EVERY MOMENT COUNT
   </div>
 
   <header class="navbar">
@@ -638,9 +638,9 @@
     </nav>
 
     <div class="nav-actions">
-      <a href="wishlist.html" aria-label="Wishlist" title="Wishlist">â™¡</a>
-      <a href="cart.html" aria-label="Cart" title="Cart">ðŸ›</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">â˜°</button>
+      <a href="wishlist.html" aria-label="Wishlist" title="Wishlist">♡</a>
+      <a href="cart.html" aria-label="Cart" title="Cart">🛍</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
     </div>
   </header>
 
@@ -727,7 +727,7 @@
 
       <div class="policy-grid">
         <article class="policy-card">
-          <div class="icon">ðŸ“¦</div>
+          <div class="icon">📦</div>
           <h3>Damaged or Incorrect Items</h3>
           <p>
             If your order arrives damaged, defective or different from what
@@ -741,7 +741,7 @@
         </article>
 
         <article class="policy-card">
-          <div class="icon">ðŸŽ¨</div>
+          <div class="icon">🎨</div>
           <h3>Personalized Gifts</h3>
           <p>
             Personalized products are created using details supplied by the
@@ -755,7 +755,7 @@
         </article>
 
         <article class="policy-card">
-          <div class="icon">â†©ï¸</div>
+          <div class="icon">↩️</div>
           <h3>Order Cancellation</h3>
           <p>
             Contact us promptly if you need to cancel an order. Whether
@@ -769,7 +769,7 @@
         </article>
 
         <article class="policy-card">
-          <div class="icon">ðŸ’³</div>
+          <div class="icon">💳</div>
           <h3>Refund Processing</h3>
           <p>
             Where a refund is approved, the processing method and timing depend
@@ -783,7 +783,7 @@
         </article>
 
         <article class="policy-card">
-          <div class="icon">ðŸšš</div>
+          <div class="icon">🚚</div>
           <h3>Shipping & Return Delivery</h3>
           <p>
             If a return is authorized, we will explain the return procedure,
@@ -797,7 +797,7 @@
         </article>
 
         <article class="policy-card">
-          <div class="icon">ðŸ§¾</div>
+          <div class="icon">🧾</div>
           <h3>Order Information</h3>
           <p>
             Having your order details ready helps us investigate issues efficiently.
@@ -820,7 +820,7 @@
           Find helpful information about cancellations, damaged gifts
           and refund requests.
         </p>
-        <a href="contact.html" class="light-btn">Contact Our Team â†’</a>
+        <a href="contact.html" class="light-btn">Contact Our Team →</a>
       </div>
 
       <div class="faq-list">
@@ -912,7 +912,7 @@
         </p>
       </div>
 
-      <a href="contact.html" class="primary-btn">Get in Touch â†’</a>
+      <a href="contact.html" class="primary-btn">Get in Touch →</a>
     </section>
   </main>
 
@@ -958,12 +958,12 @@
     </div>
 
     <div class="footer-bottom">
-      <span>Â© <span id="year"></span> MakeItMine. All rights reserved.</span>
-      <span>Made with care, for the people you love â™¡</span>
+      <span>© <span id="year"></span> MakeItMine. All rights reserved.</span>
+      <span>Made with care, for the people you love ♡</span>
     </div>
   </footer>
 
-  <button class="back-top" id="backTop" aria-label="Back to top" title="Back to top">â†‘</button>
+  <button class="back-top" id="backTop" aria-label="Back to top" title="Back to top">↑</button>
 
   <script>
     const menuToggle = document.getElementById("menuToggle");
@@ -972,14 +972,14 @@
     menuToggle.addEventListener("click", () => {
       const open = navLinks.classList.toggle("open");
       menuToggle.setAttribute("aria-expanded", String(open));
-      menuToggle.textContent = open ? "âœ•" : "â˜°";
+      menuToggle.textContent = open ? "✕" : "☰";
     });
 
     navLinks.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
         navLinks.classList.remove("open");
         menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.textContent = "â˜°";
+        menuToggle.textContent = "☰";
       });
     });
 

@@ -227,23 +227,23 @@
         <section class="stats">
             <div class="stat-card">
                 <span>Total Users</span>
-                <strong id="totalUsers">â€”</strong>
+                <strong id="totalUsers">—</strong>
             </div>
             <div class="stat-card">
                 <span>Active Products</span>
-                <strong id="totalProducts">â€”</strong>
+                <strong id="totalProducts">—</strong>
             </div>
             <div class="stat-card">
                 <span>Total Orders</span>
-                <strong id="totalOrders">â€”</strong>
+                <strong id="totalOrders">—</strong>
             </div>
             <div class="stat-card">
                 <span>Pending Orders</span>
-                <strong id="pendingOrders">â€”</strong>
+                <strong id="pendingOrders">—</strong>
             </div>
             <div class="stat-card">
                 <span>Paid Sales</span>
-                <strong id="totalSales">â€”</strong>
+                <strong id="totalSales">—</strong>
             </div>
         </section>
 
@@ -454,9 +454,9 @@
         }
 
         function formatDate(value) {
-            if (!value) return "â€”";
+            if (!value) return "—";
             const date = new Date(value);
-            return Number.isNaN(date.getTime()) ? "â€”" : date.toLocaleDateString("en-IN");
+            return Number.isNaN(date.getTime()) ? "—" : date.toLocaleDateString("en-IN");
         }
 
         async function loadDashboard() {
@@ -479,8 +479,8 @@
                         <td>${escapeHTML(order.orderNumber || order._id)}</td>
                         <td>${escapeHTML(order.user?.name || "Customer")}</td>
                         <td>${money(order.totalAmount)}</td>
-                        <td>${escapeHTML(order.status || "â€”")}</td>
-                        <td>${escapeHTML(order.paymentStatus || "â€”")}</td>
+                        <td>${escapeHTML(order.status || "—")}</td>
+                        <td>${escapeHTML(order.paymentStatus || "—")}</td>
                         <td>${formatDate(order.createdAt)}</td>
                     </tr>
                 `).join("") : '<tr><td colspan="6">No orders found.</td></tr>';
@@ -557,8 +557,8 @@
                         <td>${escapeHTML(order.orderNumber || order._id)}</td>
                         <td>${escapeHTML(order.user?.name || order.user?.email || "Customer")}</td>
                         <td>${money(order.totalAmount)}</td>
-                        <td>${escapeHTML(order.paymentStatus || "â€”")}</td>
-                        <td class="status">${escapeHTML(order.status || "â€”")}</td>
+                        <td>${escapeHTML(order.paymentStatus || "—")}</td>
+                        <td class="status">${escapeHTML(order.status || "—")}</td>
                         <td>
                             <form class="order-status-form" data-id="${escapeHTML(order._id)}">
                                 <select name="status" aria-label="New order status">
@@ -595,8 +595,8 @@
 
                 $("usersBody").innerHTML = users.length ? users.map(user => `
                     <tr>
-                        <td>${escapeHTML(user.name || "â€”")}</td>
-                        <td>${escapeHTML(user.email || "â€”")}</td>
+                        <td>${escapeHTML(user.name || "—")}</td>
+                        <td>${escapeHTML(user.email || "—")}</td>
                         <td>${escapeHTML(user.role || "user")}</td>
                         <td>${formatDate(user.createdAt)}</td>
                     </tr>

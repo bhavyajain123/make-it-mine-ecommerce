@@ -943,7 +943,7 @@
 
 <body>
   <div class="announcement">
-    MAKE EVERY MOMENT PERSONAL â€” FIND A GIFT THAT MEANS MORE
+    MAKE EVERY MOMENT PERSONAL — FIND A GIFT THAT MEANS MORE
   </div>
 
   <header class="navbar">
@@ -958,9 +958,9 @@
     </nav>
 
     <div class="nav-actions">
-      <a href="wishlist.html" title="Wishlist" aria-label="Wishlist">â™¡</a>
-      <a href="cart.html" title="Cart" aria-label="Cart">ðŸ›</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">â˜°</button>
+      <a href="wishlist.html" title="Wishlist" aria-label="Wishlist">♡</a>
+      <a href="cart.html" title="Cart" aria-label="Cart">🛍</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
     </div>
   </header>
 
@@ -977,7 +977,7 @@
         <p class="hero-copy">All your special purchases, together in one place.</p>
       </div>
 
-      <a class="shop-btn" href="shop.html">ï¼‹ Shop More Gifts</a>
+      <a class="shop-btn" href="shop.html">＋ Shop More Gifts</a>
     </div>
   </section>
 
@@ -993,15 +993,15 @@
         </div>
 
         <nav class="account-nav">
-          <a href="profile.html"><span>â™™</span> My Profile</a>
-          <a href="order-history.html" class="active"><span>â–¤</span> My Orders</a>
-          <a href="order-tracking.html"><span>âŒ–</span> Track Order</a>
-          <a href="wishlist.html"><span>â™¡</span> My Wishlist</a>
-          <a href="cart.html"><span>ðŸ›</span> My Cart</a>
-          <a href="contact.html"><span>âœ‰</span> Help & Support</a>
+          <a href="profile.html"><span>♙</span> My Profile</a>
+          <a href="order-history.html" class="active"><span>▤</span> My Orders</a>
+          <a href="order-tracking.html"><span>⌖</span> Track Order</a>
+          <a href="wishlist.html"><span>♡</span> My Wishlist</a>
+          <a href="cart.html"><span>🛍</span> My Cart</a>
+          <a href="contact.html"><span>✉</span> Help & Support</a>
         </nav>
 
-        <button class="logout-btn" id="logoutBtn"><span>â†ª</span> Back to Home</button>
+        <button class="logout-btn" id="logoutBtn"><span>↪</span> Back to Home</button>
       </aside>
 
       <section class="main-content">
@@ -1016,7 +1016,7 @@
           <div class="stat-card">
             <div class="stat-top">
               Total Orders
-              <span class="stat-icon">â–¤</span>
+              <span class="stat-icon">▤</span>
             </div>
             <strong id="totalOrders">0</strong>
             <small>Orders saved in this browser</small>
@@ -1025,7 +1025,7 @@
           <div class="stat-card">
             <div class="stat-top">
               Delivered
-              <span class="stat-icon">âœ“</span>
+              <span class="stat-icon">✓</span>
             </div>
             <strong id="deliveredOrders">0</strong>
             <small>Marked as delivered</small>
@@ -1034,9 +1034,9 @@
           <div class="stat-card">
             <div class="stat-top">
               Total Order Value
-              <span class="stat-icon">â‚¹</span>
+              <span class="stat-icon">₹</span>
             </div>
-            <strong id="totalSpent">â‚¹0</strong>
+            <strong id="totalSpent">₹0</strong>
             <small>Value of saved orders</small>
           </div>
         </div>
@@ -1074,14 +1074,14 @@
         </div>
 
         <div class="trust-strip">
-          <span>ðŸŽ</span>
+          <span>🎁</span>
           <div>
             <h3>Need help with an order?</h3>
             <p>
               If an order is missing or you need help with delivery, visit our
               contact page and share your order number.
             </p>
-            <a href="contact.html" class="inline-link">Contact Customer Care â†’</a>
+            <a href="contact.html" class="inline-link">Contact Customer Care →</a>
           </div>
         </div>
       </section>
@@ -1127,8 +1127,8 @@
     </div>
 
     <div class="footer-bottom">
-      <span>Â© <span id="year"></span> MakeItMine. All rights reserved.</span>
-      <span>Made with care, for the people you love â™¡</span>
+      <span>© <span id="year"></span> MakeItMine. All rights reserved.</span>
+      <span>Made with care, for the people you love ♡</span>
     </div>
   </footer>
 
@@ -1266,7 +1266,7 @@ paymentMethod: String(order.paymentMethod || "Not specified")
     }
 
     function getItemEmoji(item) {
-      return item?.emoji || item?.imageEmoji || "ðŸŽ";
+      return item?.emoji || item?.imageEmoji || "🎁";
     }
 
     function getOrderTitle(order) {
@@ -1405,7 +1405,7 @@ paymentMethod: String(order.paymentMethod || "Not specified")
 
       let deliveryMessage = "";
       if (category === "delivered") {
-        deliveryMessage = `<p class="delivery-info">âœ“ Delivered</p>`;
+        deliveryMessage = `<p class="delivery-info">✓ Delivered</p>`;
       } else if (category === "transit") {
         deliveryMessage = `<p class="delivery-info">Your order is on its way</p>`;
       } else if (category === "cancelled") {
@@ -1417,7 +1417,7 @@ paymentMethod: String(order.paymentMethod || "Not specified")
             <div class="detail-item">
               <span>
                 ${escapeHTML(getItemName(item))}
-                Ã— ${getItemQuantity(item)}
+                × ${getItemQuantity(item)}
               </span>
               <span>${formatCurrency(getItemPrice(item) * getItemQuantity(item))}</span>
             </div>
@@ -1433,7 +1433,7 @@ paymentMethod: String(order.paymentMethod || "Not specified")
               <div class="order-number">Order #${escapeHTML(order.orderNumber)}</div>
               <div class="order-meta">
                 Placed on ${escapeHTML(formatDate(order.createdAt))}
-                &nbsp;Â·&nbsp; ${itemCount} item(s)
+                &nbsp;·&nbsp; ${itemCount} item(s)
               </div>
             </div>
 
@@ -1444,7 +1444,7 @@ paymentMethod: String(order.paymentMethod || "Not specified")
 
           <div class="order-body">
             <div class="product-thumbs">
-              ${thumbs || `<div class="product-thumb">ðŸŽ</div>`}
+              ${thumbs || `<div class="product-thumb">🎁</div>`}
               ${moreCount}
             </div>
 
@@ -1472,7 +1472,7 @@ paymentMethod: String(order.paymentMethod || "Not specified")
                 data-id="${escapeHTML(order.id)}"
                 aria-expanded="${expanded}"
               >
-                ${expanded ? "Hide Details âˆ’" : "View Details +"}
+                ${expanded ? "Hide Details −" : "View Details +"}
               </button>
 
               <button
@@ -1480,7 +1480,7 @@ paymentMethod: String(order.paymentMethod || "Not specified")
                 data-action="track"
                 data-id="${escapeHTML(order.id)}"
               >
-                Track Order â†—
+                Track Order ↗
               </button>
             </div>
           </div>
@@ -1590,13 +1590,13 @@ async function loadMyOrders() {
       if (orders.length === 0) {
         ordersList.innerHTML = `
           <div class="empty-state">
-            <div class="empty-icon">ðŸŽ</div>
+            <div class="empty-icon">🎁</div>
             <h3>Your story starts here</h3>
             <p>
               You don't have any saved orders yet. Find something meaningful
               for someone special and your recent checkout order can appear here.
             </p>
-            <a class="primary-btn" href="shop.html">Explore Gifts â†’</a>
+            <a class="primary-btn" href="shop.html">Explore Gifts →</a>
           </div>
         `;
         return;
@@ -1670,7 +1670,7 @@ async function loadMyOrders() {
     menuToggle.addEventListener("click", () => {
       const isOpen = navLinks.classList.toggle("open");
       menuToggle.setAttribute("aria-expanded", String(isOpen));
-      menuToggle.textContent = isOpen ? "âœ•" : "â˜°";
+      menuToggle.textContent = isOpen ? "✕" : "☰";
     });
 
     document.getElementById("year").textContent = new Date().getFullYear();
