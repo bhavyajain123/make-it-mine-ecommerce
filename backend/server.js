@@ -9,6 +9,7 @@ const path = require("path");
 const connectDB = require("./config/db");
 
 const app = express();
+app.set("trust proxy", 1);
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -61,6 +62,7 @@ app.use("/api/coupons", require("./routes/couponRoutes"));
 app.use("/api/newsletter", require("./routes/newsletterRoutes"));
 app.use("/api/contact", require("./routes/contactRoutes"));
 app.use("/api/payments", require("./routes/paymentRoutes"));
+app.use("/api/chat", require("./routes/chatRoutes"));
 app.use("/api/products", require("./routes/reviewRoutes"));
 
 app.get("/", (req, res) => {
