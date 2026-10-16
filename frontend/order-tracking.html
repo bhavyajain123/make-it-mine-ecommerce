@@ -2023,45 +2023,48 @@ const timeValue = saved?.timestamp || saved?.changedAt || saved?.date ||
       return Number.isFinite(Number(value));
     }
 
-    function getCoordinates(order) {
-      const address = order && (
-        order.deliveryAddress ||
-        order.shippingAddress ||
-        order.address
-      );
+   function getCoordinates(order) {
+  const address = order && (
+    order.destination ||
+    order.deliveryAddress ||
+    order.shippingAddress ||
+    order.address
+  );
 
-      const hasDestination =
-        address &&
-        typeof address === "object" &&
-        validCoordinate(address.lat) &&
-        validCoordinate(address.lng);
+  const dispatch = order && (order.dispatch || order.warehouse);
 
-      const hasWarehouse =
-        order &&
-        order.warehouse &&
-        validCoordinate(order.warehouse.lat) &&
-        validCoordinate(order.warehouse.lng);
+  const hasDestination =
+    address &&
+    typeof address === "object" &&
+    validCoordinate(address.lat) &&
+    validCoordinate(address.lng);
 
-      return {
-        warehouse: hasWarehouse
-          ? {
-              lat: Number(order.warehouse.lat),
-              lng: Number(order.warehouse.lng),
-              name: order.warehouse.name || "Dispatch Centre"
-            }
-          : DEFAULT_WAREHOUSE,
+  const hasWarehouse =
+    dispatch &&
+    validCoordinate(dispatch.lat) &&
+    validCoordinate(dispatch.lng);
 
-        destination: hasDestination
-          ? {
-              lat: Number(address.lat),
-              lng: Number(address.lng),
-              name: address.name || "Delivery Destination"
-            }
-          : DEFAULT_DESTINATION,
+  return {
+    warehouse: hasWarehouse
+      ? {
+          lat: Number(dispatch.lat),
+          lng: Number(dispatch.lng),
+          name: dispatch.name || "Dispatch Centre"
+        }
+      : DEFAULT_WAREHOUSE,
 
-        destinationIsReal: Boolean(hasDestination)
-      };
-    }
+    destination: hasDestination
+      ? {
+          lat: Number(address.lat),
+          lng: Number(address.lng),
+          name: address.label || address.name || address.city || "Delivery Destination"
+        }
+      : DEFAULT_DESTINATION,
+
+    destinationIsReal: Boolean(hasDestination),
+    precision: hasDestination ? (address.precision || "address") : null
+  };
+}
 
     function markerIcon(kind, symbol) {
       if (kind === "vehicle") {
@@ -2093,6 +2096,11 @@ const timeValue = saved?.timestamp || saved?.changedAt || saved?.date ||
           "</div>";
         return;
       }
+
+      if (map) {
+  map.remove();
+  map = null;
+}
 
       const coordinates = getCoordinates(order);
 
@@ -2181,11 +2189,12 @@ const timeValue = saved?.timestamp || saved?.changedAt || saved?.date ||
       document.getElementById("mapRouteTitle").textContent =
         warehouse.name + " → " + destination.name;
 
-      document.getElementById("mapRouteNote").textContent =
-        coordinates.destinationIsReal
-          ? "Route preview between saved coordinates. No live courier GPS connected."
-          : "Demo route across Delhi NCR. Add actual destination coordinates for your order.";
-
+     document.getElementById("mapRouteNote").textContent =
+  coordinates.destinationIsReal
+    ? (coordinates.precision && coordinates.precision !== "address"
+        ? "Approximate location (based on " + coordinates.precision + "). No live courier GPS connected."
+        : "Route preview between saved coordinates. No live courier GPS connected.")
+    : "Demo route across Delhi NCR. Add actual destination coordinates for your order.";
       setTimeout(() => map.invalidateSize(), 150);
     }
 
@@ -2297,6 +2306,8 @@ async function loadInitialOrder() {
       };
 
       renderOrder(combinedOrder);
+     
+
       createMap(combinedOrder);
     } else {
       renderOrder(null);
@@ -2356,8 +2367,9 @@ document.getElementById("searchForm").addEventListener(
         createdAt: order.createdAt
       };
 
-      renderOrder(combinedOrder);
-
+    
+renderOrder(combinedOrder);
+createMap(combinedOrder);
     
 
       feedback.textContent = "Order found successfully.";

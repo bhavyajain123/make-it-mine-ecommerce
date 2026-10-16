@@ -71,7 +71,7 @@ async function geocodeAddress(address) {
   }
 
   for (let i = 0; i < attempts.length; i++) {
-    // Nominatim allows at most one request per second.
+   
     if (i > 0) await sleep(1100);
 
     try {
