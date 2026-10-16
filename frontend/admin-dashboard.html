@@ -210,6 +210,13 @@
                 padding: 0 12px;
             }
         }
+        #ordersBody td { vertical-align: middle; }
+.order-status-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-width: 320px; }
+.order-status-form select { width: 160px; text-transform: capitalize; }
+.ship-fields { display: none; gap: 8px; width: 100%; }
+.ship-fields input { flex: 1; min-width: 0; }
+.final-status { color: #8a8a8a; font-size: 0.9rem; }
+#ordersBody .status { text-transform: capitalize; }
     </style>
 </head>
 
@@ -556,6 +563,33 @@
                 showMessage("productMessage", error.message, "error");
             }
         }
+        const ORDER_NEXT = {
+    placed: ["confirmed", "cancelled"],
+    confirmed: ["processing", "cancelled"],
+    processing: ["shipped", "cancelled"],
+    shipped: ["out_for_delivery"],
+    out_for_delivery: ["delivered"],
+    cancellation_requested: ["cancelled", "confirmed", "processing"]
+};
+
+function renderStatusCell(order) {
+    const next = ORDER_NEXT[order.status] || [];
+    if (!next.length) return '<span class="final-status">No further action</span>';
+
+    const options = [order.status, ...next].map(s => `
+        <option value="${s}" ${s === order.status ? "selected" : ""}>${s.replace(/_/g, " ")}</option>
+    `).join("");
+
+    return `
+        <form class="order-status-form" data-id="${escapeHTML(order._id)}">
+            <select name="status" aria-label="New order status">${options}</select>
+            <button class="action-btn" type="submit">Update</button>
+            <span class="ship-fields">
+                <input name="carrier" placeholder="Carrier" value="${escapeHTML(order.carrier || "")}">
+                <input name="trackingNumber" placeholder="Tracking no." value="${escapeHTML(order.trackingNumber || "")}">
+            </span>
+        </form>`;
+}
 
         async function loadOrders() {
             showMessage("ordersMessage", "Loading orders...");
@@ -585,27 +619,7 @@
         <td>${escapeHTML(order.paymentStatus || "—")}</td>
         <td class="status">${escapeHTML(order.status || "—")}</td>
         <td>${order.estimatedDelivery ? formatDate(order.estimatedDelivery) : "—"}</td>
-        <td>
-            <form class="order-status-form" data-id="${escapeHTML(order._id)}">
-                <select name="status" aria-label="New order status">
-                  ${[order.status, ...({
-    placed: ["confirmed", "cancelled"],
-    confirmed: ["processing", "cancelled"],
-    processing: ["shipped", "cancelled"],
-    shipped: ["out_for_delivery"],
-    out_for_delivery: ["delivered"],
-    cancellation_requested: ["cancelled", "confirmed", "processing"]
-}[order.status] || [])].map(status => `
-    <option value="${status}" ${order.status === status ? "selected" : ""}>${status}</option>
-`).join("")}
-                </select>
-                <span class="ship-fields" style="display:${order.status === "shipped" ? "inline" : "none"}">
-                    <input name="carrier" placeholder="Carrier" value="${escapeHTML(order.carrier || "")}" style="width:110px">
-                    <input name="trackingNumber" placeholder="Tracking no." value="${escapeHTML(order.trackingNumber || "")}" style="width:130px">
-                </span>
-                <button class="action-btn" type="submit">Update</button>
-            </form>
-        </td>
+       <td>${renderStatusCell(order)}</td>
     </tr>
 `).join("") : '<tr><td colspan="8">No orders found.</td></tr>';
 
@@ -717,7 +731,7 @@ $("ordersBody").addEventListener("change", function (event) {
     const select = event.target.closest('select[name="status"]');
     if (!select) return;
     const fields = select.closest("form").querySelector(".ship-fields");
-    if (fields) fields.style.display = select.value === "shipped" ? "inline" : "none";
+    if (fields) fields.style.display = select.value === "shipped" ? "flex" : "none";
 });
 
 // Select all
