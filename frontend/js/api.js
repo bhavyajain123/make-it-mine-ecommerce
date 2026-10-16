@@ -2,7 +2,7 @@
 const API_BASE_URL =
   location.hostname === "localhost" || location.hostname === "127.0.0.1"
     ? "http://localhost:5000/api"
-    : "https://mim-backend-api-2026-bj111234.onrender.com/api";
+    : "https://mim-backend-api-2026-bj.onrender.com/api";
 
 function getToken() {
   return localStorage.getItem("mim_token");
