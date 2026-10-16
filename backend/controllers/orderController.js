@@ -294,7 +294,7 @@ console.log("Sending email to:", customerEmail, "order:", createdOrder._id);
    try {
   await sendOrderConfirmation(createdOrder, customerEmail);
 } catch (err) {
-  console.log("EMAIL DEBUG:", req.user?.email, createdOrder.orderNumber);
+  console.error("Order email failed:", err.message);
 }
     return res.status(201).json({
       message: "Order placed successfully",
