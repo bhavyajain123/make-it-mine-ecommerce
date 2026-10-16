@@ -30,7 +30,12 @@ const addressSnapshotSchema = new mongoose.Schema(
     city: { type: String, required: true },
     state: { type: String, required: true },
     postalCode: { type: String, required: true },
-    country: { type: String, default: "India" },
+    location: {
+      lat: { type: Number },
+      lng: { type: Number },
+      precision: { type: String },
+    },
+    locationFailedAt: { type: Date, default: null },
   },
   { _id: false }
 );

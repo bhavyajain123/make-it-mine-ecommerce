@@ -7,6 +7,9 @@ const Address = require("../models/Address");
 const Design = require("../models/Design");
 const Product = require("../models/Product");
 const Coupon = require("../models/Coupon");
+const { geocodeAddress } = require("../services/geocode");
+const dispatch = require("../config/dispatch");
+const RETRY_AFTER_FAILURE_MS = 6 * 60 * 60 * 1000;
 const validId = (id) => mongoose.isValidObjectId(id);
 
 exports.createOrder = async (req, res) => {
@@ -345,35 +348,86 @@ exports.getOrderById = async (req, res) => {
 exports.getOrderTracking = async (req, res) => {
   try {
     if (!validId(req.params.id)) {
-      return res.status(400).json({ 
-        message: "Invalid order ID" ,
-    });
+      return res.status(400).json({ message: "Invalid order ID" });
     }
 
     const order = await Order.findOne({
       _id: req.params.id,
       user: req.user._id,
-    }).select(
-      "orderNumber status statusHistory trackingNumber carrier estimatedDelivery createdAt"
-    );
+    });
 
     if (!order) {
-      return res.status(404).json({
-         message: "Order not found",
-         });
+      return res.status(404).json({ message: "Order not found" });
     }
 
-    return res.status(200).json({ 
-        tracking: order,
-     });
+    const addr = order.shippingAddress || {};
+    let location =
+      addr.location &&
+      Number.isFinite(addr.location.lat) &&
+      Number.isFinite(addr.location.lng)
+        ? {
+            lat: addr.location.lat,
+            lng: addr.location.lng,
+            precision: addr.location.precision || "city",
+          }
+        : null;
+
+    if (!location) {
+      const failedRecently =
+        addr.locationFailedAt &&
+        Date.now() - new Date(addr.locationFailedAt).getTime() <
+          RETRY_AFTER_FAILURE_MS;
+
+      if (!failedRecently) {
+        const found = await geocodeAddress(addr);
+
+        await Order.updateOne(
+          { _id: order._id },
+          found
+            ? {
+                $set: {
+                  "shippingAddress.location": found,
+                  "shippingAddress.locationFailedAt": null,
+                },
+              }
+            : { $set: { "shippingAddress.locationFailedAt": new Date() } }
+        );
+
+        location = found;
+      }
+    }
+
+    const destination = location
+      ? {
+          lat: location.lat,
+          lng: location.lng,
+          precision: location.precision,
+          label: [addr.city, addr.state].filter(Boolean).join(", "),
+        }
+      : null;
+
+    return res.status(200).json({
+      tracking: {
+        orderNumber: order.orderNumber,
+        status: order.status,
+        statusHistory: order.statusHistory,
+        trackingNumber: order.trackingNumber,
+        carrier: order.carrier,
+        estimatedDelivery: order.estimatedDelivery,
+        createdAt: order.createdAt,
+        destination,
+        dispatch: {
+          name: dispatch.name,
+          lat: dispatch.lat,
+          lng: dispatch.lng,
+        },
+      },
+    });
   } catch (error) {
     console.error("Tracking error:", error.message);
-    return res.status(500).json({
-         message: "Unable to fetch tracking" ,
-        });
+    return res.status(500).json({ message: "Unable to fetch tracking" });
   }
 };
-
 exports.requestCancellation = async (req, res) => {
   try {
     if (!validId(req.params.id)) {
