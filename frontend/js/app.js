@@ -1260,3 +1260,39 @@ window.MakeItMine = {
   formatPrice,
   apiRequest
 };
+function setupAccountLink() {
+  const loggedIn = Boolean(localStorage.getItem("mim_token"));
+  const target = loggedIn ? "profile.html" : "login.html";
+  const label = loggedIn ? "My account" : "Log in";
+
+  // Agar header mein Account link pehle se hai to bas uska link aur label sahi kar do
+  const existing = document.querySelector(
+    'header a[aria-label="Account"], header a[aria-label="My account"], header a.account-link, header a[href="login.html"], header a[href="profile.html"]'
+  );
+
+  if (existing) {
+    existing.href = target;
+    existing.setAttribute("aria-label", label);
+    existing.title = label;
+    return;
+  }
+
+  // Nahi hai to wishlist icon ke bagal mein naya Account icon jodo, usi style mein
+  const wishlistLink = document.querySelector('header a[href*="wishlist"]');
+  if (!wishlistLink) return;
+
+  const link = wishlistLink.cloneNode(false);
+  link.removeAttribute("id");
+  link.href = target;
+  link.setAttribute("aria-label", label);
+  link.title = label;
+  link.textContent = "♙";
+
+  wishlistLink.parentNode.insertBefore(link, wishlistLink);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", setupAccountLink);
+} else {
+  setupAccountLink();
+}
