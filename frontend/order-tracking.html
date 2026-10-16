@@ -1767,16 +1767,29 @@ function getStatusIndex(order) {
         "Order ID unavailable";
     }
 
-    function getEstimatedDate(order) {
-      if (order && order.estimatedDelivery) {
-        return formatDate(order.estimatedDelivery);
-      }
+  function getEstimatedDate(order) {
+  if (order && order.estimatedDelivery) {
+    const end = new Date(order.estimatedDelivery);
 
-      const date = new Date();
-      date.setDate(date.getDate() + 5);
-      return formatDate(date);
+    if (order.estimatedDeliveryFrom) {
+      const start = new Date(order.estimatedDeliveryFrom);
+      const short = { day: "numeric", month: "short" };
+
+      if (!Number.isNaN(start.getTime()) && start.toDateString() !== end.toDateString()) {
+        return (
+          start.toLocaleDateString("en-IN", short) + " – " +
+          end.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
+        );
+      }
     }
 
+    return formatDate(order.estimatedDelivery);
+  }
+
+  const date = new Date();
+  date.setDate(date.getDate() + 5);
+  return formatDate(date);
+}
     function showToast(message) {
       const toast = document.getElementById("toast");
 
@@ -2004,20 +2017,16 @@ const timeValue = saved?.timestamp || saved?.changedAt || saved?.date ||
     }
 
     function renderDeliveryDate(order) {
-      document.getElementById("estimatedDate").textContent =
-        getEstimatedDate(order);
+  document.getElementById("estimatedDate").textContent =
+    getEstimatedDate(order);
 
-      document.getElementById("estimatedNote").textContent =
-        order && order.estimatedDelivery
-          ? "Estimated delivery from your order record"
-          : "Illustrative estimate — actual delivery may vary";
-    }
+  document.getElementById("estimatedNote").textContent =
+    order && order.estimatedDelivery
+      ? "Estimated from our dispatch centre to your location. Actual delivery may vary."
+      : "Illustrative estimate — actual delivery may vary";
+}
 
-    /*
-      Map setup:
-      The default map is centred on Delhi NCR as a demonstration.
-      Coordinates from the saved order can replace these defaults.
-    */
+   
 
     function validCoordinate(value) {
       return Number.isFinite(Number(value));

@@ -135,7 +135,7 @@ const orderSchema = new mongoose.Schema(
     trackingNumber: { type: String, default: "" },
     carrier: { type: String, default: "" },
     estimatedDelivery: { type: Date, default: null },
-
+estimatedDeliveryFrom: { type: Date, default: null },
     cancellationReason: { type: String, default: "" },
     cancellationRequestedAt: { type: Date, default: null },
 

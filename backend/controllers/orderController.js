@@ -9,6 +9,7 @@ const Product = require("../models/Product");
 const Coupon = require("../models/Coupon");
 const { geocodeAddress } = require("../services/geocode");
 const dispatch = require("../config/dispatch");
+const { estimateDelivery } = require("../services/deliveryEstimate");
 const RETRY_AFTER_FAILURE_MS = 6 * 60 * 60 * 1000;
 const validId = (id) => mongoose.isValidObjectId(id);
 
@@ -275,6 +276,10 @@ paymentMethod,
         ],
       });
 
+      const estimate = estimateDelivery({ state: address.state });
+createdOrder.estimatedDelivery = estimate.maxDate;
+createdOrder.estimatedDeliveryFrom = estimate.minDate;
+
       await createdOrder.save({ session });
 
       cart.items = [];
@@ -414,6 +419,7 @@ exports.getOrderTracking = async (req, res) => {
         trackingNumber: order.trackingNumber,
         carrier: order.carrier,
         estimatedDelivery: order.estimatedDelivery,
+        estimatedDeliveryFrom: order.estimatedDeliveryFrom,
         createdAt: order.createdAt,
         destination,
         dispatch: {

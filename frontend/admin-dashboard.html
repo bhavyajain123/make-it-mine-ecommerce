@@ -323,7 +323,9 @@
                         <option value="confirmed">Confirmed</option>
                         <option value="processing">Processing</option>
                         <option value="shipped">Shipped</option>
+                        <option value="out_for_delivery">Out for delivery</option>
                         <option value="delivered">Delivered</option>
+                        <option value="cancellation_requested">Cancellation requested</option>
                         <option value="cancelled">Cancelled</option>
                     </select>
                     <button class="action-btn" id="loadOrdersBtn" type="button">
@@ -332,20 +334,37 @@
                 </div>
             </div>
             <p id="ordersMessage" class="message" aria-live="polite"></p>
+            <div class="toolbar" style="margin:12px 0;flex-wrap:wrap;gap:8px">
+    <input id="orderSearch" type="search" placeholder="Search order number or customer" style="min-width:240px">
+    <select id="bulkStatus" aria-label="Bulk status">
+    <option value="">Bulk: choose status</option>
+    <option value="confirmed">Confirmed</option>
+    <option value="processing">Processing</option>
+    <option value="out_for_delivery">Out for delivery</option>
+    <option value="delivered">Delivered</option>
+    <option value="cancelled">Cancelled</option>
+</select>
+    <button class="action-btn" id="bulkApplyBtn" type="button">Apply to selected</button>
+</div>
             <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
+                           
+                            <th><input type="checkbox" id="selectAllOrders" aria-label="Select all"></th>
                             <th>Order</th>
                             <th>Customer</th>
                             <th>Amount</th>
                             <th>Payment</th>
                             <th>Current Status</th>
+                            
+                            <th>Est. Delivery</th>
+                            
                             <th>Change Status</th>
                         </tr>
                     </thead>
                     <tbody id="ordersBody">
-                        <tr><td colspan="6">Click Load Orders.</td></tr>
+                        <tr><td colspan="8">Click Load Orders.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -558,26 +577,39 @@
                 $("ordersNext").disabled = orderPage >= orderTotalPages;
 
                 $("ordersBody").innerHTML = orders.length ? orders.map(order => `
-                    <tr>
-                        <td>${escapeHTML(order.orderNumber || order._id)}</td>
-                        <td>${escapeHTML(order.user?.name || order.user?.email || "Customer")}</td>
-                        <td>${money(order.totalAmount)}</td>
-                        <td>${escapeHTML(order.paymentStatus || "—")}</td>
-                        <td class="status">${escapeHTML(order.status || "—")}</td>
-                        <td>
-                            <form class="order-status-form" data-id="${escapeHTML(order._id)}">
-                                <select name="status" aria-label="New order status">
-                                    ${["placed", "confirmed", "processing", "shipped", "delivered", "cancelled"].map(status => `
-                                        <option value="${status}" ${order.status === status ? "selected" : ""}>
-                                            ${status}
-                                        </option>
-                                    `).join("")}
-                                </select>
-                                <button class="action-btn" type="submit">Update</button>
-                            </form>
-                        </td>
-                    </tr>
-                `).join("") : '<tr><td colspan="6">No orders found.</td></tr>';
+    <tr>
+        <td><input type="checkbox" class="order-check" value="${escapeHTML(order._id)}" aria-label="Select order"></td>
+        <td>${escapeHTML(order.orderNumber || order._id)}</td>
+        <td>${escapeHTML(order.user?.name || order.user?.email || "Customer")}</td>
+        <td>${money(order.totalAmount)}</td>
+        <td>${escapeHTML(order.paymentStatus || "—")}</td>
+        <td class="status">${escapeHTML(order.status || "—")}</td>
+        <td>${order.estimatedDelivery ? formatDate(order.estimatedDelivery) : "—"}</td>
+        <td>
+            <form class="order-status-form" data-id="${escapeHTML(order._id)}">
+                <select name="status" aria-label="New order status">
+                  ${[order.status, ...({
+    placed: ["confirmed", "cancelled"],
+    confirmed: ["processing", "cancelled"],
+    processing: ["shipped", "cancelled"],
+    shipped: ["out_for_delivery"],
+    out_for_delivery: ["delivered"],
+    cancellation_requested: ["cancelled", "confirmed", "processing"]
+}[order.status] || [])].map(status => `
+    <option value="${status}" ${order.status === status ? "selected" : ""}>${status}</option>
+`).join("")}
+                </select>
+                <span class="ship-fields" style="display:${order.status === "shipped" ? "inline" : "none"}">
+                    <input name="carrier" placeholder="Carrier" value="${escapeHTML(order.carrier || "")}" style="width:110px">
+                    <input name="trackingNumber" placeholder="Tracking no." value="${escapeHTML(order.trackingNumber || "")}" style="width:130px">
+                </span>
+                <button class="action-btn" type="submit">Update</button>
+            </form>
+        </td>
+    </tr>
+`).join("") : '<tr><td colspan="8">No orders found.</td></tr>';
+
+$("selectAllOrders").checked = false;
 
                 showMessage("ordersMessage", `${orders.length} orders loaded.`, "success");
             } catch (error) {
@@ -639,27 +671,36 @@
             }
         });
 
-        $("ordersBody").addEventListener("submit", async function (event) {
-            const form = event.target.closest(".order-status-form");
-            if (!form) return;
-            event.preventDefault();
+       $("ordersBody").addEventListener("submit", async function (event) {
+    const form = event.target.closest(".order-status-form");
+    if (!form) return;
+    event.preventDefault();
 
-            const id = encodeURIComponent(form.dataset.id);
-            const status = form.elements.status.value;
+    const id = encodeURIComponent(form.dataset.id);
+    const status = form.elements.status.value;
+    const carrier = form.elements.carrier ? form.elements.carrier.value.trim() : "";
+    const trackingNumber = form.elements.trackingNumber ? form.elements.trackingNumber.value.trim() : "";
 
-            try {
-                await apiRequest(`/${id}/status`, {
-                    method: "PATCH",
-                    body: JSON.stringify({ status })
-                });
+    if (["delivered", "cancelled"].includes(status) &&
+        !confirm(`Mark this order as ${status}? Customer ko update dikhega.`)) {
+        return;
+    }
 
-                showMessage("ordersMessage", "Order status updated.", "success");
-                await loadOrders();
-                await loadDashboard();
-            } catch (error) {
-                showMessage("ordersMessage", error.message, "error");
-            }
+    try {
+        await apiRequest(`/${id}/status`, {
+            method: "PATCH",
+            body: JSON.stringify(
+                status === "shipped" ? { status, carrier, trackingNumber } : { status }
+            )
         });
+
+        showMessage("ordersMessage", "Order status updated.", "success");
+        await loadOrders();
+        await loadDashboard();
+    } catch (error) {
+        showMessage("ordersMessage", error.message, "error");
+    }
+});
 
         $("loadProductsBtn").addEventListener("click", () => {
             productPage = 1;
@@ -670,6 +711,58 @@
             orderPage = 1;
             loadOrders();
         });
+
+        // Shipped chunne par carrier aur tracking ke inputs dikhao
+$("ordersBody").addEventListener("change", function (event) {
+    const select = event.target.closest('select[name="status"]');
+    if (!select) return;
+    const fields = select.closest("form").querySelector(".ship-fields");
+    if (fields) fields.style.display = select.value === "shipped" ? "inline" : "none";
+});
+
+// Select all
+$("selectAllOrders").addEventListener("change", function () {
+    document.querySelectorAll(".order-check").forEach(box => {
+        if (box.closest("tr").style.display !== "none") box.checked = this.checked;
+    });
+});
+
+// Search (abhi load hue orders mein)
+$("orderSearch").addEventListener("input", function () {
+    const term = this.value.trim().toLowerCase();
+    document.querySelectorAll("#ordersBody tr").forEach(row => {
+        row.style.display = !term || row.textContent.toLowerCase().includes(term) ? "" : "none";
+    });
+});
+
+
+$("bulkApplyBtn").addEventListener("click", async function () {
+    const ids = [...document.querySelectorAll(".order-check:checked")].map(box => box.value);
+    const status = $("bulkStatus").value;
+
+    if (!ids.length) return showMessage("ordersMessage", "Select at least one order.", "error");
+    if (!status) return showMessage("ordersMessage", "Choose a bulk status first.", "error");
+    if (!confirm(`Mark ${ids.length} order(s) as ${status}?`)) return;
+
+    let done = 0, failed = 0;
+    for (const id of ids) {
+        try {
+            await apiRequest(`/${encodeURIComponent(id)}/status`, {
+                method: "PATCH",
+                body: JSON.stringify({ status })
+            });
+            done++;
+        } catch (error) {
+            failed++;
+        }
+    }
+
+    showMessage("ordersMessage",
+        `${done} updated${failed ? `, ${failed} failed` : ""}.`,
+        failed ? "error" : "success");
+    await loadOrders();
+    await loadDashboard();
+});
 
         $("loadUsersBtn").addEventListener("click", () => {
             userPage = 1;

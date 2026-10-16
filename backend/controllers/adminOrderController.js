@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
 const mongoose = require("mongoose");
 const Order = require("../models/Order");
+const { estimateDelivery } = require("../services/deliveryEstimate");
 
 const allowedTransitions = {
   placed: ["confirmed", "cancelled"],
@@ -125,6 +126,14 @@ exports.updateOrderStatus = async (req, res) => {
       if (deliveryDate !== undefined) {
         order.estimatedDelivery = deliveryDate;
       }
+if (status === "shipped" && deliveryDate === undefined) {
+  const est = estimateDelivery({
+    location: order.shippingAddress && order.shippingAddress.location,
+    state: order.shippingAddress && order.shippingAddress.state,
+  });
+  order.estimatedDelivery = est.maxDate;
+  order.estimatedDeliveryFrom = est.minDate;
+}
 
       order.status = status;
       order.statusHistory.push({
@@ -159,54 +168,5 @@ exports.updateOrderStatus = async (req, res) => {
   }
 };
 
-exports.updateOrderStatus = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { status } = req.body;
 
-    const allowedStatuses = [
-      "placed",
-      "confirmed",
-      "processing",
-      "shipped",
-      "out_for_delivery",
-      "delivered",
-      "cancelled",
-    ];
-
-    if (!mongoose.isValidObjectId(id)) {
-      return res.status(400).json({
-        message: "Invalid order ID",
-      });
-    }
-
-    if (!allowedStatuses.includes(status)) {
-      return res.status(400).json({
-        message: "Invalid order status",
-      });
-    }
-
-    const order = await Order.findById(id);
-
-    if (!order) {
-      return res.status(404).json({
-        message: "Order not found",
-      });
-    }
-
-    order.status = status;
-    await order.save();
-
-    return res.status(200).json({
-      message: "Order status updated successfully",
-      order,
-    });
-  } catch (error) {
-    console.error("Update order status error:", error.message);
-
-    return res.status(500).json({
-      message: "Unable to update order status",
-    });
-  }
-};
 
