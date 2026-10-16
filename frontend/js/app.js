@@ -980,18 +980,7 @@ function initCheckout() {
         );
 
         // ✅ NEW: confirmation email (cart khali hone se pehle, redirect se pehle)
-        await sendOrderEmail({
-          email,
-          name: firstName,
-          orderId: order.orderNumber || orderId,
-          items: cart,
-          total:
-            order.totalAmount ??
-            order.total ??
-            order.finalAmount ??
-            Cart.getTotal(),
-          paymentMethod: "Cash on Delivery"
-        });
+        
 
         await Cart.refreshFromBackend();
 
