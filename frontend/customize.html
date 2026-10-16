@@ -2312,6 +2312,182 @@ showToast("Customized gift added to cart!");
 
 });
 </script>
+
+<style>
+  #aiDesignBox{margin-top:14px;padding:16px;border:1px dashed #d9c3b6;border-radius:10px;background:#fffaf6}
+  #aiDesignBox strong{display:block;margin-bottom:10px;font-size:15px}
+  #aiDesignBox input{width:100%;padding:11px;margin-bottom:10px;border:1px solid #e5d4c9;border-radius:6px;font:inherit;font-size:14px;box-sizing:border-box;background:#fff}
+  #aiDesignBox .ai-main{width:100%;padding:12px;border:0;border-radius:6px;background:#6d2238;color:#fff;font-weight:bold;cursor:pointer}
+  #aiDesignBox .ai-main:disabled{opacity:.6;cursor:wait}
+  #aiDesignStatus{font-size:12px;margin:8px 0 0;color:#806b60}
+  #aiDesignResults{display:grid;gap:12px;margin-top:12px}
+  .ai-idea{background:#fff;border:1px solid #eaded5;border-radius:10px;padding:14px}
+  .ai-idea h4{margin:0 0 6px;font-size:16px}
+  .ai-idea p{margin:0 0 10px;font-size:13px;line-height:1.5;color:#806b60}
+  .ai-palette{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .ai-chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border:1px solid #eaded5;border-radius:99px;background:#fffdfb}
+  .ai-dot{width:12px;height:12px;border-radius:50%;border:1px solid #d9c3b6;display:inline-block}
+  .ai-use{padding:8px 12px;border:1px solid #6d2238;border-radius:6px;background:#fff;color:#6d2238;font-weight:bold;font-size:12px;cursor:pointer}
+</style>
+
+<script>
+(function () {
+  var note = document.getElementById("personalMessage");
+  if (!note) return;
+
+  var box = document.createElement("div");
+  box.id = "aiDesignBox";
+  box.innerHTML =
+    '<strong>&#10024; Need design ideas?</strong>' +
+    '<input id="aiTheme" type="text" maxlength="150" placeholder="Theme or occasion, e.g. anniversary, romantic, vintage">' +
+    '<button type="button" class="ai-main" id="aiDesignBtn">Get design ideas</button>' +
+    '<p id="aiDesignStatus" role="status"></p>' +
+    '<div id="aiDesignResults"></div>';
+
+  note.insertAdjacentElement("afterend", box);
+
+  var btn = document.getElementById("aiDesignBtn");
+  var status = document.getElementById("aiDesignStatus");
+  var results = document.getElementById("aiDesignResults");
+
+  var NAMES = {
+    giftBox: "gift box",
+    mug: "personalized mug",
+    photoFrame: "photo frame",
+    teddy: "teddy bear"
+  };
+
+  function say(text, ok) {
+    status.textContent = text;
+    status.style.color = ok ? "#53765d" : "#b44343";
+  }
+
+  function getProductType() {
+    var radio = document.querySelector('input[name="giftType"]:checked');
+    if (!radio) return "";
+    if (NAMES[radio.id]) return NAMES[radio.id];
+    if (radio.value && radio.value !== "on") return radio.value;
+    return radio.id;
+  }
+
+  function addToNote(idea) {
+    var line = (idea.title || "Design idea") + ": " + (idea.description || "");
+    var current = note.value.trim();
+    var limit = note.maxLength > 0 ? note.maxLength : 500;
+    note.value = (current ? current + "\n" : "") + line;
+    note.value = note.value.slice(0, limit);
+    note.dispatchEvent(new Event("input"));
+    say("Added to your personal note. You can edit it above.", true);
+  }
+
+  function renderIdeas(ideas) {
+    results.replaceChildren();
+
+    ideas.slice(0, 3).forEach(function (idea) {
+      var card = document.createElement("div");
+      card.className = "ai-idea";
+
+      var title = document.createElement("h4");
+      title.textContent = String(idea.title || "Design idea");
+
+      var desc = document.createElement("p");
+      desc.textContent = String(idea.description || "");
+
+      var palette = document.createElement("div");
+      palette.className = "ai-palette";
+      (Array.isArray(idea.colorPalette) ? idea.colorPalette : []).slice(0, 6).forEach(function (color) {
+        var chip = document.createElement("span");
+        chip.className = "ai-chip";
+        var dot = document.createElement("span");
+        dot.className = "ai-dot";
+        dot.style.background = String(color);
+        chip.append(dot, document.createTextNode(String(color)));
+        palette.appendChild(chip);
+      });
+
+      var use = document.createElement("button");
+      use.type = "button";
+      use.className = "ai-use";
+      use.textContent = "Add to my personal note";
+      use.addEventListener("click", function () { addToNote(idea); });
+
+      card.append(title, desc, palette, use);
+      results.appendChild(card);
+    });
+  }
+
+  btn.addEventListener("click", async function () {
+    var token = localStorage.getItem("mim_token");
+    var productType = getProductType();
+    var theme = document.getElementById("aiTheme").value.trim();
+
+    if (!token) {
+      say("Please log in to use design ideas.", false);
+      return;
+    }
+    if (!productType) {
+      say("Choose a gift type first.", false);
+      return;
+    }
+    if (!theme) {
+      say("Tell us a theme or occasion.", false);
+      return;
+    }
+
+    var nameField = document.getElementById("recipientName");
+    var colorRadio = document.querySelector('input[name="giftColor"]:checked');
+
+    var body = { productType: productType, theme: theme };
+    if (nameField && nameField.value.trim()) {
+      body.text = nameField.value.trim().slice(0, 100);
+    }
+    if (colorRadio && colorRadio.value && colorRadio.value !== "on") {
+      body.colors = [String(colorRadio.value).slice(0, 30)];
+    }
+
+    btn.disabled = true;
+    say("Thinking up ideas... this can take up to a minute the first time.", true);
+    results.replaceChildren();
+
+    var apiOrigin = window.API_ORIGIN ||
+      (location.hostname === "localhost" || location.hostname === "127.0.0.1"
+        ? "http://localhost:5000"
+        : "https://mim-backend-api-2026-bj111234.onrender.com");
+
+    try {
+      var response = await fetch(apiOrigin + "/api/ai/design-suggestions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(90000)
+      });
+
+      var data = await response.json().catch(function () { return {}; });
+
+      if (response.status === 401) {
+        say("Your session expired. Please log in again.", false);
+        return;
+      }
+      if (!response.ok || !Array.isArray(data.ideas) || !data.ideas.length) {
+        throw new Error(data.message || "Could not get ideas right now.");
+      }
+
+      renderIdeas(data.ideas);
+      say("Here are 3 ideas. Click one to add it to your note.", true);
+    } catch (error) {
+      say(error.name === "TimeoutError"
+        ? "This is taking too long. Please try again."
+        : error.message, false);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+
 <script type="module" src="js/app.js"></script>
 </body>
 </html>
