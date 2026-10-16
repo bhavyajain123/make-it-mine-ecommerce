@@ -806,6 +806,33 @@ function initCustomization() {
   });
 }
 
+async function sendOrderEmail({ email, name, orderId, items, total, paymentMethod }) {
+  if (!email) return;
+
+  try {
+    await fetch("/api/send-order-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      keepalive: true, // redirect ke baad bhi request cancel nahi hogi
+      body: JSON.stringify({
+        email,
+        name,
+        orderId,
+        items: items.map(i => ({
+          name: i.name,
+          price: i.price,
+          quantity: i.quantity
+        })),
+        total,
+        paymentMethod
+      })
+    });
+  } catch (error) {
+    // Email fail hone par order fail nahi hona chahiye
+    console.error("Order email failed:", error);
+  }
+}
+
 /* ---------- CHECKOUT ---------- */
 
 
@@ -946,12 +973,25 @@ function initCheckout() {
         throw new Error("Order ID was not returned by the server.");
       }
 
-      // COD: continue to the success page.
-      if (payment === "cod") {
+          if (payment === "cod") {
         sessionStorage.setItem(
           "makeitmine_last_order_id",
           String(orderId)
         );
+
+        // ✅ NEW: confirmation email (cart khali hone se pehle, redirect se pehle)
+        await sendOrderEmail({
+          email,
+          name: firstName,
+          orderId: order.orderNumber || orderId,
+          items: cart,
+          total:
+            order.totalAmount ??
+            order.total ??
+            order.finalAmount ??
+            Cart.getTotal(),
+          paymentMethod: "Cash on Delivery"
+        });
 
         await Cart.refreshFromBackend();
 
