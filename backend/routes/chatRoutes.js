@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { chat } = require("../controllers/chatController");
 const { createRateLimiter } = require("../middleware/rateLimit");
+const optionalAuth = require("../middleware/optionalAuth");
 
 const perVisitor = createRateLimiter({
   windowMs: 10 * 60 * 1000,
@@ -17,6 +18,6 @@ const wholeSite = createRateLimiter({
 });
 
 // Public route. Per-visitor limit runs first so abusers never use up the site-wide limit.
-router.post("/", perVisitor, wholeSite, chat);
+router.post("/", perVisitor, wholeSite, optionalAuth, chat);
 
 module.exports = router;

@@ -70,7 +70,7 @@
     '<div class="mimc-msgs" aria-live="polite"></div>' +
     '<div class="mimc-chips"></div>' +
     '<form class="mimc-form"><input type="text" maxlength="500" placeholder="Ask about gifts, delivery..." aria-label="Your message" autocomplete="off"><button type="submit">Send</button></form>' +
-    '<div class="mimc-note">AI answers can be wrong. For orders, please contact us.</div>';
+    '<div class="mimc-note">AI answers can be wrong. Log in to ask about your orders.</div>';
 
   document.body.appendChild(btn);
   document.body.appendChild(panel);
@@ -119,6 +119,7 @@
     "How do I customize a gift?",
     "What payment options do you have?",
     "Delivery and shipping?",
+        "Where is my order?",
     "Returns and refunds?",
     "Help me find a gift"
   ];
@@ -151,12 +152,17 @@
     var typing = addMessage("bot", "Typing...");
     typing.classList.add("mimc-typing");
 
-    var reply;
+        var reply;
+    var link = "";
+    var token = null;
+    try { token = localStorage.getItem("mim_token"); } catch (e) {}
+    var headers = { "Content-Type": "application/json" };
+    if (token) headers.Authorization = "Bearer " + token;
 
     try {
       var response = await fetch(API_ORIGIN + "/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: headers,
         body: JSON.stringify({ message: text, history: prior }),
         signal: AbortSignal.timeout(90000)
       });
@@ -168,6 +174,7 @@
       }
 
       reply = data.reply;
+            link = typeof data.link === "string" ? data.link : "";
       history.push({ role: "assistant", text: reply });
       save();
     } catch (error) {
@@ -177,7 +184,16 @@
     }
 
     typing.remove();
-    addMessage("bot", reply);
+        var botEl = addMessage("bot", reply);
+    if (link && /^(login|order-tracking)\.html(\?id=[a-f0-9]{24})?$/i.test(link)) {
+      var a = document.createElement("a");
+      a.href = link;
+      a.textContent = link.indexOf("login") === 0 ? "Log in" : "Track this order";
+      a.style.cssText = "color:#6d2238;font-weight:bold;display:inline-block;margin-top:6px";
+      botEl.appendChild(document.createElement("br"));
+      botEl.appendChild(a);
+    }
+    
 
     busy = false;
     sendBtn.disabled = false;

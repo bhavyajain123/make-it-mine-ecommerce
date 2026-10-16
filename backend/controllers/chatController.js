@@ -1,5 +1,6 @@
 const { GoogleGenAI } = require("@google/genai");
 const STORE_KNOWLEDGE = require("../config/storeKnowledge");
+const Order = require("../models/Order");
 
 const ai = process.env.GEMINI_API_KEY
   ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
@@ -13,7 +14,7 @@ const SYSTEM_PROMPT = `You are the MakeItMine helper, a friendly AI assistant on
 Rules:
 - Answer using only the STORE FACTS below plus general gifting advice. Never invent policies, prices, delivery times, discounts or stock.
 - If a fact is missing or marked NOT_SET, say you are not sure and suggest the Contact page or hello@makeitmine.com.
-- You cannot see orders, accounts or payments. For order status, point the customer to My Account or the View Order Details page.
+- Order status questions are answered separately from the customer's own account. If asked and you have no order data, tell them to log in and ask "where is my order". Never guess order status, tracking numbers or dates.
 - Never ask for passwords, OTPs, card details or UPI PINs. If a customer shares them, tell them not to.
 - Keep replies short (at most 4 sentences), warm and in plain text with no markdown.
 - Reply in the language the customer uses (English or Hinglish).
@@ -64,12 +65,86 @@ async function ask(transcript) {
   throw lastError;
 }
 
+/* ---------- Order lookup (database se, AI se nahi) ---------- */
+
+const STATUS_TEXT = {
+  placed: "placed and waiting for confirmation",
+  confirmed: "confirmed",
+  processing: "being prepared",
+  shipped: "shipped",
+  out_for_delivery: "out for delivery",
+  delivered: "delivered",
+  cancellation_requested: "waiting for cancellation approval",
+  cancelled: "cancelled",
+};
+
+const ORDER_INTENT =
+  /(track|tracking|order status|my order|my parcel|my package|mera order|meri order|mere order|order kahan|parcel kahan|where is my|where's my|status of my)/i;
+const ORDER_NUMBER = /ORD-\d+-[A-F0-9]+/i;
+
+function shortDate(value) {
+  return new Date(value).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+}
+
+async function answerOrderQuestion(user, message) {
+  const hinglish = /\b(mera|meri|mere|kahan|kab|kya|hai|nahi|aayega|bhai|batao)\b/i.test(message);
+
+  if (!user) {
+    return {
+      reply: hinglish
+        ? "Order ki details dekhne ke liye pehle login karo, phir mujhse poochho."
+        : "Please log in to your account first, then ask me again and I will check your order.",
+      link: "login.html",
+    };
+  }
+
+  // Sirf is user ke apne orders, kisi aur ke kabhi nahi
+  const filter = { user: user._id };
+  const numberMatch = message.match(ORDER_NUMBER);
+  if (numberMatch) filter.orderNumber = numberMatch[0].toUpperCase();
+
+  const orders = await Order.find(filter)
+    .sort({ createdAt: -1 })
+    .limit(5)
+    .select("orderNumber status carrier trackingNumber estimatedDelivery estimatedDeliveryFrom");
+
+  if (!orders.length) {
+    return {
+      reply: numberMatch
+        ? "I could not find that order number in your account. Please check it on the My Orders page."
+        : "I could not find any orders in your account yet.",
+    };
+  }
+
+  const order = orders[0];
+  const lines = [
+    `Order ${order.orderNumber} is ${STATUS_TEXT[order.status] || order.status}.`,
+  ];
+
+  if (order.carrier || order.trackingNumber) {
+    const parts = [];
+    if (order.carrier) parts.push(`Carrier: ${order.carrier}`);
+    if (order.trackingNumber) parts.push(`Tracking number: ${order.trackingNumber}`);
+    lines.push(parts.join(", ") + ".");
+  }
+
+  if (order.estimatedDelivery && !["delivered", "cancelled"].includes(order.status)) {
+    const end = shortDate(order.estimatedDelivery);
+    const start = order.estimatedDeliveryFrom ? shortDate(order.estimatedDeliveryFrom) : "";
+    lines.push(
+      `Estimated delivery: ${start && start !== end ? start + " to " + end : end} (an estimate, actual delivery may vary).`
+    );
+  }
+
+  if (!numberMatch && orders.length > 1) {
+    lines.push("This is your latest order. Send an order number like ORD-123... to check another one.");
+  }
+
+  return { reply: lines.join("\n"), link: `order-tracking.html?id=${order._id}` };
+}
+
 exports.chat = async (req, res) => {
   try {
-    if (!ai) {
-      return res.status(503).json({ message: "The helper is not available right now." });
-    }
-
     const message =
       typeof req.body.message === "string" ? req.body.message.trim() : "";
 
@@ -78,6 +153,15 @@ exports.chat = async (req, res) => {
     }
     if (message.length > 500) {
       return res.status(400).json({ message: "Please keep your message under 500 characters." });
+    }
+
+    // Order sawal: jawab seedha database se
+    if (ORDER_INTENT.test(message) || ORDER_NUMBER.test(message)) {
+      return res.status(200).json(await answerOrderQuestion(req.user, message));
+    }
+
+    if (!ai) {
+      return res.status(503).json({ message: "The helper is not available right now." });
     }
 
     const history = Array.isArray(req.body.history) ? req.body.history.slice(-6) : [];

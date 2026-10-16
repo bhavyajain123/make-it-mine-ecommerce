@@ -290,3 +290,5 @@ exports.generateDesign = async (req, res) => {
     });
   }
 };
+exports.generateText = generateText;
+exports.parseJson = parseJson;

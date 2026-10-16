@@ -323,6 +323,33 @@
         <section class="panel">
             <div class="panel-heading">
                 <h3>All Orders</h3>
+                <section class="panel" id="aiPanel">
+    <div class="panel-heading">
+        <h3>AI Insights</h3>
+        <div class="toolbar">
+            <button class="action-btn" id="aiInsightsBtn" type="button">Generate insights</button>
+        </div>
+    </div>
+    <p id="aiMessage" class="message" aria-live="polite"></p>
+    <div id="aiInsights"></div>
+
+    <h4 style="margin:28px 0 10px">Product description and SEO title</h4>
+    <div class="toolbar" style="flex-wrap:wrap;gap:8px">
+        <input id="pcName" placeholder="Product name" maxlength="100">
+        <input id="pcCategory" placeholder="Category" maxlength="60">
+        <input id="pcPrice" type="number" min="0" placeholder="Price">
+        <label><input type="checkbox" id="pcCustom"> Customizable</label>
+    </div>
+    <textarea id="pcNotes" rows="2" maxlength="300" placeholder="Notes: material, size, who it is for (optional)" style="width:100%;margin-top:8px"></textarea>
+    <button class="action-btn" id="pcBtn" type="button" style="margin-top:8px">Write copy</button>
+    <p id="pcMessage" class="message" aria-live="polite"></p>
+    <div id="pcResult" style="display:none;gap:8px;flex-direction:column">
+        <label>SEO title <input id="pcTitle" style="width:100%"></label>
+        <label>Meta description <textarea id="pcMeta" rows="2" style="width:100%"></textarea></label>
+        <label>Description <textarea id="pcDesc" rows="5" style="width:100%"></textarea></label>
+        <small>AI ka likha hua hai, publish karne se pehle padh ke edit kar lo.</small>
+    </div>
+</section>
                 <div class="toolbar">
                     <select id="orderStatusFilter">
                         <option value="">All statuses</option>
@@ -844,6 +871,75 @@ $("bulkApplyBtn").addEventListener("click", async function () {
             localStorage.removeItem("mim_token");
             window.location.href = "login.html";
         });
+
+        function renderInsights(d) {
+    const list = items => items && items.length
+        ? "<ul>" + items.map(x => `<li>${escapeHTML(x)}</li>`).join("") + "</ul>" : "<p>—</p>";
+
+    const r = d.reviews || {};
+    const reviewsHtml = r.error ? `<p>${escapeHTML(r.error)}</p>`
+        : !r.count ? "<p>No reviews yet.</p>"
+        : `<p><strong>${r.average}/5</strong> from ${r.count} reviews</p>
+           <p>${escapeHTML(r.overall)}</p>
+           <p><strong>Customers liked</strong></p>${list(r.liked)}
+           <p><strong>Complaints</strong></p>${list(r.complaints)}
+           <p><strong>Suggestions</strong></p>${list(r.suggestions)}`;
+
+    const late = d.late || { orders: [], stuckCount: 0 };
+    const lateHtml = (late.stuckCount ? `<p>${late.stuckCount} order(s) are still Placed/Confirmed after 2+ days.</p>` : "") +
+        (late.orders.length
+            ? `<div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Promised</th><th>Late by</th></tr></thead><tbody>` +
+              late.orders.map(o => `<tr><td>${escapeHTML(o.orderNumber)}</td><td>${escapeHTML(o.customer)}</td><td>${escapeHTML(o.status.replace(/_/g, " "))}</td><td>${formatDate(o.estimatedDelivery)}</td><td>${o.daysLate} day(s)</td></tr>`).join("") +
+              `</tbody></table></div>`
+            : "<p>No late orders.</p>");
+
+    const stockHtml = d.stock && d.stock.length
+        ? `<div class="table-wrap"><table><thead><tr><th>Product</th><th>In stock</th><th>Sold (30 days)</th><th>Lasts about</th><th>Suggested reorder</th></tr></thead><tbody>` +
+          d.stock.map(p => `<tr><td>${escapeHTML(p.name)}</td><td>${p.stock}</td><td>${p.sold30}</td><td>${p.daysLeft === null ? "no recent sales" : p.daysLeft + " days"}</td><td>${p.reorder ? p.reorder + " units" : "—"}</td></tr>`).join("") +
+          `</tbody></table></div>
+           <small>Reorder = 30 din ki bikri + 20% buffer, pichle 30 din ke orders se. Made-to-order products par ye lagu nahi bhi ho sakta.</small>`
+        : "<p>No low-stock products.</p>";
+
+    $("aiInsights").innerHTML =
+        `<h4>Reviews summary</h4>${reviewsHtml}<h4>Late deliveries</h4>${lateHtml}<h4>Low stock</h4>${stockHtml}`;
+}
+
+$("aiInsightsBtn").addEventListener("click", async () => {
+    showMessage("aiMessage", "Analysing...");
+    try {
+        renderInsights(await apiRequest("/ai/insights"));
+        showMessage("aiMessage", "Insights updated.", "success");
+    } catch (error) {
+        showMessage("aiMessage", error.message, "error");
+    }
+});
+
+$("pcBtn").addEventListener("click", async () => {
+    const name = $("pcName").value.trim();
+    const category = $("pcCategory").value.trim();
+    if (!name || !category) return showMessage("pcMessage", "Enter product name and category.", "error");
+
+    const price = Number($("pcPrice").value);
+    showMessage("pcMessage", "Writing...");
+    try {
+        const out = await apiRequest("/ai/product-copy", {
+            method: "POST",
+            body: JSON.stringify({
+                name, category,
+                price: $("pcPrice").value && Number.isFinite(price) ? price : undefined,
+                customizable: $("pcCustom").checked,
+                notes: $("pcNotes").value.trim()
+            })
+        });
+        $("pcTitle").value = out.seoTitle;
+        $("pcMeta").value = out.metaDescription;
+        $("pcDesc").value = out.description;
+        $("pcResult").style.display = "flex";
+        showMessage("pcMessage", "Done. Edit as needed.", "success");
+    } catch (error) {
+        showMessage("pcMessage", error.message, "error");
+    }
+});
 
         loadDashboard();
     </script>
