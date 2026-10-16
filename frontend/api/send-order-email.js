@@ -1,11 +1,16 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ ok: false });
 
   try {
+    if (!resend) {
+  return res.status(500).json({ ok: false, error: 'RESEND_API_KEY missing' });
+}
     const { email, name, orderId, items = [], total, paymentMethod } = req.body;
 
     const rows = items.map(i =>
