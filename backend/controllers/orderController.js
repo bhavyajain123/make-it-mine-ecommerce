@@ -288,13 +288,14 @@ createdOrder.estimatedDeliveryFrom = estimate.minDate;
       await cart.save({ session });
     });
 
-       
-    sendOrderConfirmation({
-      to: req.user.email,
-      name: req.user.name || createdOrder.shippingAddress?.fullName,
-      order: createdOrder,
-    }).catch((e) => console.error("Order email failed:", e.message));
+    const customerEmail = req.user?.email;
+console.log("Sending email to:", customerEmail, "order:", createdOrder._id);
 
+   try {
+  await sendOrderConfirmation(createdOrder, customerEmail);
+} catch (err) {
+  console.error("Order email failed:", err.message);
+}
     return res.status(201).json({
       message: "Order placed successfully",
       order: createdOrder,
