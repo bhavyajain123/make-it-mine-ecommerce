@@ -350,23 +350,27 @@
         <small>AI ka likha hua hai, publish karne se pehle padh ke edit kar lo.</small>
     </div>
 </section>
-                <div class="toolbar">
-                    <select id="orderStatusFilter">
-                        <option value="">All statuses</option>
-                        <option value="placed">Placed</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="processing">Processing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="out_for_delivery">Out for delivery</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancellation_requested">Cancellation requested</option>
-                        <option value="cancelled">Cancelled</option>
-                    </select>
-                    <button class="action-btn" id="loadOrdersBtn" type="button">
-                        Load Orders
-                    </button>
-                </div>
-            </div>
+
+<section class="panel">
+    <div class="panel-heading">
+        <h3>All Orders</h3>
+        <div class="toolbar">
+            <select id="orderStatusFilter">
+                <option value="">All statuses</option>
+                <option value="placed">Placed</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="out_for_delivery">Out for delivery</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancellation_requested">Cancellation requested</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+            <button class="action-btn" id="loadOrdersBtn" type="button">
+                Load Orders
+            </button>
+        </div>
+    </div>
             <p id="ordersMessage" class="message" aria-live="polite"></p>
             <div class="toolbar" style="margin:12px 0;flex-wrap:wrap;gap:8px">
     <input id="orderSearch" type="search" placeholder="Search order number or customer" style="min-width:240px">
