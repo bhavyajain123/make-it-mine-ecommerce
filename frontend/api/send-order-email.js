@@ -8,9 +8,15 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ ok: false });
 
   try {
-    if (!resend) {
-  return res.status(500).json({ ok: false, error: 'RESEND_API_KEY missing' });
-}
+       if (!resend) {
+      return res.status(500).json({
+        ok: false,
+        error: 'RESEND_API_KEY missing',
+        seenKeys: Object.keys(process.env).filter(k =>
+          k.toUpperCase().includes('RESEND')
+        )
+      });
+    }
     const { email, name, orderId, items = [], total, paymentMethod } = req.body;
 
     const rows = items.map(i =>
