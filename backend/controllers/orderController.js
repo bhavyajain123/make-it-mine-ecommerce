@@ -12,7 +12,7 @@ const validId = (id) => mongoose.isValidObjectId(id);
 exports.createOrder = async (req, res) => {
   const session = await mongoose.startSession();
   try {
-    const { addressId, paymentMethod, couponCode } = req.body;
+    const { addressId, paymentMethod, couponCode, isGift, giftMessage } = req.body;
     if (!mongoose.isValidObjectId(addressId)) {
       return res.status(400).json({
          message: "Valid addressId is required",
@@ -262,6 +262,9 @@ couponCode: appliedCouponCode,
 discount,
 totalAmount: subtotal + shippingFee - discount,
 paymentMethod,
+        isGift: isGift === true,
+        giftMessage:
+          typeof giftMessage === "string" ? giftMessage.trim().slice(0, 500) : "",
         paymentStatus: "pending",
         status: "placed",
         statusHistory: [

@@ -928,9 +928,11 @@ function initCheckout() {
       // 2. Create the order from the backend cart.
       const orderResult = await apiRequest("/orders", {
         method: "POST",
-        body: JSON.stringify({
+               body: JSON.stringify({
           addressId,
           paymentMethod,
+          isGift: !!document.getElementById("giftOrder")?.checked,
+          giftMessage: getValue("giftMessage") || undefined,
           couponCode: getValue("couponInput") || undefined
         })
       });

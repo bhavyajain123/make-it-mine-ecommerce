@@ -110,6 +110,9 @@ const orderSchema = new mongoose.Schema(
         upiReference: { type: String, default: "", trim: true },
     upiReferenceSubmittedAt: { type: Date, default: null },
 
+        isGift: { type: Boolean, default: false },
+    giftMessage: { type: String, default: "", trim: true, maxlength: 500 },
+
     status: {
       type: String,
       enum: [
