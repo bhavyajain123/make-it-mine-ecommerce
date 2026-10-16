@@ -9,7 +9,9 @@ const Product = require("../models/Product");
 const Coupon = require("../models/Coupon");
 const { geocodeAddress } = require("../services/geocode");
 const dispatch = require("../config/dispatch");
+
 const { estimateDelivery } = require("../services/deliveryEstimate");
+const { sendOrderConfirmation } = require("../services/orderEmail");
 const RETRY_AFTER_FAILURE_MS = 6 * 60 * 60 * 1000;
 const validId = (id) => mongoose.isValidObjectId(id);
 
@@ -285,6 +287,13 @@ createdOrder.estimatedDeliveryFrom = estimate.minDate;
       cart.items = [];
       await cart.save({ session });
     });
+
+       
+    sendOrderConfirmation({
+      to: req.user.email,
+      name: req.user.name || createdOrder.shippingAddress?.fullName,
+      order: createdOrder,
+    }).catch((e) => console.error("Order email failed:", e.message));
 
     return res.status(201).json({
       message: "Order placed successfully",
