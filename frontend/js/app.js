@@ -820,11 +820,28 @@ function initCheckout() {
 
     if (!form.reportValidity()) return;
 
-    if (!getToken()) {
+       if (!getToken()) {
       showToast("Please login before placing your order.", "error");
       window.location.href = "login.html";
       return;
     }
+
+    // UPI order already placed? Bring the QR back instead of creating another order.
+    window.__upi = window.__upi || {};
+    const selectedPayment = form.querySelector(
+      'input[name="payment"]:checked'
+    )?.value;
+
+    if (selectedPayment === "upi" && window.__upi.orderId) {
+      const existingPanel = document.getElementById("upiPaymentPanel");
+      if (existingPanel) {
+        existingPanel.hidden = false;
+        existingPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      showToast("Your order is placed. Please pay using the QR and submit your transaction ID.");
+      return;
+    }
+
     await Cart.refreshFromBackend();
 
 

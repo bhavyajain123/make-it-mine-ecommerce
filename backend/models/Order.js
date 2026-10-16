@@ -107,6 +107,8 @@ const orderSchema = new mongoose.Schema(
       enum: ["pending", "paid", "failed", "refunded"],
       default: "pending",
     },
+        upiReference: { type: String, default: "", trim: true },
+    upiReferenceSubmittedAt: { type: Date, default: null },
 
     status: {
       type: String,

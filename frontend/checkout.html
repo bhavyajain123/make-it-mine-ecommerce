@@ -1900,6 +1900,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // CHECKOUT VALIDATION
   form.addEventListener("submit", async event => {
         event.preventDefault();
+        return;
 
         if (!cart.length) {
             showToast("Your shopping bag is empty. Add a gift first.");
@@ -1977,6 +1978,21 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             // Continue with the on-screen demo confirmation if storage is unavailable.
         }
+                if (payment === "upi" && !(window.__upi && window.__upi.confirmed)) {
+            if (!localStorage.getItem("mim_token")) {
+                showToast("Please login before placing your order.");
+                return;
+            }
+
+            const upiPanel = document.getElementById("upiPaymentPanel");
+            document.getElementById("upiAmount").textContent =
+                "Amount to pay: ₹" + Number(order.total).toLocaleString("en-IN");
+
+            upiPanel.hidden = false;
+            upiPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+            showToast("Scan the QR, pay, then enter your transaction ID.");
+            return;
+        }
 
        try {
     const token = localStorage.getItem("mim_token");
@@ -2038,9 +2054,10 @@ addressType: (details.addressType || "home").toLowerCase(),
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify({
+                       body: JSON.stringify({
                 addressId,
                 paymentMethod: payment === "cod" ? "cod" : "online",
+                upiReference: payment === "upi" ? window.__upi.reference : undefined,
                 couponCode: details.couponCode || undefined
             })
         }
@@ -2124,53 +2141,105 @@ loadBackendCart();
 <script type="module" src="js/app.js"></script>
 
 
+<style>
+  #upiPaymentPanel{max-width:420px;margin:32px auto;padding:24px;background:#fff;border:1px solid #eaded5;border-radius:12px;text-align:center}
+  #upiPaymentPanel[hidden]{display:none}
+  #upiPaymentPanel img{max-width:100%;height:auto;margin:12px auto;display:block}
+  #upiPaymentPanel input{width:100%;padding:12px;margin:8px 0 12px;border:1px solid #e5d4c9;border-radius:6px;font:inherit;box-sizing:border-box}
+  #upiPaymentPanel button{width:100%;padding:14px;border:0;border-radius:6px;background:#6d2238;color:#fff;font-weight:bold;cursor:pointer}
+  #upiPaymentPanel button:disabled{opacity:.6;cursor:wait}
+  #upiAmount{font-weight:bold;font-size:18px}
+  #upiPaymentMessage{font-size:13px;margin-top:10px}
+</style>
+
 <section id="upiPaymentPanel" hidden>
-  <h2>Pay using Paytm UPI</h2>
+  <h2>Pay using UPI</h2>
+  <p>Open Paytm or any UPI app, scan this QR code and pay the exact order amount.</p>
 
-  <p>
-    Open Paytm, scan this QR code and pay the exact order amount.
-  </p>
-
-  <img
-  src="images/upi-qr.png"
-  alt="Paytm UPI QR Code"
-  width="240"
-/>
+  <img src="images/upi-qr.png" alt="UPI QR Code" width="240">
 
   <p id="upiAmount"></p>
 
-  <label for="upiReference">
-    UPI Transaction ID / UTR
-  </label>
+  <label for="upiReference">UPI Transaction ID / UTR</label>
+  <input id="upiReference" type="text" maxlength="35" placeholder="Enter your transaction ID after paying">
 
-  <input
-    id="upiReference"
-    type="text"
-    maxlength="100"
-    placeholder="Enter your UPI transaction reference"
-  />
-
-  <button type="button" id="submitUpiReference">
-    Submit Payment Reference
-  </button>
+  <button type="button" id="submitUpiReference">Confirm payment &amp; place order</button>
 
   <p id="upiPaymentMessage" role="status"></p>
+  <p style="font-size:12px;color:#806b60">Your order is confirmed after we verify the payment.</p>
 </section>
 
+<script>
+(function () {
+  window.__upi = window.__upi || {};
 
-<section id="upiPaymentPanel" hidden>
-  <h2>Pay using Paytm UPI</h2>
-  <p>Scan the QR code using Paytm or another UPI app.</p>
+  var input = document.getElementById("upiReference");
+  var button = document.getElementById("submitUpiReference");
+  var message = document.getElementById("upiPaymentMessage");
 
-  <img
-    src="images/upi-qr.png"
-    alt="UPI QR Code"
-    width="240"
-  />
+  function say(text, ok) {
+    message.textContent = text;
+    message.style.color = ok ? "#53765d" : "#b44343";
+  }
 
-  <p id="upiAmount"></p>
-  <p>Payment confirmation is subject to transaction verification.</p>
-</section>
+  button.addEventListener("click", async function () {
+    var reference = input.value.trim();
+    var orderId = window.__upi.orderId || sessionStorage.getItem("mim_pending_upi_order");
+    var token = localStorage.getItem("mim_token");
 
+    if (!orderId) {
+      say("Please click Place Order first.", false);
+      return;
+    }
+    if (!token) {
+      say("Please log in again.", false);
+      return;
+    }
+    if (!/^[A-Za-z0-9]{8,35}$/.test(reference)) {
+      say("Enter a valid transaction ID / UTR (8-35 letters or numbers).", false);
+      return;
+    }
+
+    button.disabled = true;
+    say("Submitting your payment reference...", true);
+
+    var apiOrigin = window.API_ORIGIN ||
+      (location.hostname === "localhost" || location.hostname === "127.0.0.1"
+        ? "http://localhost:5000"
+        : "https://mim-backend-api-2026-bj111234.onrender.com");
+
+    try {
+      var response = await fetch(apiOrigin + "/api/payments/upi-reference", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify({ orderId: orderId, reference: reference }),
+        signal: AbortSignal.timeout(60000)
+      });
+
+      var data = await response.json().catch(function () { return {}; });
+
+      if (!response.ok) {
+        throw new Error(data.message || "Could not save the payment reference.");
+      }
+
+      say(data.message || "Payment reference received.", true);
+      sessionStorage.setItem("makeitmine_last_order_id", orderId);
+      sessionStorage.removeItem("mim_pending_upi_order");
+
+      setTimeout(function () {
+        window.location.href = "order-success.html?orderId=" + encodeURIComponent(orderId);
+      }, 1200);
+    } catch (error) {
+      say(error.name === "TimeoutError"
+        ? "This is taking too long. Please try again."
+        : error.message, false);
+      button.disabled = false;
+    }
+  });
+})();
+</script>
 </body>
 </html>

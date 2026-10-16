@@ -60,6 +60,7 @@ app.use("/api/wishlist", require("./routes/wishlistRoutes"));
 app.use("/api/coupons", require("./routes/couponRoutes"));
 app.use("/api/newsletter", require("./routes/newsletterRoutes"));
 app.use("/api/contact", require("./routes/contactRoutes"));
+app.use("/api/payments", require("./routes/paymentRoutes"));
 app.use("/api/products", require("./routes/reviewRoutes"));
 
 app.get("/", (req, res) => {
