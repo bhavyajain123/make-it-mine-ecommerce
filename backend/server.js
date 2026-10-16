@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+
 const path = require("path");
 const connectDB = require("./config/db");
 
@@ -15,6 +16,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
   "http://localhost:5500",
+   "https://make-it-mine-ecommerce-frontend.vercel.app",
   ...(process.env.FRONTEND_URLS
     ? process.env.FRONTEND_URLS.split(",").map((u) => u.trim())
     : []),
